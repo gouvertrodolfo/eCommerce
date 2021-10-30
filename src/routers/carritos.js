@@ -33,7 +33,7 @@ apiCarritos.get('/:id/productos', async (req, res) => {
 async function mdwObtenerCarrito(req, res, next) {
   const { id } = req.params
   req.carrito = await carritos.getById(id)
-console.log(req.carrito)
+
   if (req.carrito == undefined) {
     res.status(404).json({ error: 'carrito no encontrado' })
   }
@@ -57,9 +57,7 @@ apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProduct
   let carrito = req.carrito
   carrito.listaProductos.push(req.producto)
 
-  console.log(carrito)
-
-  await carritos.update(carrito)
+  await carritos.update(carrito.id, carrito)
   res.json(carrito)
 });
 
@@ -68,7 +66,7 @@ apiCarritos.delete('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProdu
   let carrito = req.carrito
   carrito.listaProductos.push(req.producto)
   
-  await carritos.update(carrito)
+  await carritos.update(carrito.id, carrito)
   res.json(carrito)
 });
 
