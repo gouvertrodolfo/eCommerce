@@ -1,8 +1,9 @@
 const { Router } = require('express');
 
 const apiProductos = Router();
-const Contenedor = require("../Contenedor")
-const inventario = new Contenedor('productos.txt')
+const ContenedorProductos = require("../ContenedorProductos")
+
+const inventario = new ContenedorProductos('productos.txt')
 
 /* ------------------------------------------------------ */
 

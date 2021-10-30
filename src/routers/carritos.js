@@ -1,10 +1,10 @@
 const { Router } = require('express');
 
 const apiCarritos = Router();
-const Contenedor = require("../Contenedor")
-const carritos = new Contenedor('carrito.txt')
-const inventario = new Contenedor('productos.txt')
-
+const ContenedorCarritos = require("../ContenedorCarritos")
+const carritos = new ContenedorCarritos('carrito.txt')
+const ContenedorProductos = require("../ContenedorProductos")
+const inventario = new ContenedorProductos('productos.txt')
 
 // a. POST: '/' - Crea un carrito y devuelve su id.
 apiCarritos.post('/', async (req, res) => {
@@ -33,7 +33,7 @@ apiCarritos.get('/:id/productos', async (req, res) => {
 async function mdwObtenerCarrito(req, res, next) {
   const { id } = req.params
   req.carrito = await carritos.getById(id)
-
+console.log(req.carrito)
   if (req.carrito == undefined) {
     res.status(404).json({ error: 'carrito no encontrado' })
   }
@@ -53,19 +53,23 @@ async function mdwObtenerProducto(req, res, next) {
 }
 
 // d. POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
-apiCarritos.post('/:id/productos', mdwObtenerCarrito, mdwObtenerProducto, async (req, res) => {
-  const carrito = req.carrito
+apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto, async (req, res) => {
+  let carrito = req.carrito
   carrito.listaProductos.push(req.producto)
+
+  console.log(carrito)
+
   await carritos.update(carrito)
-  res.json(carrito.listaProductos)
+  res.json(carrito)
 });
 
 // e. DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de producto
 apiCarritos.delete('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto, async (req, res) => {
-  const carrito = req.carrito
+  let carrito = req.carrito
   carrito.listaProductos.push(req.producto)
+  
   await carritos.update(carrito)
-  res.json(carrito.listaProductos)
+  res.json(carrito)
 });
 
 
