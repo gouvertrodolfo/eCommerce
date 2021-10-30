@@ -1,9 +1,8 @@
 const express = require('express')
 
-
 // const { apiSeguridad } = require("./routers/seguridad")
 const { apiProductos } = require("./routers/productos")
-// const { apiCarrito } = require("./routers/Carrito")
+const { apiCarritos } = require("./routers/carritos")
 
 
 const app = express()
@@ -13,11 +12,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // app.use('/', apiSeguridad)
 app.use('/productos', apiProductos)
-app.use('/carrito', apiCarrito)
-
-
-
-
+app.use('/carritos', apiCarritos)
 
 
 
