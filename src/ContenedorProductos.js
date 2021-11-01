@@ -1,36 +1,97 @@
 const Contenedor = require("./Contenedor");
-const fs = require('fs');
+const Producto = require("./Productos")
 
 
-class ContenedorProductos extends Contenedor{
+class ContenedorProductos {
 
-    constructor(nombreArchivo){
-        super(nombreArchivo);
+    constructor() {
+        this.archivo = new Contenedor('productos.json');
     }
 
-     // update(Object):  Recibe un objeto, que busca en el archivo y actualiza .
-     async update(clave, data) {
+    async init() {
+        this.listaProductos = await this.archivo.getAll();
+    }
 
-        let items = await this.getAll()
-        let array = [];
+    async commit() {
+         await this.archivo.save(this.listaProductos);
+    }
 
-        items.forEach(element => {
-            if (element.id == clave) {
-                element.timeStamp = Date.now()
-                element.title = data.title
-                element.price = data.price
-                element.thumbnail = data.thumbnail
-                element.stock = data.stock
+
+    nextId() {
+        let id = 0
+        this.listaProductos.forEach(item => {
+            if (item.id > id) {
+                id = item.id;
             }
         });
 
-        try {
-            await fs.promises.writeFile(this.ruta, JSON.stringify(items));
-        }
-        catch (error) {
-            console.log(`Error al guardar archivo ${error}`)
-        }
+        return id
     }
+
+    addProducto(object) {
+        const { nombre, descripcion, precio, thumbnail, stock } = object
+        let producto = new Producto(this.nextId() + 1, nombre, descripcion, precio, thumbnail, stock)
+        this.listaProductos.push(producto);
+        return producto
+    }
+
+    getAllProductos() {
+        return this.listaProductos;
+    }
+
+    getProductobyId(id) {
+        let producto;
+        this.listaProductos.forEach(element => {
+            if (element.id = id) {
+                producto=element
+            }
+        });
+        return producto;
+    }
+
+        updateProducto(id, data){
+            let producto = this.getProductobyId(id)        
+            producto.update(data);
+            
+
+        // const { codigo, nombre, descripcion, precio, thumbnail, stock } = object
+        // if (codigo != undefined) {
+        //     producto.codigo = codigo
+        // }
+
+        // producto.timestamp = Date.now()
+
+        // if (nombre != undefined) {
+        //     producto.nombre = nombre;
+        // }
+        // if (descripcion != undefined) {
+        //     producto.descripcion = descripcion;
+        // }
+        // if (precio != undefined) {
+        //     producto.precio = precio
+        // }
+        // if (thumbnail != undefined) {
+        //     producto.thumbnail = thumbnail
+        // }
+        // if (stock != undefined) {
+        //     producto.stock = stock
+        // }
+        
+        return producto
+    }
+
+    delProducto(id){
+        let array = []
+
+        this.listaProductos.forEach(element => {
+            if (element.id != id) {
+                array.push(element)
+            }
+        });
+        this.listaProductos = array;
+        return this.listaProductos;
+    }
+
 }
 
-module.exports= ContenedorProductos
+module.exports = ContenedorProductos
