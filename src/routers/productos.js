@@ -1,21 +1,20 @@
-const { Router } = require('express');
+const apiProductos = require('express').Router();
 
-const apiProductos = Router();
-const ContenedorProductos = require("../ContenedorProductos")
-
-const inventario = new ContenedorProductos('productos.txt')
+const listaProductos = require("../ContenedorProductos")
+const inventario = new listaProductos();
+inventario.init();
 
 /* ------------------------------------------------------ */
 
 // a. GET: '/:id?' - Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
-apiProductos.get('/', async (req, res) => {
-  const array = await inventario.getAll();
+apiProductos.get('/', (req, res) => {
+  const array = inventario.getAllProductos
   res.json(array);
 });
 
-async function mdwObtenerProducto(req, res, next) {
+function mdwObtenerProducto(req, res, next) {
   const { id } = req.params
-  res.producto = await inventario.getById(id)
+  res.producto = inventario.getProductobyId(id)
   next()
 }
 
@@ -53,31 +52,36 @@ function mwdProductoValido(req, res, next) {
 
 }
 
-
 // b. POST: '/' - Para incorporar productos al listado (disponible para administradores)
-apiProductos.post('/', mwdRoleAdministrador, mwdProductoValido, async (req, res) => {
-  let producto = req.body
-  const id = await inventario.save(producto)
-  producto = await inventario.getById(id)
+apiProductos.post('/', mwdRoleAdministrador, mwdProductoValido, (req, res) => {
+  let object = req.body
+  const producto  = inventario.addProducto(object)
   res.json(producto)
 });
 
+// c. PUT: '/' - registrar los cambios echos en memoria al archivo
+apiProductos.put('/', mwdRoleAdministrador, async (req, res) => {
+  await inventario.commit()
+  res.json()
+});
 
 // c. PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
-apiProductos.put('/:id', mwdRoleAdministrador,mwdProductoValido, async (req, res) => {
+apiProductos.put('/:id', mwdRoleAdministrador, (req, res) => {
   const { id } = req.params
   let data = req.body
 
-  await inventario.update(id, data)
-  const producto = await inventario.getById(id)
+  const producto = inventario.updateProducto(id, data)
+
   res.json(producto)
 });
 
 // d. DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
-apiProductos.delete('/:id', mwdRoleAdministrador, async (req, res) => {
+apiProductos.delete('/:id', mwdRoleAdministrador,  (req, res) => {
   const { id } = req.params
-  await inventario.deleteById(id)
-  res.json({ borrado: "Ok" })
+  const array = inventario.delProducto(id)
+  res.json(array)
 });
+
+
 
 exports.apiProductos = apiProductos;

@@ -16,39 +16,18 @@ const fs = require('fs');
         return array
     }
 
-    async getMaxId(){
-        let items = await this.getAll()
-
-        let id = 0
-        items.forEach(item=> {
-            if (item.id>id) {
-                id=item.id;
-            }
-        });
-
-        return id
-    }
-
     // save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
     async save(object){
-
-        const id =  await this.getMaxId() + 1
-        let items = await this.getAll()
-        object.id = id
-        object.timeStamp = Date.now()
-
-        items.push(object);
-
         try{
-            await fs.promises.writeFile(this.ruta, JSON.stringify(items));
+            await fs.promises.writeFile(this.ruta, JSON.stringify(object));
         }
         catch(error){
             console.log(`Error al guardar archivo ${error}` )
         }
-
-        return id;
     }
 
+
+    
     // getById(Number): Object - Recibe un id y devuelve el objeto con ese id, o null si no está.
     async getById(clave){
         let objeto

@@ -1,30 +1,67 @@
 const Contenedor = require("./Contenedor");
+const Carrito = require("./Carrito");
 const fs = require('fs');
 
 
-class ContenedorCarritos extends Contenedor {
+class ContenedorCarritos {
+    
     constructor(NombreArchivo) {
-        super(NombreArchivo)
+        this.archivo = new Contenedor('carritos.json')
     }
-    // update(Object):  Recibe un objeto, que busca en el archivo y actualiza .
-    async update(clave, data) {
 
-        let items = await this.getAll()
-        let array = [];
+    async init()
+    {
+        this.listaCarritos = await this.archivo.getAll();
+    }
+    
+    async commit() {
+        this.archivo.save(this.listaCarritos)        
+    }
 
-        items.forEach(element => {
-            if (element.id == clave) {
-                element.timeStamp = Date.now()
-                element.listaProductos = data.listaProductos
+    nextId(){
+        let id = 0
+        this.listaCarritos.forEach(item=> {
+            if (item.id>id) {
+                id=item.id;
             }
         });
 
-        try {
-            await fs.promises.writeFile(this.ruta, JSON.stringify(items));
-        }
-        catch (error) {
-            console.log(`Error al guardar archivo ${error}`)
-        }
+        return id
     }
+
+    addCarrito(){
+
+        let carrito = new Carrito(this.nextId()+1);
+                
+        this.listaCarritos.push(carrito);
+        
+        return this.listaCarritos
+    }
+
+    getCarrito(id){
+        JSON.parse(this.listaCarritos).forEach(element => {
+            if(element.id = id){
+                return element
+            }
+        });
+    }
+
+    delCarrito(id){
+        let array=[]
+
+        this.listaCarritos.forEach(element => {
+            if(element.id != id){
+                array.push(element)
+            }
+        });
+
+        this.listaCarritos=array;
+
+        return this.listaCarritos;
+    }
+
+
+
+ 
 }
 module.exports= ContenedorCarritos
