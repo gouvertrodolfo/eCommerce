@@ -11,7 +11,8 @@ class ContenedorCarritos {
 
     async init()
     {
-        this.listaCarritos = await this.archivo.getAll();
+        let dtos = await this.archivo.getAll();
+        this.listaCarritos = dtos.map(dto => new Carrito(dto))
     }
     
     async commit() {
@@ -21,7 +22,7 @@ class ContenedorCarritos {
     nextId(){
         let id = 0
         this.listaCarritos.forEach(item=> {
-            if (item.id>id) {
+            if (item.id > id) {
                 id=item.id;
             }
         });
@@ -31,19 +32,19 @@ class ContenedorCarritos {
 
     addCarrito(){
 
-        let carrito = new Carrito(this.nextId()+1);
-                
+        let carrito = new Carrito({id: this.nextId()+1});
+        // carrito.id = this.nextId()+1;                        
         this.listaCarritos.push(carrito);
         
-        return this.listaCarritos
+        return carrito;
     }
 
     getCarrito(id){
-        JSON.parse(this.listaCarritos).forEach(element => {
-            if(element.id = id){
+        for (const element of this.listaCarritos) {
+            if (element.id == id) {
                 return element
             }
-        });
+        }
     }
 
     delCarrito(id){

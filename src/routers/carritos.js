@@ -1,18 +1,17 @@
 const apiCarritos = require('express').Router();
 
-const listaCarritos = require("../ContenedorCarritos")
-const carritos = new listaCarritos()
+const ContenedorCarritos = require("../ContenedorCarritos")
+const carritos = new ContenedorCarritos()
 carritos.init();
 
 const listaProductos = require("../ContenedorProductos")
 const inventario = new listaProductos()
+inventario.init();
 
 // a. POST: '/' - Crea un carrito y devuelve su id.
-apiCarritos.post('/', async (req, res) => {
-
-  const id = await carritos.addCarrito()
+apiCarritos.post('/', (req, res) => {
+  const { id } = carritos.addCarrito()
   res.json(id)
-
 });
 
 // b. DELETE: '/:id' - Vacía un carrito y lo elimina.
@@ -29,15 +28,15 @@ apiCarritos.put('/', async (req, res) => {
 })
 
 // c. GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
-apiCarritos.get('/:id/productos', async (req, res) => {
+apiCarritos.get('/:id/productos',  (req, res) => {
   const { id } = req.params
-  const { listaProductos } = await carritos.getById(id)
+  const { listaProductos } = carritos.getCarrito(id)
   res.json(listaProductos)
 });
 
-async function mdwObtenerCarrito(req, res, next) {
+function mdwObtenerCarrito(req, res, next) {
   const { id } = req.params
-  req.carrito = await carritos.getById(id)
+  req.carrito = carritos.getCarrito(id)
 
   if (req.carrito == undefined) {
     res.status(404).json({ error: 'carrito no encontrado' })
@@ -46,9 +45,9 @@ async function mdwObtenerCarrito(req, res, next) {
   next()
 }
 
-async function mdwObtenerProducto(req, res, next) {
+function mdwObtenerProducto(req, res, next) {
   const { id_prod } = req.params
-  req.producto = await inventario.getById(id_prod)
+  req.producto = inventario.getProductobyId(id_prod)
 
   if (req.producto == undefined) {
     res.status(404).json({ error: 'producto no encontrado' })
@@ -58,11 +57,15 @@ async function mdwObtenerProducto(req, res, next) {
 }
 
 // d. POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
-apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto, async (req, res) => {
-  let carrito = req.carrito
-  carrito.listaProductos.push(req.producto)
+apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto,  (req, res) => {
 
-  await carritos.update(carrito.id, carrito)
+  let {carrito, producto } = req
+
+  
+  console.log( carrito)
+  console.log( producto )
+
+  carrito.addProducto(producto)
   res.json(carrito)
 });
 

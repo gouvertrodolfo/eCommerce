@@ -1,0 +1,44 @@
+<% const hayProductos= listaProductos.length > 0; %>
+    <div class="container">
+
+        <% if(hayProductos){ %>
+            <table class="table">
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                    <th>Foto</th>
+                </tr>
+                <% for (const item of listaProductos) {%>
+                    <tr>
+                        <td>
+                            <%=item.codigo%>
+                        </td>
+                        <td>
+                            <%=item.nombre%>
+                        </td>
+                        <td>
+                            <%=item.descripcion%>
+                        </td>
+                        <td>
+                            <%=item.precio%>
+                        </td>
+                        <td>
+                            <img class="image" src=<%=item.thumbnail%> style="width:25px ;height:25px">
+                        </td>
+                        <td>
+                            <img class="image" src="https://cdn1.iconfinder.com/data/icons/ecommerce-61/48/eccomerce_-_shopping_cart_add-512.png"  onclick="AddCarrito( '<%=item.id%>' )" style="width:25px ;height:25px">
+                        </td>
+                    </tr>
+                    <%};%>
+            </table>
+            <% } else{ %>
+                <h3 class="alert alert-danger">no se encontraron datos</h1>
+                    <% } %>
+
+        
+        <img class="image" src="https://cdn1.iconfinder.com/data/icons/ecommerce-61/48/eccomerce_-_shopping_cart_pay-512.png" onclick="verCarrito()" style="width:50px ;height:50px">
+
+
+    </div>

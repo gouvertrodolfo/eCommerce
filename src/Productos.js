@@ -1,11 +1,18 @@
 
 class Producto {
 
-    constructor(id, codigo, nombre, descripcion, precio, thumbnail, stock) {
+    constructor(data) {
+
+        const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = data
 
         this.id = id;
         this.codigo = codigo
-        this.timestamp = Date.now()
+        
+        if (timestamp == undefined) {
+            this.timestamp = Date.now()
+        }
+        else { this.timestamp = timestamp }
+
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio
@@ -15,26 +22,23 @@ class Producto {
 
     update(data) {
 
-        const { codigo, nombre, descripcion, precio, thumbnail, stock } = data
-        if (codigo != undefined) {
-            this.codigo = codigo
-        }
+        const { nombre, descripcion, precio, thumbnail, stock } = data
 
         this.timestamp = Date.now()
 
-        if (codigo != undefined) {
+        if (nombre != undefined) {
             this.nombre = nombre;
         }
-        if (codigo != undefined) {
+        if (descripcion != undefined) {
             this.descripcion = descripcion;
         }
-        if (codigo != undefined) {
+        if (precio != undefined) {
             this.precio = precio
         }
-        if (codigo != undefined) {
+        if (thumbnail != undefined) {
             this.thumbnail = thumbnail
         }
-        if (codigo != undefined) {
+        if (stock != undefined) {
             this.stock = stock
         }
     }

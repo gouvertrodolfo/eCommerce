@@ -1,14 +1,14 @@
 const apiProductos = require('express').Router();
 
-const listaProductos = require("../ContenedorProductos")
-const inventario = new listaProductos();
+const ContenedorProductos = require("../ContenedorProductos")
+const inventario = new ContenedorProductos();
 inventario.init();
 
 /* ------------------------------------------------------ */
 
 // a. GET: '/:id?' - Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
 apiProductos.get('/', (req, res) => {
-  const array = inventario.getAllProductos
+  const array = inventario.getAllProductos()
   res.json(array);
 });
 

@@ -1,27 +1,43 @@
-const Contenedor = require("./Contenedor");
-const fs = require('fs');
+const Producto = require("./Productos");
 
-class Carrito{
+class Carrito {
 
-    constructor(id){
-        this.listaProductos = [];
+    constructor(data) {
+
+        const { id, timestamp, listaProductos } = data
+
         this.id = id
-        this.timestamp = Date.now();
+        
+
+        if (timestamp == undefined) {
+            this.timestamp = Date.now();
+        }
+        else {
+            this.timestamp = timestamp;
+        }
+
+        if (listaProductos == undefined) {
+            this.listaProductos = [];
+        }
+        else {
+            this.listaProductos = listaProductos.map(prod => new Producto())
+        }
+
     };
 
     addProducto(producto) {
-        listaProductos.push(producto)      
-        return listaProductos.length();  
+        this.listaProductos.push(producto)
+        return this.listaProductos;
     }
 
-    delProducto(id_prod){
+    delProducto(id_prod) {
         let array = []
 
         this.listaProductos.forEach(element => {
-            if(element.id != id_prod){
+            if (element.id != id_prod) {
                 array.push(element);
             }
-            
+
         });
 
         this.listaProductos = array;
@@ -32,4 +48,4 @@ class Carrito{
 
 }
 
-module.exports= Carrito
+module.exports = Carrito

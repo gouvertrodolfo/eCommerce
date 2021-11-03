@@ -9,11 +9,13 @@ class ContenedorProductos {
     }
 
     async init() {
-        this.listaProductos = await this.archivo.getAll();
+        let dots = await this.archivo.getAll();
+        this.listaProductos = dots.map(dot => new Producto(dot))
+
     }
 
     async commit() {
-         await this.archivo.save(this.listaProductos);
+        await this.archivo.save(this.listaProductos);
     }
 
 
@@ -29,8 +31,8 @@ class ContenedorProductos {
     }
 
     addProducto(object) {
-        const { nombre, descripcion, precio, thumbnail, stock } = object
-        let producto = new Producto(this.nextId() + 1, nombre, descripcion, precio, thumbnail, stock)
+        object.id = this.nextId() + 1        
+        let producto = new Producto(object)
         this.listaProductos.push(producto);
         return producto
     }
@@ -40,47 +42,25 @@ class ContenedorProductos {
     }
 
     getProductobyId(id) {
-        let producto;
-        this.listaProductos.forEach(element => {
-            if (element.id = id) {
-                producto=element
+        for (const element of this.listaProductos) {
+            if (element.id == id) {
+                return element
             }
-        });
-        return producto;
+        }
     }
 
-        updateProducto(id, data){
-            let producto = this.getProductobyId(id)        
+    updateProducto(id, data) {
+        let producto = this.getProductobyId(id)
+
+        if (producto != undefined) {
             producto.update(data);
-            
+            return producto
+        }
 
-        // const { codigo, nombre, descripcion, precio, thumbnail, stock } = object
-        // if (codigo != undefined) {
-        //     producto.codigo = codigo
-        // }
 
-        // producto.timestamp = Date.now()
-
-        // if (nombre != undefined) {
-        //     producto.nombre = nombre;
-        // }
-        // if (descripcion != undefined) {
-        //     producto.descripcion = descripcion;
-        // }
-        // if (precio != undefined) {
-        //     producto.precio = precio
-        // }
-        // if (thumbnail != undefined) {
-        //     producto.thumbnail = thumbnail
-        // }
-        // if (stock != undefined) {
-        //     producto.stock = stock
-        // }
-        
-        return producto
     }
 
-    delProducto(id){
+    delProducto(id) {
         let array = []
 
         this.listaProductos.forEach(element => {
