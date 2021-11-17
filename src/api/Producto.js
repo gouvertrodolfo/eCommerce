@@ -2,7 +2,6 @@
 class Producto {
 
     constructor(data) {
-
         const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = data
 
         this.id = id;

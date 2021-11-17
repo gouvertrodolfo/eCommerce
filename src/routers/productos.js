@@ -1,7 +1,7 @@
 const apiProductos = require('express').Router();
 
-const ContenedorProductos = require("../ContenedorProductos")
-const inventario = new ContenedorProductos();
+const Productos = require("../api/Productos")
+const inventario = new Productos();
 inventario.init();
 
 /* ------------------------------------------------------ */

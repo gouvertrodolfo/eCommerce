@@ -1,10 +1,10 @@
 const apiCarritos = require('express').Router();
 
-const ContenedorCarritos = require("../ContenedorCarritos")
-const carritos = new ContenedorCarritos()
+const Carritos = require("../api/Carritos")
+const carritos = new Carritos()
 carritos.init();
 
-const listaProductos = require("../ContenedorProductos")
+const listaProductos = require("../api/Productos")
 const inventario = new listaProductos()
 inventario.init();
 
@@ -19,7 +19,6 @@ apiCarritos.delete('/:id', (req, res) => {
   const { id } = req.params
   const lista = carritos.delCarrito(id)
   res.json(lista)
-
 });
 
 apiCarritos.put('/', async (req, res) => {
@@ -60,11 +59,6 @@ function mdwObtenerProducto(req, res, next) {
 apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto,  (req, res) => {
 
   let {carrito, producto } = req
-
-  
-  console.log( carrito)
-  console.log( producto )
-
   carrito.addProducto(producto)
   res.json(carrito)
 });

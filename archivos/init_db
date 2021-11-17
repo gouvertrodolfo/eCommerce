@@ -1,4 +1,10 @@
-[
+use eCommerce
+
+db.productos.drop
+
+db.createCollection("productos")
+
+db.productos.insert([
     {
         "id": 1,
         "codigo": "regla1",
@@ -29,4 +35,4 @@
         "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
         "stock": 150
     }
-]
+])

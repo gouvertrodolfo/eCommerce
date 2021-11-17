@@ -1,6 +1,6 @@
 const fs = require('fs');
 
- class Contenedor{
+ class ContenedorArchivo{
 
     constructor(NombreArchivo){
         this.ruta=`./archivos/${NombreArchivo}`
@@ -63,4 +63,4 @@ const fs = require('fs');
 
 }
 
-module.exports= Contenedor
+module.exports= ContenedorArchivo
