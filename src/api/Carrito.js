@@ -3,10 +3,11 @@ const Producto = require("./Producto");
 class Carrito {
 
     constructor(data) {
-console.log(data)
+
         const { id, timestamp, listaProductos } = data
 
         this.id = id
+
 
         if (timestamp == undefined) {
             this.timestamp = Date.now();
@@ -19,9 +20,9 @@ console.log(data)
             this.listaProductos = [];
         }
         else {
-            this.listaProductos = listaProductos.map(prod => new Producto())
+            this.listaProductos = listaProductos.map(prod => new Producto(prod))
         }
-console.log(this.listaProductos)
+
     };
 
     addProducto(producto) {

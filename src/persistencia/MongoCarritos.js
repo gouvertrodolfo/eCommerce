@@ -6,9 +6,9 @@ class MongoCarritos extends ContenedorMongo {
         super('eCommerce', 'carrito');
     }
 
-    update(id, producto){
+    async addProducto(id, producto){
 
-        this.collection.updateOne(
+        await this.collection.updateOne(
             {
                 id: Number.parseInt(id)
             },
@@ -20,6 +20,22 @@ class MongoCarritos extends ContenedorMongo {
             })
 
     }
+
+    async delProducto(id, producto){
+
+        await this.collection.updateOne(
+            {
+                id: Number.parseInt(id)
+            },
+            {
+                '$pull':
+                {
+                    listaProductos: {id : {$eq:producto.id}}
+                }
+            })
+
+    }
+
 
 }
 module.exports = MongoCarritos

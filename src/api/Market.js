@@ -1,16 +1,19 @@
- const ContenedorProductos = require("../persistencia/MongoProductos");
-// const ContenedorProductos = require("../persistencia/MongooseCarritos");
- const ContenedorCarritos = require("../persistencia/MongoCarritos");
-//  const ContenedorCarritos = require("../persistencia/MongooseCarritos");
-const Producto = require("./Producto")
-const Carrito = require("./Carrito")
+//  const ContenedorProductos = require("../persistencia/MongoProductos");
+//  const ContenedorCarritos = require("../persistencia/MongoCarritos");
+
+ const ContenedorProductos = require("../persistencia/FireBase");
+  const ContenedorCarritos = require("../persistencia/FireBase");
+
+
+ const Producto = require("./Producto")
+ const Carrito = require("./Carrito")
 
 
 class Market {
 
     constructor() {
-        this.contenedorProductos = new ContenedorProductos();
-        this.ContenedorCarritos = new ContenedorCarritos();
+        this.contenedorProductos = new ContenedorProductos('productos');
+        this.ContenedorCarritos = new ContenedorCarritos('carrito');
     }
 
     async addProducto(object) {
@@ -76,15 +79,22 @@ class Market {
         return carrito;
     }
 
-    async addProdutoAlCarrito(carrito, producto) {
+     addProdutoAlCarrito(carrito, producto) {
 
-        // const dot = await this.ContenedorCarritos.getById(id);
-        // const carrito = new Carrito(dot)
-        // carrito.addProducto(producto)
-console.log(carrito)
-console.log(producto)
-        await this.ContenedorCarritos.update(carrito.id, producto)
+        carrito.addProducto(producto)
+        this.ContenedorCarritos.addProducto(carrito.id, producto)
 
+        return carrito;
+    }
+
+    async delProdutoAlCarrito(carrito, producto) {
+        const {id} = carrito
+
+        await this.ContenedorCarritos.delProducto(id, producto)
+
+        carrito = await this.getCarritobyId(id)
+
+        return carrito;
     }
 
     delCarrito(id) {

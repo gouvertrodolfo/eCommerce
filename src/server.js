@@ -4,7 +4,6 @@ const express = require('express')
 const { apiProductos } = require("./routers/productos")
 const { apiCarritos } = require("./routers/carritos")
 
-
 const app = express()
 
 app.use(express.static('public'))

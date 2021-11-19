@@ -27,7 +27,7 @@ class MongoNativo {
     async create(object) {
 
         await this.collection.insertOne(object)
-            .then(console.log)
+            .then()
 
     }
 
@@ -41,7 +41,7 @@ class MongoNativo {
     async getById(id) {
 
         try {
-            const [ object ] = await this.collection.find({ id: Number.parseInt(id) }).toArray()
+            const [object] = await this.collection.find({ id: Number.parseInt(id) }).toArray()
             return object
         }
         catch (err) {
@@ -64,10 +64,11 @@ class MongoNativo {
         this.collection.findOne({}).deleteAll()
     }
 
-    deleteById(id) {
-        this.collection.find({ id: Number.parseInt(id) }).delete()
-
-        return array
+    async deleteById(id) {
+        this.collection.deleteOne({ id: Number.parseInt(id) }, function (err, obj) {
+            if (err) throw err;
+            console.log("1 document deleted");
+        });
     }
 
 

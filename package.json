@@ -19,8 +19,9 @@
   "homepage": "https://github.com/gouvertrodolfo/eCommerce#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "firebase": "^9.5.0",
+    "firebase-admin": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.1.4",
-    "mongoose": "^6.0.13"
+    "mongodb": "^4.1.4"
   }
 }

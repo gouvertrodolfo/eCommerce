@@ -19,15 +19,11 @@ apiCarritos.delete('/:id', (req, res) => {
   res.json()
 });
 
-
 // c. GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
 apiCarritos.get('/:id/productos', async (req, res) => {
   const { id } = req.params
-  console.log(id)
   const carrito = await market.getCarritobyId(id)
-  console.log(carrito)
   const { listaProductos } = carrito
-  console.log(listaProductos)
   res.json(listaProductos)
 });
 
@@ -54,23 +50,23 @@ async function mdwObtenerProducto(req, res, next) {
 }
 
 // d. POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
-apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto, async (req, res) => {
+apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto, (req, res) => {
 
   let { carrito, producto } = req
 
-  await market.addProdutoAlCarrito(carrito, producto)
+  const new_carrito = market.addProdutoAlCarrito(carrito, producto)
 
-  res.json(carrito)
+  res.json(new_carrito)
 
 });
 
 // e. DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de producto
 apiCarritos.delete('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto, async (req, res) => {
-  let carrito = req.carrito
-  carrito.listaProductos.push(req.producto)
+  let { carrito, producto } = req
 
-  await market.update(carrito.id, carrito)
-  res.json(carrito)
+  const new_carrito =  await market.delProdutoAlCarrito(carrito, producto)
+
+  res.json(new_carrito)
 });
 
 
