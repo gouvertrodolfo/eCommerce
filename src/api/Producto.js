@@ -19,7 +19,7 @@ class Producto {
         this.stock = stock
     }
 
-    update(data) {
+    modificar(data) {
 
         const { nombre, descripcion, precio, thumbnail, stock } = data
 

@@ -1,6 +1,6 @@
-const ContenedorMongo = require('./ContenedorMongo');
+const ContenedorMongo = require('./MongoNativo');
 
-class ProductosMongo extends ContenedorMongo {
+class MongoProductos extends ContenedorMongo {
 
     constructor() {
         super('eCommerce', 'productos');
@@ -33,4 +33,4 @@ class ProductosMongo extends ContenedorMongo {
 
 
 }
-module.exports = ProductosMongo
+module.exports = MongoProductos

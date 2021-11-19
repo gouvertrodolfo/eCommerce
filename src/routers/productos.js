@@ -1,35 +1,30 @@
 const apiProductos = require('express').Router();
 
-const Productos = require("../api/Productos")
-const inventario = new Productos();
-inventario.init();
+const Market = require('../api/Market');
+const market = new Market();
+
 
 /* ------------------------------------------------------ */
 
 // a. GET: '/:id?' - Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
-apiProductos.get('/', (req, res) => {
-  const array = inventario.getAllProductos()
+apiProductos.get('/', async (req, res) => {
+  const array = await market.getAllProductos()
   res.json(array);
 });
 
-function mdwObtenerProducto(req, res, next) {
-  const { id } = req.params
-  res.producto = inventario.getProductobyId(id)
-  next()
-}
+// GET '/api/productos/:id' -> devuelve un producto según su id.
+apiProductos.get('/:id', async (req, res) => {
+  const  id  = req.params.id
 
-function mdwValidarProducto(req, res, next) {
-  if (res.producto == undefined) {
+  const producto = await market.getProductobyId( id )
+
+  if (producto == undefined) {
     res.status(404).json({ error: 'producto no encontrado' })
   }
-  next()
-}
-
-// GET '/api/productos/:id' -> devuelve un producto según su id.
-apiProductos.get('/:id', mdwObtenerProducto, mdwValidarProducto, (req, res, next) => {
-  res.json(res.producto)
-}
-);
+  else {
+    res.json(producto)
+  }
+});
 
 function mwdRoleAdministrador(req, res, next) {
   const role = req.headers['role'];
@@ -55,13 +50,19 @@ function mwdProductoValido(req, res, next) {
 // b. POST: '/' - Para incorporar productos al listado (disponible para administradores)
 apiProductos.post('/', mwdRoleAdministrador, mwdProductoValido, (req, res) => {
   let object = req.body
-  const producto  = inventario.addProducto(object)
+
+  const producto = market.addProducto(object)
+
+
+  console.log(producto)
+
   res.json(producto)
+
 });
 
 // c. PUT: '/' - registrar los cambios echos en memoria al archivo
 apiProductos.put('/', mwdRoleAdministrador, async (req, res) => {
-  await inventario.commit()
+  await market.commit()
   res.json()
 });
 
@@ -70,15 +71,15 @@ apiProductos.put('/:id', mwdRoleAdministrador, (req, res) => {
   const { id } = req.params
   let data = req.body
 
-  const producto = inventario.updateProducto(id, data)
+  const producto = market.updateProducto(id, data)
 
   res.json(producto)
 });
 
 // d. DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
-apiProductos.delete('/:id', mwdRoleAdministrador,  (req, res) => {
+apiProductos.delete('/:id', mwdRoleAdministrador, (req, res) => {
   const { id } = req.params
-  const array = inventario.delProducto(id)
+  const array = market.delProducto(id)
   res.json(array)
 });
 

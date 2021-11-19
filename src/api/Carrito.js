@@ -3,7 +3,7 @@ const Producto = require("./Producto");
 class Carrito {
 
     constructor(data) {
-
+console.log(data)
         const { id, timestamp, listaProductos } = data
 
         this.id = id
@@ -21,7 +21,7 @@ class Carrito {
         else {
             this.listaProductos = listaProductos.map(prod => new Producto())
         }
-
+console.log(this.listaProductos)
     };
 
     addProducto(producto) {
@@ -43,8 +43,7 @@ class Carrito {
 
         return this.listaProductos;
     }
-
-
 }
+
 
 module.exports = Carrito

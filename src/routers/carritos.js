@@ -1,41 +1,39 @@
 const apiCarritos = require('express').Router();
 
-const Carritos = require("../api/Carritos")
-const carritos = new Carritos()
-carritos.init();
+const Market = require("../api/Market")
+const market = new Market()
 
-const listaProductos = require("../api/Productos")
-const inventario = new listaProductos()
-inventario.init();
 
 // a. POST: '/' - Crea un carrito y devuelve su id.
-apiCarritos.post('/', (req, res) => {
-  const { id } = carritos.addCarrito()
+apiCarritos.post('/', async (req, res) => {
+  const { id } = await market.addCarrito()
   res.json(id)
 });
 
 // b. DELETE: '/:id' - Vacía un carrito y lo elimina.
 apiCarritos.delete('/:id', (req, res) => {
   const { id } = req.params
-  const lista = carritos.delCarrito(id)
-  res.json(lista)
+
+  market.delCarrito(id)
+
+  res.json()
 });
 
-apiCarritos.put('/', async (req, res) => {
-  await carritos.commit();
-  res.json()
-})
 
 // c. GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
-apiCarritos.get('/:id/productos',  (req, res) => {
+apiCarritos.get('/:id/productos', async (req, res) => {
   const { id } = req.params
-  const { listaProductos } = carritos.getCarrito(id)
+  console.log(id)
+  const carrito = await market.getCarritobyId(id)
+  console.log(carrito)
+  const { listaProductos } = carrito
+  console.log(listaProductos)
   res.json(listaProductos)
 });
 
-function mdwObtenerCarrito(req, res, next) {
+async function mdwObtenerCarrito(req, res, next) {
   const { id } = req.params
-  req.carrito = carritos.getCarrito(id)
+  req.carrito = await market.getCarritobyId(id)
 
   if (req.carrito == undefined) {
     res.status(404).json({ error: 'carrito no encontrado' })
@@ -44,9 +42,9 @@ function mdwObtenerCarrito(req, res, next) {
   next()
 }
 
-function mdwObtenerProducto(req, res, next) {
+async function mdwObtenerProducto(req, res, next) {
   const { id_prod } = req.params
-  req.producto = inventario.getProductobyId(id_prod)
+  req.producto = await market.getProductobyId(id_prod)
 
   if (req.producto == undefined) {
     res.status(404).json({ error: 'producto no encontrado' })
@@ -56,11 +54,14 @@ function mdwObtenerProducto(req, res, next) {
 }
 
 // d. POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
-apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto,  (req, res) => {
+apiCarritos.post('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProducto, async (req, res) => {
 
-  let {carrito, producto } = req
-  carrito.addProducto(producto)
+  let { carrito, producto } = req
+
+  await market.addProdutoAlCarrito(carrito, producto)
+
   res.json(carrito)
+
 });
 
 // e. DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de producto
@@ -68,7 +69,7 @@ apiCarritos.delete('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProdu
   let carrito = req.carrito
   carrito.listaProductos.push(req.producto)
 
-  await carritos.update(carrito.id, carrito)
+  await market.update(carrito.id, carrito)
   res.json(carrito)
 });
 
