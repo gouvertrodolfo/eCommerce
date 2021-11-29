@@ -1,16 +1,16 @@
-const express = require('express')
+import express, {  json, urlencoded } from 'express'
 
 // const { apiSeguridad } = require("./routers/seguridad")
-const { apiProductos } = require("./routers/productos")
-const { apiCarritos } = require("./routers/carritos")
+import  apiCarritos  from "./routers/carritos"
+import { apiProductos } from "./routers/productos"
 
 const app = express()
 
 app.use(express.static('public'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(json())
+app.use(urlencoded({ extended: true }))
 
-// app.use('/', apiSeguridad)
+// app.use('/', apiSeguridad)s
 app.use('/productos', apiProductos)
 app.use('/carrito', apiCarritos)
 

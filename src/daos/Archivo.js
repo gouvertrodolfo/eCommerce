@@ -1,4 +1,4 @@
-const fs = require('fs');
+import { promises } from 'fs';
 
  class Archivos{
 
@@ -9,7 +9,7 @@ const fs = require('fs');
 
     // getAll(): Object[] - Devuelve un array con los objetos presentes en el archivo.
     async getAll(){
-        let array = await fs.promises.readFile(this.ruta, this.encoding)
+        let array = await promises.readFile(this.ruta, this.encoding)
         .then(JSON.parse)
         .catch(()=>{return []})
 
@@ -19,7 +19,7 @@ const fs = require('fs');
     // save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
     async save(object){
         try{
-            await fs.promises.writeFile(this.ruta, JSON.stringify(object));
+            await promises.writeFile(this.ruta, JSON.stringify(object));
         }
         catch(error){
             console.log(`Error al guardar archivo ${error}` )
@@ -40,7 +40,7 @@ const fs = require('fs');
     // deleteById(Number): void - Elimina del archivo el objeto con el id buscado.
     async deleteById(clave){
      
-        let items = await fs.promises.readFile(this.ruta, this.encoding)
+        let items = await promises.readFile(this.ruta, this.encoding)
         .then(JSON.parse)
         .catch(()=>{return [] })
         
@@ -52,15 +52,15 @@ const fs = require('fs');
             } 
         });
 
-        await fs.promises.writeFile(this.ruta, JSON.stringify(array));
+        await promises.writeFile(this.ruta, JSON.stringify(array));
     }
     
     // deleteAll(): void - Elimina todos los objetos presentes en el archivo
     async deleteAll(){
         const items=[]
-        await fs.promises.writeFile(this.ruta, JSON.stringify(items));
+        await promises.writeFile(this.ruta, JSON.stringify(items));
     }
 
 }
 
-module.exports= Archivos
+export default Archivos

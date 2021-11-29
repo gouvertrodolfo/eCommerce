@@ -1,12 +1,12 @@
 //  const ContenedorProductos = require("../persistencia/MongoProductos");
 //  const ContenedorCarritos = require("../persistencia/MongoCarritos");
 
- const ContenedorProductos = require("../persistencia/FireBase");
-  const ContenedorCarritos = require("../persistencia/FireBase");
+import ContenedorProductos from "../daos/FireBase";
+import ContenedorCarritos from "../daos/FireBase";
 
 
- const Producto = require("./Producto")
- const Carrito = require("./Carrito")
+import Producto from "./Producto";
+import Carrito from "./Carrito";
 
 
 class Market {
@@ -65,7 +65,7 @@ class Market {
 
         let carrito = new Carrito({ id: id });
 
-        carrito = await this.ContenedorCarritos.create(carrito)
+        await this.ContenedorCarritos.create(carrito)
 
         return carrito;
     }
@@ -79,7 +79,7 @@ class Market {
         return carrito;
     }
 
-     addProdutoAlCarrito(carrito, producto) {
+    addProdutoAlCarrito(carrito, producto) {
 
         carrito.addProducto(producto)
         this.ContenedorCarritos.addProducto(carrito.id, producto)
@@ -88,7 +88,7 @@ class Market {
     }
 
     async delProdutoAlCarrito(carrito, producto) {
-        const {id} = carrito
+        const { id } = carrito
 
         await this.ContenedorCarritos.delProducto(id, producto)
 
@@ -104,4 +104,4 @@ class Market {
     updateCarrito(id) { }
 }
 
-module.exports = Market
+export default Market

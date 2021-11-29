@@ -1,4 +1,4 @@
-const Producto = require("./Producto");
+import Producto from "./Producto";
 
 class Carrito {
 
@@ -47,4 +47,4 @@ class Carrito {
 }
 
 
-module.exports = Carrito
+export default Carrito

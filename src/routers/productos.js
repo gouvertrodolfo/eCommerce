@@ -1,6 +1,8 @@
-const apiProductos = require('express').Router();
+import express from 'express'
 
-const Market = require('../api/Market');
+const apiProductos = express.Router()
+
+import Market from '../api/Market';
 const market = new Market();
 
 
@@ -85,4 +87,5 @@ apiProductos.delete('/:id', mwdRoleAdministrador, (req, res) => {
 
 
 
-exports.apiProductos = apiProductos;
+const _apiProductos = apiProductos;
+export { _apiProductos as apiProductos };

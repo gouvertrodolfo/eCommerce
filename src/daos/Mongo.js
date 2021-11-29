@@ -1,7 +1,7 @@
-const { MongoClient } = require('mongodb');
-const { database } = require("../../options/mongoDB");
+import { MongoClient } from 'mongodb';
+import { database } from "../../options/mongoDB";
 
-class MongoNativo {
+class Mongo {
 
     constructor(base, collection) {
 
@@ -74,4 +74,4 @@ class MongoNativo {
 
 }
 
-module.exports = MongoNativo
+export default Mongo

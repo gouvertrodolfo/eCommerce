@@ -1,10 +1,11 @@
 {
   "name": "ecommerce",
+  "type":"module",
   "version": "1.0.0",
   "description": "Proyecto final Node.js eComerce",
   "main": "src/server.js",
   "scripts": {
-    "start": "node ."
+    "start": "node --experimental-modules --es-module-specifier-resolution=node ."
   },
   "repository": {
     "type": "git",

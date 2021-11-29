@@ -1,6 +1,9 @@
-const apiCarritos = require('express').Router();
 
-const Market = require("../api/Market")
+
+import express from 'express'
+const apiCarritos = express.Router()
+
+import Market from "../api/Market";
 const market = new Market()
 
 
@@ -70,4 +73,4 @@ apiCarritos.delete('/:id/productos/:id_prod', mdwObtenerCarrito, mdwObtenerProdu
 });
 
 
-exports.apiCarritos = apiCarritos;
+export default  apiCarritos;

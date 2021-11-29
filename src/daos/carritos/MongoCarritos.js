@@ -1,4 +1,4 @@
-const ContenedorMongo = require('./MongoNativo');
+import ContenedorMongo from '../Mongo';
 
 class MongoCarritos extends ContenedorMongo {
 
@@ -38,4 +38,4 @@ class MongoCarritos extends ContenedorMongo {
 
 
 }
-module.exports = MongoCarritos
+export default MongoCarritos
