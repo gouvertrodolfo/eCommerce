@@ -1,11 +1,11 @@
 {
   "name": "ecommerce",
-  "type":"module",
+  "type": "module",
   "version": "1.0.0",
   "description": "Proyecto final Node.js eComerce",
   "main": "src/server.js",
   "scripts": {
-    "start": "node --experimental-modules --es-module-specifier-resolution=node ."
+    "start": "node ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "firebase": "^9.5.0",
     "firebase-admin": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.1.4"
+    "mongodb": "^4.1.4",
+    "nuid": "^1.1.6"
   }
 }

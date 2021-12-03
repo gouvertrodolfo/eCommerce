@@ -1,9 +1,9 @@
-import ContenedorMongo from '../Mongo';
+import Contenedor from '../../contenedores/Mongo.js';
 
-class MongoCarritos extends ContenedorMongo {
+class MongoCarritos extends Contenedor {
 
     constructor() {
-        super('eCommerce', 'carrito');
+        super('eCommerce', 'carritos');
     }
 
     async addProducto(id, producto){

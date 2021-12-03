@@ -1,16 +1,25 @@
+import NUID from 'nuid'
 
 class Producto {
 
     constructor(data) {
         const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = data
 
-        this.id = id;
+        if (id == undefined) {
+            this.id = NUID.next();
+        }
+        else {
+            this.id = id;
+        }
+
         this.codigo = codigo
-        
+
         if (timestamp == undefined) {
             this.timestamp = Date.now()
         }
-        else { this.timestamp = timestamp }
+        else {
+            this.timestamp = timestamp
+        }
 
         this.nombre = nombre;
         this.descripcion = descripcion;

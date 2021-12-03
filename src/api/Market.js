@@ -1,28 +1,28 @@
 //  const ContenedorProductos = require("../persistencia/MongoProductos");
 //  const ContenedorCarritos = require("../persistencia/MongoCarritos");
 
-import ContenedorProductos from "../daos/FireBase";
-import ContenedorCarritos from "../daos/FireBase";
+import ContenedorProductos from "../daos/ContenedorProductos.js";
+import ContenedorCarritos from "../daos/ContenedorCarrito.js";
 
 
-import Producto from "./Producto";
-import Carrito from "./Carrito";
+import Producto from "./Producto.js";
+import Carrito from "./Carrito.js";
 
 
 class Market {
 
     constructor() {
-        this.contenedorProductos = new ContenedorProductos('productos');
-        this.ContenedorCarritos = new ContenedorCarritos('carrito');
+        this.contenedorProductos = new ContenedorProductos();
+        this.ContenedorCarritos = new ContenedorCarritos();
     }
 
     async addProducto(object) {
 
-        // object.id = await this.contenedorProductos.getNextId()
+        const producto = new Producto(object);
 
-        await this.contenedorProductos.create(object)
+        await this.contenedorProductos.create(producto)
 
-        return object
+        return producto
     }
 
     async getAllProductos() {
@@ -61,9 +61,7 @@ class Market {
     /*************************************************************************************************** */
     async addCarrito() {
 
-        const id = await this.ContenedorCarritos.getNextId()
-
-        let carrito = new Carrito({ id: id });
+        let carrito = new Carrito();
 
         await this.ContenedorCarritos.create(carrito)
 
@@ -81,7 +79,7 @@ class Market {
 
     addProdutoAlCarrito(carrito, producto) {
 
-        carrito.addProducto(producto)
+        //carrito.addProducto(producto)
         this.ContenedorCarritos.addProducto(carrito.id, producto)
 
         return carrito;

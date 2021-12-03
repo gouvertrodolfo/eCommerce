@@ -1,28 +1,22 @@
-import Producto from "./Producto";
+import Producto from './Producto.js';
+import NUID from 'nuid'
 
 class Carrito {
 
     constructor(data) {
 
-        const { id, timestamp, listaProductos } = data
-
-        this.id = id
-
-
-        if (timestamp == undefined) {
+        if (data == undefined) {
+            this.id= NUID.next();
             this.timestamp = Date.now();
-        }
-        else {
-            this.timestamp = timestamp;
-        }
-
-        if (listaProductos == undefined) {
             this.listaProductos = [];
         }
-        else {
-            this.listaProductos = listaProductos.map(prod => new Producto(prod))
+        else{
+            const { id, timestamp, listaProductos } = data
+            this.id = id
+            this.timestamp = timestamp;
+            this.listaProductos = listaProductos;
         }
-
+        
     };
 
     addProducto(producto) {

@@ -1,8 +1,8 @@
 import express, {  json, urlencoded } from 'express'
 
 // const { apiSeguridad } = require("./routers/seguridad")
-import  apiCarritos  from "./routers/carritos"
-import { apiProductos } from "./routers/productos"
+import  apiCarritos  from "./routers/carritos.js"
+import { apiProductos } from "./routers/productos.js"
 
 const app = express()
 

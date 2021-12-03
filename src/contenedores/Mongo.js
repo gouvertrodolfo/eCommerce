@@ -1,26 +1,15 @@
 import { MongoClient } from 'mongodb';
-import { database } from "../../options/mongoDB";
+import fs from 'fs'
+
+const {mongo_url} = JSON.parse(await fs.promises.readFile('./options/config.json', 'utf-8'))
+
+const client = new MongoClient(mongo_url, { serverSelectionTimeOutMS: 5000 });
+await client.connect();
 
 class Mongo {
 
     constructor(base, collection) {
-
-        const client = new MongoClient(database.url, { serverSelectionTimeOutMS: 5000 });
-
-        client.connect();
-
         this.collection = client.db(base).collection(collection)
-    }
-
-    async getNextId() {
-        try {
-            const [{ id }] = await this.collection.find().sort({ id: -1 }).limit(1).toArray()
-            return id + 1
-
-        }
-        catch {
-            return 1;
-        }
     }
 
     // save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
@@ -28,7 +17,6 @@ class Mongo {
 
         await this.collection.insertOne(object)
             .then()
-
     }
 
     // getAll(): Object[] - Devuelve un array con los objetos presentes en el archivo.
@@ -49,16 +37,6 @@ class Mongo {
         }
     }
 
-    async create(object) {
-
-        object.id = await this.getNextId()
-
-        this.collection.insertOne(object)
-            .then()
-
-        return object
-    }
-
     // deleteAll(): void - Elimina todos los objetos presentes en el archivo
     async deleteAll() {
         this.collection.findOne({}).deleteAll()
@@ -70,7 +48,6 @@ class Mongo {
             console.log("1 document deleted");
         });
     }
-
 
 }
 

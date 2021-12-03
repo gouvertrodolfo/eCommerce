@@ -2,7 +2,7 @@ import express from 'express'
 
 const apiProductos = express.Router()
 
-import Market from '../api/Market';
+import Market from '../api/Market.js';
 const market = new Market();
 
 
