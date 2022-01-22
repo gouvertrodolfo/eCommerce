@@ -1,8 +1,8 @@
 //  const ContenedorProductos = require("../persistencia/MongoProductos");
 //  const ContenedorCarritos = require("../persistencia/MongoCarritos");
 
-import ContenedorProductos from "../daos/ContenedorProductos.js";
-import ContenedorCarritos from "../daos/ContenedorCarrito.js";
+import ContenedorProductos from "../daos/Productos.js";
+import ContenedorCarritos from "../daos/Carrito.js";
 
 
 import Producto from "./Producto.js";

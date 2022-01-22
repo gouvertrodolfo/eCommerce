@@ -38,6 +38,10 @@ class Carrito {
 
         return this.listaProductos;
     }
+
+    Confirmar(){
+        
+    }
 }
 
 

@@ -1,9 +1,9 @@
-import Contenedor from '../../contenedores/Mongo.js';
+import Contenecor from '../contenedores/FireBase.js';
 
-class MongoProductos extends Contenedor {
+class Firebase extends Contenecor {
 
     constructor() {
-        super('eCommerce', 'productos');
+        super('productos');
     }
 
     update(product) {
@@ -29,8 +29,5 @@ class MongoProductos extends Contenedor {
             .catch(err => { console.log(err) })
     }
 
-
-
-
 }
-export default MongoProductos
+export default Firebase

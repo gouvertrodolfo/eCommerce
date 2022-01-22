@@ -1,4 +1,4 @@
-import Contenedor from '../../contenedores/FireBase.js';
+import Contenedor from '../contenedores/FireBase.js';
 import admin from 'firebase-admin';
 
 class FirebaseCarritos extends Contenedor {
