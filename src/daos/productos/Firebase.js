@@ -1,4 +1,5 @@
 import Contenecor from '../contenedores/FireBase.js';
+import logger from './logger.js'
 
 class Firebase extends Contenecor {
 
@@ -26,7 +27,7 @@ class Firebase extends Contenecor {
                 }
             })
             .then()
-            .catch(err => { console.log(err) })
+            .catch(err => { logger.error(err) })
     }
 
 }

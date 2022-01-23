@@ -1,7 +1,7 @@
 //  const ContenedorProductos = require("../persistencia/MongoProductos");
 //  const ContenedorCarritos = require("../persistencia/MongoCarritos");
 
-import ContenedorProductos from "../daos/Productos.js";
+import {getinstancia} from "../daos/Productos.js";
 import ContenedorCarritos from "../daos/Carrito.js";
 
 
@@ -12,7 +12,7 @@ import Carrito from "./Carrito.js";
 class Market {
 
     constructor() {
-        this.contenedorProductos = new ContenedorProductos();
+        this.contenedorProductos = getinstancia();
         this.ContenedorCarritos = new ContenedorCarritos();
     }
 

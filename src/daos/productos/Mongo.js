@@ -1,4 +1,5 @@
 import Contenedor from '../contenedores/Mongo.js.js';
+import logger from './logger.js'
 
 class MongoProductos extends Contenedor {
 
@@ -26,7 +27,7 @@ class MongoProductos extends Contenedor {
                 }
             })
             .then()
-            .catch(err => { console.log(err) })
+            .catch(err => { logger.error(err) })
     }
 
 

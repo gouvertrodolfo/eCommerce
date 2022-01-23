@@ -55,9 +55,6 @@ apiProductos.post('/', mwdRoleAdministrador, mwdProductoValido, (req, res) => {
 
   const producto = market.addProducto(object)
 
-
-  console.log(producto)
-
   res.json(producto)
 
 });

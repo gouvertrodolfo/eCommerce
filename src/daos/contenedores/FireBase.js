@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
 import fs from 'fs'
+import logger from '../../logger.js'
 
 const serviceAccount = JSON.parse(await fs.promises.readFile('./options/ecommerce-ad388-firebase-adminsdk-dgeq4-ddf54374f5.json', 'utf-8'))
 
@@ -10,7 +11,7 @@ if (admin.apps.length == 0) {
     });
 }
 
-console.log(`firebase admin conectado`)
+logger.info(`firebase admin conectado`)
 
 
 class FireBase {

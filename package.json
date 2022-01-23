@@ -24,6 +24,7 @@
     "firebase": "^9.5.0",
     "firebase-admin": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
+    "log4js": "^6.4.0",
     "mongodb": "^4.1.4",
     "nuid": "^1.1.6"
   }

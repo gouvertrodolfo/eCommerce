@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 import fs from 'fs'
+import logger from './logger.js'
 
 const {mongo_url} = JSON.parse(await fs.promises.readFile('./options/config.json', 'utf-8'))
 
@@ -33,7 +34,7 @@ class Mongo {
             return object
         }
         catch (err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -45,7 +46,7 @@ class Mongo {
     async deleteById(id) {
         this.collection.deleteOne({ id: Number.parseInt(id) }, function (err, obj) {
             if (err) throw err;
-            console.log("1 document deleted");
+            logger.error("1 document deleted");
         });
     }
 

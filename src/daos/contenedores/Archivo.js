@@ -1,4 +1,5 @@
 import { promises } from 'fs';
+import logger from './logger.js'
 
  class Archivos{
 
@@ -22,7 +23,7 @@ import { promises } from 'fs';
             await promises.writeFile(this.ruta, JSON.stringify(object));
         }
         catch(error){
-            console.log(`Error al guardar archivo ${error}` )
+            logger.error(`Error al guardar archivo ${error}` )
         }
     }
     
