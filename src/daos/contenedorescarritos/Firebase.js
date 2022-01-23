@@ -1,7 +1,7 @@
 import Contenedor from '../contenedores/FireBase.js';
-import admin from 'firebase-admin';
+// import admin from 'firebase-admin';
 
-class FirebaseCarritos extends Contenedor {
+class Firebase extends Contenedor {
 
     constructor() {
         super('carrito');
@@ -28,4 +28,10 @@ class FirebaseCarritos extends Contenedor {
 
 
 }
-export default FirebaseCarritos
+function getInstancia() {
+    const instacia = new Firebase()
+    logger.info('instancia contenedor de carritos firebase')
+    return instacia;
+}
+
+export default { getInstancia }

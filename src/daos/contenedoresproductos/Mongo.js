@@ -1,12 +1,12 @@
-import Contenedor from '../contenedores/Mongo.js.js';
-import logger from './logger.js'
+import Contenedor from '../contenedores/Mongo.js';
+import logger from '../../logger.js'
 
-class MongoProductos extends Contenedor {
+class Mongo extends Contenedor {
 
     constructor() {
         super('eCommerce', 'productos');
     }
-
+    
     update(product) {
         const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = product
 
@@ -34,4 +34,12 @@ class MongoProductos extends Contenedor {
 
 
 }
-export default MongoProductos
+
+function getInstancia()
+{
+    const instacia = new Mongo()
+    logger.info('instancia contenedor de productos mongo')
+    return instacia;
+}
+
+export  {getInstancia};

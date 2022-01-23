@@ -1,8 +1,8 @@
 //  const ContenedorProductos = require("../persistencia/MongoProductos");
 //  const ContenedorCarritos = require("../persistencia/MongoCarritos");
 
-import {getinstancia} from "../daos/Productos.js";
-import ContenedorCarritos from "../daos/Carrito.js";
+import {getInstancia as getInstanciaProductos} from "../daos/Productos.js";
+import {getInstancia as getInstanciaCarritos} from "../daos/Carrito.js";
 
 
 import Producto from "./Producto.js";
@@ -12,8 +12,9 @@ import Carrito from "./Carrito.js";
 class Market {
 
     constructor() {
-        this.contenedorProductos = getinstancia();
-        this.ContenedorCarritos = new ContenedorCarritos();
+        this.contenedorProductos = getInstanciaProductos();
+
+        // this.ContenedorCarritos = getInstanciaCarritos();
     }
 
     async addProducto(object) {
@@ -25,7 +26,8 @@ class Market {
         return producto
     }
 
-    async getAllProductos() {
+    async getAllProductos() 
+    {
         const array = await this.contenedorProductos.getAll();
         return array
     }

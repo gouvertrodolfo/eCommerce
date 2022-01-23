@@ -1,19 +1,23 @@
-import dotenv from 'dotenv'
-
+import logger from '../logger.js'
+import dotenv from 'dotenv';
 dotenv.config()
-let contenedor ;
 
-export function getinstancia(){
+const file = process.env.PRODUCTOS_TIPO_PERSISTENCIA;
 
-    if (process.env.PRODUCTOS_TIPO_PERSISTENCIA == 'MONGO') {
-        contenedor= 'Mongo'
-
-    } else {
-        contenedor= 'Firebase'    
+class Productos {
+    constructor() {
+            this.contenedor = undefined;
     }
 
-    const instancia = import(`./productos/${contenedor}`)
-    .then(module => module.getinstancia());
-
-    return instancia;    
 }
+
+Productos.contenedor = import(`./contenedoresproductos/${file}.js`)
+.then(module => module.getInstancia())
+.then();
+
+export function getInstancia() {
+    return Productos.contenedor;
+}
+
+export default Productos;
+

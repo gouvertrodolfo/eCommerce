@@ -1,7 +1,7 @@
-import Contenecor from '../contenedores/FireBase.js';
-import logger from './logger.js'
+import Contenedor from '../contenedores/FireBase.js';
+import logger from '../../logger.js'
 
-class Firebase extends Contenecor {
+class Firebase extends Contenedor {
 
     constructor() {
         super('productos');
@@ -31,4 +31,12 @@ class Firebase extends Contenecor {
     }
 
 }
-export default Firebase
+
+function getInstancia()
+{
+    const instacia = new Firebase()
+    logger.info('instancia contenedor de productos Firebase')
+    return instacia;
+}
+
+export  {getInstancia};

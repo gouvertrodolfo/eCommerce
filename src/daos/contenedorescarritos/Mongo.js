@@ -1,12 +1,13 @@
-import Contenedor from '../../contenedores/Mongo.js';
+import Contenedor from '../contenedores/Mongo.js';
 
-class MongoCarritos extends Contenedor {
+
+class Mongo extends Contenedor {
 
     constructor() {
         super('eCommerce', 'carritos');
     }
 
-    async addProducto(id, producto){
+    async addProducto(id, producto) {
 
         await this.collection.updateOne(
             {
@@ -21,7 +22,7 @@ class MongoCarritos extends Contenedor {
 
     }
 
-    async delProducto(id, producto){
+    async delProducto(id, producto) {
 
         await this.collection.updateOne(
             {
@@ -30,12 +31,19 @@ class MongoCarritos extends Contenedor {
             {
                 '$pull':
                 {
-                    listaProductos: {id : {$eq:producto.id}}
+                    listaProductos: { id: { $eq: producto.id } }
                 }
             })
 
     }
 
-
 }
-export default MongoCarritos
+
+
+function getInstancia() {
+    const instacia = new Mongo()
+    logger.info('instancia contenedor de carritos mongo')
+    return instacia;
+}
+
+export default { getInstancia }

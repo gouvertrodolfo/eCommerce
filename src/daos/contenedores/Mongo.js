@@ -1,11 +1,11 @@
 import { MongoClient } from 'mongodb';
-import fs from 'fs'
-import logger from './logger.js'
+import logger from '../../logger.js'
 
-const {mongo_url} = JSON.parse(await fs.promises.readFile('./options/config.json', 'utf-8'))
+const mongo_url = process.env.PRODUCTOS_URL 
 
 const client = new MongoClient(mongo_url, { serverSelectionTimeOutMS: 5000 });
 await client.connect();
+logger.info('Contenedor Mongo Base conectada')
 
 class Mongo {
 
