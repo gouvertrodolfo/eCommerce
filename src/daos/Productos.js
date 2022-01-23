@@ -1,11 +1,19 @@
 import dotenv from 'dotenv'
 
 dotenv.config()
-const tipo_persistencia = process.env.PRODUCTOS_TIPO_PERSISTENCIA
+let contenedor ;
 
+export function getinstancia(){
 
-import contenedorProductos from './productos/Firebase.js'
+    if (process.env.PRODUCTOS_TIPO_PERSISTENCIA == 'MONGO') {
+        contenedor= 'Mongo'
 
+    } else {
+        contenedor= 'Firebase'    
+    }
 
+    const instancia = import(`./productos/${contenedor}`)
+    .then(module => module.getinstancia());
 
-export default contenedorProductos;
+    return instancia;    
+}
