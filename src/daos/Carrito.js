@@ -13,8 +13,8 @@ class Carrito{
     }
 
 }
-
-Carrito.contenedor = await import(`./contenedorescarritos/${file}.js`)
+logger.warn(`./contenedorescarritos/${file}.js`)
+Carrito.contenedor = import(`./contenedorescarritos/${file}.js`)
 .then(module => module.getInstancia())
 .then();
 

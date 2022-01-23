@@ -1,6 +1,6 @@
 import Contenedor from '../contenedores/FireBase.js';
 // import admin from 'firebase-admin';
-
+import logger from '../../logger.js'
 class Firebase extends Contenedor {
 
     constructor() {

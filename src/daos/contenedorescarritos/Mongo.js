@@ -1,5 +1,5 @@
 import Contenedor from '../contenedores/Mongo.js';
-
+import logger from '../../logger.js'
 
 class Mongo extends Contenedor {
 
