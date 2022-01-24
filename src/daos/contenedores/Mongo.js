@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import logger from '../../logger.js'
 
-const mongo_url = process.env.PRODUCTOS_URL 
+const mongo_url = process.env.MONGO_URL 
 
 const client = new MongoClient(mongo_url, { serverSelectionTimeOutMS: 5000 });
 await client.connect();

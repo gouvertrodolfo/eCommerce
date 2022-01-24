@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 import fs from 'fs'
 import logger from '../../logger.js'
 
-const serviceAccount = JSON.parse(await fs.promises.readFile('./options/ecommerce-ad388-firebase-adminsdk-dgeq4-ddf54374f5.json', 'utf-8'))
+const serviceAccount = JSON.parse(await fs.promises.readFile(process.env.FIREBASE_FILE, 'utf-8'))
 
 if (admin.apps.length == 0) {
     admin.initializeApp({
@@ -23,15 +23,6 @@ class FireBase {
 
     }
 
-    async create(object) {
-
-        const { id, timestamp, listaProductos } = object
-
-        let doc = this.coleccion.doc(`${id}`)
-
-        await doc.create({ id: id, timestamp: timestamp, listaProductos: listaProductos })
-
-    }
 
     async getAll() {
 

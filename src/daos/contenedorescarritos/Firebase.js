@@ -7,6 +7,17 @@ class Firebase extends Contenedor {
         super('carrito');
     }
 
+
+    async create(object) {
+
+        const { id, timestamp, listaProductos } = object
+
+        let doc = this.coleccion.doc(`${id}`)
+
+        await doc.create({ id: id, timestamp: timestamp, listaProductos: listaProductos })
+
+    }
+
     async addProducto(id, producto) {
 
         const carrito = this.coleccion.doc(`${id}`);
@@ -28,10 +39,12 @@ class Firebase extends Contenedor {
 
 
 }
-function getInstancia() {
+
+function getInstancia()
+{
     const instacia = new Firebase()
-    logger.info('instancia contenedor de carritos firebase')
+    logger.info('instancia contenedor de carritos Firebase')
     return instacia;
 }
 
-export default { getInstancia }
+export  {getInstancia};
