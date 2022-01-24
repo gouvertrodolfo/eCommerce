@@ -8,7 +8,6 @@ class Mongo extends Contenedor {
     }
 
     async addProducto(id, producto) {
-logger.info(`MongoCarrito ${id} addproducto ${producto.id}`)
 
         await this.collection.updateOne(
             {
@@ -27,7 +26,7 @@ logger.info(`MongoCarrito ${id} addproducto ${producto.id}`)
 
         await this.collection.updateOne(
             {
-                id: Number.parseInt(id)
+                id: id
             },
             {
                 '$pull':
