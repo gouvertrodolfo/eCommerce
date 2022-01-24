@@ -30,7 +30,7 @@ class Mongo {
     async getById(id) {
 
         try {
-            const [object] = await this.collection.find({ id: Number.parseInt(id) }).toArray()
+            const [object] = await this.collection.find({ id: id }).toArray()
             return object
         }
         catch (err) {
