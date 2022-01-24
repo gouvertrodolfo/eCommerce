@@ -5,20 +5,18 @@ dotenv.config()
 
 const file = process.env.CARRITO_TIPO_PERSISTENCIA;
 
-
-
-class Carrito{
-    constructor(){
-        logger.info(`clase carrito ${this.contenedor}`)
+class Carrito {
+    constructor() {
+            this.contenedor = undefined;
     }
 
 }
-logger.warn(`./contenedorescarritos/${file}.js`)
-Carrito.contenedor = import(`./contenedorescarritos/${file}.js`)
+
+Carrito.contenedor =await import(`./contenedorescarritos/${file}.js`)
 .then(module => module.getInstancia())
 .then();
 
-export function getInstancia(){
+export function getInstancia() {
     return Carrito.contenedor;
 }
 

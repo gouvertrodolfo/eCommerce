@@ -2,7 +2,7 @@ import express, {  json, urlencoded } from 'express'
 
 // const { apiSeguridad } = require("./routers/seguridad")
 import  apiCarritos  from "./routers/carritos.js"
-import { apiProductos } from "./routers/productos.js"
+import  apiProductos  from "./routers/productos.js"
 import logger from './logger.js'
 
 import dotenv from 'dotenv';
@@ -18,6 +18,7 @@ app.use(urlencoded({ extended: true }))
 
 app.use('/productos', apiProductos)
 app.use('/carrito', apiCarritos)
+
 
 const PORT = process.env.PORT || 8081
 

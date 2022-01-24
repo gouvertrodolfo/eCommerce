@@ -7,25 +7,20 @@ class Producto {
 
         if (id == undefined) {
             this.id = NUID.next();
-        }
-        else {
-            this.id = id;
-        }
-
-        this.codigo = codigo
-
-        if (timestamp == undefined) {
             this.timestamp = Date.now()
         }
         else {
+            this.id = id;
             this.timestamp = timestamp
         }
 
+        this.codigo = codigo
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio
         this.thumbnail = thumbnail
         this.stock = stock
+
     }
 
     modificar(data) {

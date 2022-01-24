@@ -11,7 +11,7 @@ class Productos {
 
 }
 
-Productos.contenedor = import(`./contenedoresproductos/${file}.js`)
+Productos.contenedor = await import(`./contenedoresproductos/${file}.js`)
 .then(module => module.getInstancia())
 .then();
 

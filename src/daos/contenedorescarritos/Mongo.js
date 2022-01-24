@@ -39,11 +39,11 @@ class Mongo extends Contenedor {
 
 }
 
-
-function getInstancia() {
+function getInstancia()
+{
     const instacia = new Mongo()
     logger.info('instancia contenedor de carritos mongo')
     return instacia;
 }
 
-export default { getInstancia }
+export  {getInstancia};

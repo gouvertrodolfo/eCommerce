@@ -1,7 +1,7 @@
 import express from 'express'
-
 const apiProductos = express.Router()
 
+import logger from '../logger.js'
 import Market from '../api/Market.js';
 const market = new Market();
 
@@ -84,5 +84,4 @@ apiProductos.delete('/:id', mwdRoleAdministrador, (req, res) => {
 
 
 
-const _apiProductos = apiProductos;
-export { _apiProductos as apiProductos };
+export default apiProductos ;

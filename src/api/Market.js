@@ -14,20 +14,19 @@ class Market {
     constructor() {
         this.contenedorProductos = getInstanciaProductos();
 
-        // this.ContenedorCarritos = getInstanciaCarritos();
+         this.ContenedorCarritos = getInstanciaCarritos();
     }
 
     async addProducto(object) {
 
         const producto = new Producto(object);
-
         await this.contenedorProductos.create(producto)
-
         return producto
     }
 
     async getAllProductos() 
     {
+
         const array = await this.contenedorProductos.getAll();
         return array
     }
@@ -64,7 +63,7 @@ class Market {
     async addCarrito() {
 
         let carrito = new Carrito();
-
+console.log(this.ContenedorCarritos)
         await this.ContenedorCarritos.create(carrito)
 
         return carrito;

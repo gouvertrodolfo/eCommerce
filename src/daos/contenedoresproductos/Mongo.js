@@ -30,9 +30,6 @@ class Mongo extends Contenedor {
             .catch(err => { logger.error(err) })
     }
 
-
-
-
 }
 
 function getInstancia()
