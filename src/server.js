@@ -3,12 +3,12 @@ import express, {  json, urlencoded } from 'express'
 // const { apiSeguridad } = require("./routers/seguridad")
 import  apiCarritos  from "./routers/carritos.js"
 import  apiProductos  from "./routers/productos.js"
+import  {failRoute}  from "./routers/default.js"
+
 import logger from './logger.js'
 
 import dotenv from 'dotenv';
 dotenv.config()
-
-
 
 const app = express()
 
@@ -18,6 +18,7 @@ app.use(urlencoded({ extended: true }))
 
 app.use('/productos', apiProductos)
 app.use('/carrito', apiCarritos)
+app.use('/*', failRoute)
 
 
 const PORT = process.env.PORT || 8080
