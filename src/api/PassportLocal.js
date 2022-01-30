@@ -4,7 +4,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/users');
 
-const log =require('../logger')
+import logger from '../../logger.js'
 
 passport.use('signup', new LocalStrategy({
     passReqToCallback: true
@@ -53,7 +53,7 @@ passport.use('login', new LocalStrategy(
 
             if (!user) {
                 log.warn(`User Not Found with username ${user}`);
-                return done(null, false);
+                return done(null, false);  
             }
 
             if (!isValidPassword(user, password)) {

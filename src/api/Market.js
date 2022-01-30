@@ -1,9 +1,8 @@
 //  const ContenedorProductos = require("../persistencia/MongoProductos");
 //  const ContenedorCarritos = require("../persistencia/MongoCarritos");
 
-import { getInstancia as getInstanciaProductos } from "../daos/Productos.js";
-import { getInstancia as getInstanciaCarritos } from "../daos/Carrito.js";
-
+import { contenedor as productosDao } from "../daos/Productos.js";
+import { contenedor as carritosDao } from "../daos/Carrito.js";
 
 import Producto from "./Producto.js";
 import Carrito from "./Carrito.js";
@@ -12,27 +11,23 @@ import Carrito from "./Carrito.js";
 class Market {
 
     constructor() {
-        this.contenedorProductos = getInstanciaProductos();
-
-        this.ContenedorCarritos = getInstanciaCarritos();
     }
 
     async addProducto(object) {
-
         const producto = new Producto(object);
-        await this.contenedorProductos.create(producto)
+        await productosDao.create(producto)
         return producto
     }
 
     async getAllProductos() {
 
-        const array = await this.contenedorProductos.getAll();
+        const array = await productosDao.getAll();
         return array
     }
 
     async getProductobyId(id) {
 
-        const dot = await this.contenedorProductos.getById(id)
+        const dot = await productosDao.getById(id)
         if (dot == undefined) { return undefined; }
         {
             const producto = new Producto(dot)
@@ -48,7 +43,7 @@ class Market {
 
             producto.modificar(data);
 
-            this.contenedorProductos.update(producto)
+            productosDao.update(producto)
 
             return producto
         }
@@ -56,40 +51,35 @@ class Market {
     }
 
     delProducto(id) {
-        this.contenedorProductos.deleteById(id)
+        productosDao.deleteById(id)
     }
 
     /*************************************************************************************************** */
     async addCarrito() {
 
         let carrito = new Carrito();
-        console.log(this.ContenedorCarritos)
-        await this.ContenedorCarritos.create(carrito)
+        console.log(carritosDao)
+        await carritosDao.create(carrito)
 
         return carrito;
     }
 
     async getCarritobyId(id) {
 
-        const dot = await this.ContenedorCarritos.getById(id);
-
+        const dot = await carritosDao.getById(id);
         const carrito = new Carrito(dot)
-
         return carrito;
     }
 
     addProdutoAlCarrito(carrito, producto) {
-
-        //carrito.addProducto(producto)
-        this.ContenedorCarritos.addProducto(carrito.id, producto)
-
+        carritosDao.addProducto(carrito.id, producto)
         return carrito;
     }
 
     async delProdutoAlCarrito(carrito, producto) {
         const { id } = carrito
 
-        await this.ContenedorCarritos.delProducto(id, producto)
+        await carritosDao.delProducto(id, producto)
 
         carrito = await this.getCarritobyId(id)
 
@@ -97,7 +87,7 @@ class Market {
     }
 
     delCarrito(id) {
-        this.ContenedorCarritos.deleteById(id)
+        carritosDao.deleteById(id)
     }
 
     updateCarrito(id) { }
