@@ -1,68 +1,66 @@
-const bCrypt = require('bcrypt');
+import bCrypt from 'bcrypt';
 
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/users');
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
 
-import logger from '../../logger.js'
+import { contenedor as Usuarios } from '../daos/Usuarios.js';
+
+import logger from '../logger.js'
 
 passport.use('signup', new LocalStrategy({
     passReqToCallback: true
 },
-    (req, username, password, done) => {
+    async (req, username, password, done) => {
 
-            
-        User.findOne({ 'username': username }, function (err, user) {
+        console.log('passport.use signup')
+        const usuario = await Usuarios.getByUserName(username);
 
-            if (err) {
-                log.warn('Error in SignUp: ' + err);
-                return done(err);
-            }
-
-            if (user) {
-                log.warn('User already exists');
-                return done(null, false)
-            }
-
-            const newUser = {
+        if (usuario == undefined) {
+            const nuevoUsuario = {
                 username: username,
                 password: createHash(password),
                 email: req.body.email,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
+                avatar: req.body.avatar
+            }
+            try {
+                const usuarioReg = await Usuarios.create(nuevoUsuario)
+                console.log(usuarioReg)
+                logger.info('Usuario passport registro Ok');
+                return done(null, usuarioReg);
+            }
+            catch (err) {
+                logger.error(); ('Error in Saving user: ' + err);
+                return done(err);
             }
 
-            User.create(newUser, (err, userWithId) => {
-                if (err) {
-                    log.warn('Error in Saving user: ' + err);
-                    return done(err);
-                }
-                log.info(user)
-                log.info('User Registration succesful');
-                return done(null, userWithId);
-            });
-        });
+        }
+        else {
+            logger.warn('User already exists');
+            return done(null, false)
+        }
+
     })
 )
 
 passport.use('login', new LocalStrategy(
-    (username, password, done) => {
-        User.findOne({ username }, (err, user) => {
-            if (err)
-                return done(err);
+    async (username, password, done) => {
 
-            if (!user) {
-                log.warn(`User Not Found with username ${user}`);
-                return done(null, false);  
-            }
+        const usuario = await Usuarios.getById(username);
 
-            if (!isValidPassword(user, password)) {
-                log.warn(`Username ${user} Invalid Password`);
-                return done(null, false);
-            }
+        if (usuario == undefined) {
+            logger.warn(`User Not Found with username ${usuario}`);
+            return done(null, false);
+        }
 
-            return done(null, user);
-        });
+        console.log(usuario)
+        if (!isValidPassword(usuario, password)) {
+            logger.warn(`Username ${usuario} Invalid Password`);
+            return done(null, false);
+        }
+
+        return done(null, usuario);
     })
 );
 
@@ -70,9 +68,9 @@ passport.serializeUser((user, done) => {
     done(null, user._id);
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id, done);
-});
+ passport.deserializeUser((id, done) => {
+     Usuarios.getById(id, done);
+ });
 
 function isValidPassword(user, password) {
     return bCrypt.compareSync(password, user.password);
@@ -82,4 +80,4 @@ function createHash(password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 }
 
-exports.passport = passport;
+export { passport };

@@ -1,52 +1,16 @@
+import { Router } from 'express'
+import { passport } from '../api/PassportLocal.js'
 
-function getLogin(req, res) {
-  if (req.isAuthenticated()) {
-    const user = req.user;
-    res.redirect('/')
-  }
-  else {
-    
-    res.render('pages/login');
-  }
-}
+import { postLoginController, postSignupController, getfailloginController, getfailsignupController, getlogoutController } from '../controller/login.js'
 
-function getSignup(req, res) {
-  res.render('pages/signup');
+const routerLogin = new Router();
 
-}
+routerLogin.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin' }), postLoginController);
+routerLogin.post('/signup', passport.authenticate('signup', { failureRedirect: '/failsignup' }), postSignupController)
 
+routerLogin.get('/faillogin', getfailloginController)
+routerLogin.get('/failsignup', getfailsignupController)
 
-function postLogin(req, res) {
-  res.redirect('/')
-}
+routerLogin.get('/logout', getlogoutController)
 
-function postSignup(req, res) {
-  res.redirect('/')
-}
-
-function getFaillogin(req, res) {
-  const title = 'USER ERROR LOGIN';
-  res.render('pages/error', { titulo: title });
-}
-
-function getFailsignup(req, res) {
-  const title = 'USER ERROR SIGNUP';
-  res.render('pages/error', { titulo: title });
-}
-
-function getLogout(req, res) {
-  const user = req.user;
-  req.logout();
-  res.render('pages/bye', { user: user.username });
-}
-
-
-export {
-  getLogin,
-  postLogin,
-  getFaillogin,
-  getLogout,
-  getSignup,
-  postSignup,
-  getFailsignup
-}
+export { routerLogin }

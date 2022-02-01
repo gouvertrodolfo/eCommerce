@@ -7,23 +7,35 @@ class Mongo extends Contenedor {
         super('eCommerce', 'usuarios');
     }
     
-    update(product) {
-        const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = product
+
+
+    async getByUserName(username) {
+
+        try {
+            const [object] = await this.collection.find({ username: username }).toArray()
+            return object
+        }
+        catch (err) {
+            logger.error(err)
+        }
+    }
+
+
+    update(usuario) {
+        const { username, password, email, firstName, lastName, avatar } = usuario
 
         this.collection.updateOne(
             {
-                id: id
+                username: username
             },
             {
                 '$set':
                 {
-                    codigo: codigo,
-                    timestamp: timestamp,
-                    nombre: nombre,
-                    descripcion: descripcion,
-                    precio: precio,
-                    thumbnail: thumbnail,
-                    stock: stock
+                    email: email,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    avatar: avatar
                 }
             })
             .then()
