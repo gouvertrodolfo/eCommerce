@@ -1,6 +1,6 @@
 import express, { json, urlencoded } from 'express'
 import session from 'express-session'
-import { passport } from './api/PassportLocal.js'
+import { passport } from './routers/PassportLocal.js'
 import apiCarritos from "./routers/carritos.js"
 import apiProductos from "./routers/productos.js"
 import { failRoute } from "./routers/default.js"
@@ -29,7 +29,7 @@ app.use(session({
     /* ------------------------------------------------------------ */
     store: MongoStore.create({
         //En Atlas connect App :  Make sure to change the node version to 2.2.12:
-        mongoUrl: 'mongodb://user:us3r@cluster0-shard-00-00.3svtz.mongodb.net:27017,cluster0-shard-00-01.3svtz.mongodb.net:27017,cluster0-shard-00-02.3svtz.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-3m6b86-shard-0&authSource=admin&retryWrites=true&w=majority',
+        mongoUrl: 'mongodb://user:us3r@cluster0-shard-00-00.3svtz.mongodb.net:27017,cluster0-shard-00-01.3svtz.mongodb.net:27017,cluster0-shard-00-02.3svtz.mongodb.net:27017/eCommerce?ssl=true&replicaSet=atlas-3m6b86-shard-0&authSource=admin&retryWrites=true&w=majority',
         mongoOptions: advancedOptions
     }),
     /* ------------------------------------------------------------ */

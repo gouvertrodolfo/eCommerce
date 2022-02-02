@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { passport } from '../api/PassportLocal.js'
+import { passport } from './PassportLocal.js'
 
 import { postLoginController, postSignupController, getfailloginController, getfailsignupController, getlogoutController } from '../controller/login.js'
 

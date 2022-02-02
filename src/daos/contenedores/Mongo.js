@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import logger from '../../logger.js'
 
 const mongo_url = process.env.MONGO_URL 
@@ -31,6 +31,18 @@ class Mongo {
 
         try {
             const [object] = await this.collection.find({ id: id }).toArray()
+            return object
+        }
+        catch (err) {
+            logger.error(err)
+        }
+    }
+
+    async getByObjectId(id) {
+
+        try {
+            const [object] = await this.collection.find({ _id: ObjectId(id) }).toArray()
+
             return object
         }
         catch (err) {
