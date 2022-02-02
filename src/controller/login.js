@@ -1,12 +1,6 @@
-import {registrarUsuario} from '../api/Usuario.js'
-import { contenedor as Usuarios } from '../daos/Usuarios.js';
-import logger from '../logger.js'
+import {registrarUsuario, loginUsuario } from '../api/Usuario.js'
 
-
-
-
-async function SignUp(req, username, password, done){
-
+function SignUp(req, username, password, done){
 
     const nuevoUsuario = {
         username: username,
@@ -18,36 +12,12 @@ async function SignUp(req, username, password, done){
     }
 
     registrarUsuario(nuevoUsuario, done)
-
 }
 
-async function login (username, password, done) 
+function login (username, password, done) 
 {
-    const usuario = await Usuarios.getByUserName(username);
-
-    if (usuario == undefined) {
-        logger.warn(`User Not Found with username ${usuario}`);
-        return done(null, false);
-    }
-
-    if (!isValidPassword(usuario, password)) {
-        logger.warn(`Username ${usuario} Invalid Password`);
-        return done(null, false);
-    }
-
-    return done(null, usuario);
+    loginUsuario(username, password, done);    
 };
-
-
-function isValidPassword(user, password) {
-    return bCrypt.compareSync(password, user.password);
-}
-
-function createHash(password) {
-    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-}
-
-
 
 function postLoginController(req, res) {
 
@@ -63,8 +33,6 @@ function getfailloginController(req, res) {
 }
 
 function getfailsignupController(req, res) {
-    console.log(req)
-    console.log(res)
     res.status(401).json({'status':'getfailsignupController'})
 }
 
