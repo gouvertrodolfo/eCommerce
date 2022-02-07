@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { passport } from './middelware/PassportLocal.js'
 
-import { postLoginController, postSignupController, getfailloginController, getfailsignupController, getlogoutController } from '../controller/login.js'
+import { postLoginController, postSignupController, getfailloginController, getfailsignupController, getlogoutController } from '../controller/usuarios.js'
 
 const routerLogin = new Router();
 
