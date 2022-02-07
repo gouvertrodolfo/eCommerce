@@ -1,12 +1,4 @@
-function mwdRoleAdministrador(req, res, next) {
 
-    if (!req.user.admin) {
-        res.status(401).json({ error: 'ruta no autorizada' })
-    }
-    else {
-        next()
-    }
-}
 
 function mwdProductoValido(req, res, next) {
     let { nombre, precio } = req.body
@@ -19,4 +11,4 @@ function mwdProductoValido(req, res, next) {
 
 }
 
-export { mwdRoleAdministrador, mwdProductoValido }
+export { mwdProductoValido }

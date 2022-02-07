@@ -6,8 +6,6 @@ class Mongo extends Contenedor {
     constructor() {
         super('eCommerce', 'usuarios');
     }
-    
-
 
     async getByUserName(username) {
 

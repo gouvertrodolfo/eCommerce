@@ -27,5 +27,14 @@ function isAuth(req, res, next) {
     }
   }
 
+  function Admin(req, res, next) {
 
-export { passport, isAuth };
+    if (!req.user.admin) {
+        res.status(401).json({ error: 'ruta no autorizada' })
+    }
+    else {
+        next()
+    }
+}
+
+export { passport, isAuth, Admin };
