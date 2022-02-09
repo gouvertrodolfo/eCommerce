@@ -61,7 +61,7 @@ class Mongo {
     }
 
     async deleteById(id) {
-        this.collection.deleteOne({ id: Number.parseInt(id) }, function (err, obj) {
+        this.collection.deleteOne({ id: id }, function (err, obj) {
             if (err) throw err;
             logger.error("1 document deleted");
         });

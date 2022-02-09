@@ -1,43 +1,46 @@
-import { buscar, crear, isValidPassword } from '../api/Usuario.js'
+import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 
 export function SignUp(req, username, password, done) {
 
-    if (buscar(username) == undefined) {
-        const nuevoUsuario = {
+
+    if (UsuarioApi.existe(username)) {
+        logger.warn('username already exists');
+        req.error = { error: "username already exists" }
+        return done(null, false)
+    } else {
+
+        const data = {
             username: username,
             password: password,
             email: req.body.email,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             avatar: req.body.avatar
-        }
-        const user = crear(nuevoUsuario);
-        registrarUsuario(user, done)
+        };
+        const user = UsuarioApi.registrar(data);
 
-    }
-    else {
-        logger.warn('username already exists');
-        req.error= {error:"username already exists"}
-        return done(null, false)
-
+        registrarUsuario(user.get(), done);
     }
 
 }
 
-export async function login(username, password, done) {
-    
-    const user = await buscar(username)
-    if (user == undefined) {
-        return done(null, false)
-    }
 
-    if (!isValidPassword(user, password)) {
+export async function login(username, password, done) {
+
+    try {
+        const user = await UsuarioApi.buscar(username)
+
+        if (!user.isValidPassword(password)) {
+            return done(null, false);
+        }
+
+        return done(null, user.get());
+    }
+    catch (error) {
+        logger.warn(error);
         return done(null, false);
     }
-    
-    return done(null, user);
-
 };
 
 export function postLoginController(req, res) {
@@ -51,11 +54,11 @@ export function postSignupController(req, res) {
 
 export function getfailloginController(req, res) {
 
-    res.status(400).json( {"descripcion":"username o contraseña incorrecta" })
+    res.status(400).json({ "descripcion": "username o contraseña incorrecta" })
 }
 
 export function getfailsignupController(req, res) {
-    res.status(401).json( req.error)
+    res.status(401).json(req.error)
 }
 
 export function getlogoutController(req, res) {

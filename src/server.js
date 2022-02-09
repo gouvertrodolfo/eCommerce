@@ -20,7 +20,7 @@ app.use(urlencoded({ extended: true }))
 
 
 /**************************************************************************************** */
-import  MongoStore from 'connect-mongo'
+import MongoStore from 'connect-mongo'
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 
 app.use(session({
@@ -51,11 +51,14 @@ app.use(passport.session());
 
 app.use('/', routerLogin)
 
-
 app.use('/productos', apiProductos)
 app.use('/carrito', apiCarritos)
 app.use('/*', failRoute)
 
+app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(500).json({ error: err.message })
+})
 
 const PORT = process.env.PORT || 8080
 

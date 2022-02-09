@@ -72,7 +72,11 @@ async function listar() {
 async function buscar(id) {
 
     const dot = await contenedor.getById(id)
-    if (dot == undefined) { return undefined; }
+    if (dot == undefined) { 
+
+            throw ` Producto ${id} no existe`
+        
+    }
     {
         const producto = new Producto(dot)
         return producto;

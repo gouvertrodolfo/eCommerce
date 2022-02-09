@@ -9,11 +9,11 @@ passport.use('login', new LocalStrategy(login));
 
 
 passport.serializeUser(function (user, done) {
-  done(null, user.username);
+  done(null, user);
 });
 
-passport.deserializeUser(async function (username, done) {
-  done(null,username)
+passport.deserializeUser(function (user, done) {
+  done(null, user)
 });
 
 
@@ -28,7 +28,7 @@ function isAuth(req, res, next) {
 function Admin(req, res, next) {
 
   if (!req.user.admin) {
-    res.status(401).json({ error: 'ruta no autorizada' })
+    res.status(401).json({ error: `${req.user.username} ruta no autorizada` })
   }
   else {
     next()
