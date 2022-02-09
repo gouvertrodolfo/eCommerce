@@ -1,41 +1,51 @@
-import Market from '../api/Market.js';
-const market = new Market();
+import * as apiProducto from '../api/Producto.js';
 
-async function listarTodo(req, res) {
-    const array = await market.getAllProductos()
+export async function mdwObtenerProducto(req, res, next) {
+    const { productoId } = req.params
+
+    const producto = await apiProducto.buscar(productoId)
+
+    if (producto == undefined) {
+        res.status(400).json({ error: 'producto no encontrado' })
+    }
+    req.producto = producto
+
+    next();
+};
+
+
+export async function listar(req, res) {
+    const array = await apiProducto.listar()
     res.json(array);
 }
 
-async function buscarxId(req, res) {
-    const id = req.params.id
 
-    const producto = await market.getProductobyId(id)
+export async function exponer(req, res) {
+    const producto = req.producto;
+    res.status(200).json(producto)
 
-    if (producto == undefined) {
-        res.status(404).json({ error: 'producto no encontrado' })
-    }
-    else {
-        res.json(producto)
-    }
 };
 
-async function crear(req, res) {
+export async function crear(req, res) {
     let object = req.body
-    const producto = market.addProducto(object)
-    res.json(producto)
+    const producto = await apiProducto.crear_prod(object)
+    res.status(200).json(producto)
 }
 
-function actualizar(req, res) {
-    const { id } = req.params
-    let data = req.body
-    const producto = market.updateProducto(id, data)
-    res.json(producto)
+export function actualizar(req, res) {
+    const producto = req.producto;
+    const data = req.body
+    producto.modificar(data)
+    res.status(200).json(producto)
 }
 
-function borrar (req, res) {
-    const { id } = req.params
-    const array = market.delProducto(id)
-    res.json(array)
-  }
+export function borrar(req, res) {
+    const producto = req.producto;
+    try {
+        producto.borrar()
+        res.status(200).json({ 'message': 'producto eliminado' })
+    } catch (err) { res.json(err) }
 
-export { listarTodo, buscarxId, crear, actualizar, borrar }
+}
+
+

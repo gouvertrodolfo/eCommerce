@@ -1,4 +1,5 @@
 import NUID from 'nuid'
+import { contenedor } from "../daos/Productos.js";
 
 class Producto {
 
@@ -44,7 +45,47 @@ class Producto {
         if (stock != undefined) {
             this.stock = stock
         }
+
+        contenedor.update(this)
+    }
+
+    borrar()
+    {
+        contenedor.deleteById(this.id)
     }
 
 }
+
+function crear(object) {
+    const producto = new Producto(object);
+    contenedor.create(producto)
+    return producto
+}
+
+async function listar() {
+
+    const array = await contenedor.getAll();
+    
+    return array
+}
+
+async function buscar(id) {
+
+    const dot = await contenedor.getById(id)
+    if (dot == undefined) { return undefined; }
+    {
+        const producto = new Producto(dot)
+        return producto;
+    }
+}
+
+
 export default Producto
+
+export {
+    Producto,
+    crear, 
+    listar,
+    buscar
+
+}

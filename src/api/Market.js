@@ -1,7 +1,7 @@
 //  const ContenedorProductos = require("../persistencia/MongoProductos");
 //  const ContenedorCarritos = require("../persistencia/MongoCarritos");
 
-import { contenedor as productosDao } from "../daos/Productos.js";
+// import { contenedor as productosDao } from "../daos/Productos.js";
 import { contenedor as carritosDao } from "../daos/Carrito.js";
 
 import Producto from "./Producto.js";
@@ -13,46 +13,46 @@ class Market {
     constructor() {
     }
 
-    async addProducto(object) {
-        const producto = new Producto(object);
-        await productosDao.create(producto)
-        return producto
-    }
+    // async addProducto(object) {
+    //     const producto = new Producto(object);
+    //     await productosDao.create(producto)
+    //     return producto
+    // }
 
-    async getAllProductos() {
+    // async getAllProductos() {
 
-        const array = await productosDao.getAll();
-        return array
-    }
+    //     const array = await productosDao.getAll();
+    //     return array
+    // }
 
-    async getProductobyId(id) {
+    // async getProductobyId(id) {
 
-        const dot = await productosDao.getById(id)
-        if (dot == undefined) { return undefined; }
-        {
-            const producto = new Producto(dot)
-            return producto;
-        }
-    }
+    //     const dot = await productosDao.getById(id)
+    //     if (dot == undefined) { return undefined; }
+    //     {
+    //         const producto = new Producto(dot)
+    //         return producto;
+    //     }
+    // }
 
-    updateProducto(id, data) {
+    // updateProducto(id, data) {
 
-        let producto = this.getProductobyId(id)
+    //     let producto = this.getProductobyId(id)
 
-        if (producto != undefined) {
+    //     if (producto != undefined) {
 
-            producto.modificar(data);
+    //         producto.modificar(data);
 
-            productosDao.update(producto)
+    //         productosDao.update(producto)
 
-            return producto
-        }
+    //         return producto
+    //     }
 
-    }
+    // }
 
-    delProducto(id) {
-        productosDao.deleteById(id)
-    }
+    // delProducto(id) {
+    //     productosDao.deleteById(id)
+    // }
 
     /*************************************************************************************************** */
     async addCarrito() {

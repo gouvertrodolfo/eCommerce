@@ -1,8 +1,7 @@
 import { buscar, crear, isValidPassword } from '../api/Usuario.js'
 import logger from '../logger.js'
 
-function SignUp(req, username, password, done) {
-
+export function SignUp(req, username, password, done) {
 
     if (buscar(username) == undefined) {
         const nuevoUsuario = {
@@ -19,59 +18,46 @@ function SignUp(req, username, password, done) {
     }
     else {
         logger.warn('username already exists');
-        res.statusMessage = 'username already exists'
+        req.error= {error:"username already exists"}
         return done(null, false)
 
     }
 
 }
 
-async function login(username, password, done) {
+export async function login(username, password, done) {
     
     const user = await buscar(username)
     if (user == undefined) {
-        logger.warn(`Usuario ${username} no encontrado`);
         return done(null, false)
     }
 
     if (!isValidPassword(user, password)) {
-        logger.warn(`Usuario ${username} Password no valido` );
         return done(null, false);
     }
-
+    
     return done(null, user);
 
 };
 
-function postLoginController(req, res) {
+export function postLoginController(req, res) {
 
     res.status(200).json(req.user)
 }
 
-function postSignupController(req, res) {
+export function postSignupController(req, res) {
     res.status(200).json(req.user)
 }
 
-function getfailloginController(req, res) {
-    console.log(req)
-    res.status(401).json({ 'status': 'getfailloginController' })
+export function getfailloginController(req, res) {
+
+    res.status(400).json( {"descripcion":"username o contraseña incorrecta" })
 }
 
-function getfailsignupController(req, res) {
-    res.status(401).json({ 'status': 'getfailsignupController' })
+export function getfailsignupController(req, res) {
+    res.status(401).json( req.error)
 }
 
-function getlogoutController(req, res) {
+export function getlogoutController(req, res) {
     res.status(200).json({ 'status': 'ok' })
-}
-
-export {
-    buscar,
-    SignUp,
-    login,
-    postLoginController,
-    postSignupController,
-    getfailloginController,
-    getfailsignupController,
-    getlogoutController
 }

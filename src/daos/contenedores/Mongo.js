@@ -11,6 +11,8 @@ class Mongo {
 
     constructor(base, collection) {
         this.collection = client.db(base).collection(collection)
+        logger.info(`Mongo Base:${base} collection: ${collection} instanciada`)
+
     }
 
     // save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
@@ -22,6 +24,9 @@ class Mongo {
 
     // getAll(): Object[] - Devuelve un array con los objetos presentes en el archivo.
     async getAll() {
+
+
+
         const array = await this.collection.find().toArray()
 
         return array
