@@ -1,3 +1,4 @@
+import { contenedor  } from "../daos/Carrito.js";
 import Producto from './Producto.js';
 import NUID from 'nuid'
 
@@ -19,30 +20,51 @@ class Carrito {
         
     };
 
-    addProducto(producto) {
+    agregarProducto(producto) {
         this.listaProductos.push(producto)
+        contenedor.addProducto(producto)
         return this.listaProductos;
     }
 
-    delProducto(id_prod) {
-        let array = []
+    async quitarProducto(id_prod) {
+        
+        await contenedor.delProducto(this.id, id_prod)
+        const {listaProductos} = await contenedor.getById(id)
 
-        this.listaProductos.forEach(element => {
-            if (element.id != id_prod) {
-                array.push(element);
-            }
+        this.listaProductos = listaProductos
 
-        });
+        return this.listaProductos;
+    }
 
-        this.listaProductos = array;
-
+    listaProductos(){
         return this.listaProductos;
     }
 
     Confirmar(){
         
     }
+
+    eliminar(){
+        contenedor.deleteById(this.id)
+    }
 }
 
+export async function crear() {
 
-export default Carrito
+    let carrito = new Carrito();
+    await contenedor.create(carrito)
+    return carrito;
+
+}
+
+export async function obtener(id){
+    const data = contenedor.getById(id)
+    if(data!=undefined){
+        const carrito = new Carrito(data);
+        return carrito;
+    }
+    else{
+        throw `carrito ${id} no existe`
+    }
+}
+

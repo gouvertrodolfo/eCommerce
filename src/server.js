@@ -1,8 +1,8 @@
 import express, { json, urlencoded } from 'express'
 import session from 'express-session'
 import { passport } from './routers/middelware/PassportLocal.js'
-import apiCarritos from "./routers/carritos.js"
-import apiProductos from "./routers/productos.js"
+import routesCarritos from "./routers/carritos.js"
+import routesProductos from "./routers/productos.js"
 import { failRoute } from "./routers/default.js"
 import { routerLogin } from './routers/login.js'
 import logger from './logger.js'
@@ -51,14 +51,9 @@ app.use(passport.session());
 
 app.use('/', routerLogin)
 
-app.use('/productos', apiProductos)
-app.use('/carrito', apiCarritos)
+app.use('/productos', routesProductos)
+app.use('/carrito', routesCarritos)
 app.use('/*', failRoute)
-
-app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).json({ error: err.message })
-})
 
 const PORT = process.env.PORT || 8080
 
