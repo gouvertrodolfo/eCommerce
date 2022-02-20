@@ -1,4 +1,4 @@
-import Contenedor from '../contenedores/Mongo.js';
+import Contenedor from '../DaosBase/Mongo.js';
 import logger from '../../logger.js'
 
 class Mongo extends Contenedor {
@@ -42,11 +42,9 @@ class Mongo extends Contenedor {
 
 }
 
-function getInstancia()
+export function getInstancia()
 {
     const instacia = new Mongo()
     logger.info('instancia contenedor de usuarios Mongo')
     return instacia;
 }
-
-export  {getInstancia};

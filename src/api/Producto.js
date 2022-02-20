@@ -56,9 +56,9 @@ class Producto {
 
 }
 
-function crear(object) {
+async function crear(object) {
     const producto = new Producto(object);
-    contenedor.create(producto)
+    await contenedor.create(producto)
     return producto
 }
 

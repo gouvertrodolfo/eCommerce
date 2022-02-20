@@ -1,4 +1,5 @@
 import * as apiProducto from '../api/Producto.js';
+import schema from '../validations/productos.js';
 
 export async function mdwObtenerProducto(req, res, next) {
     const { productoId } = req.params
@@ -28,9 +29,18 @@ export async function buscar(req, res) {
 };
 
 export async function crear(req, res) {
-    let object = req.body
-    const producto = await apiProducto.crear(object)
-    res.status(200).json(producto)
+
+    try{
+        const data = await schema.validateAsync(req.body)
+        const producto = await apiProducto.crear(data)
+        res.status(200).json(producto)
+        }
+    catch (err)
+    {
+        res.status(400).json(err)
+
+    }
+    
 }
 
 export async function actualizar(req, res) {

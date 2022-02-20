@@ -41,7 +41,7 @@ class Carrito {
     }
 
     Confirmar(){
-        
+        throw `TODO api carrito confirmar`
     }
 
     eliminar(){

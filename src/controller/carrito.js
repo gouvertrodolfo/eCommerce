@@ -54,6 +54,17 @@ export async function borrar(req, res) {
     }
 }
 
+export async function finalizar(req, res){
+    const { id } = req.params
+    try {
+        const carrito = await apiCarrito.obtener(id)
+        carrito.Confirmar()
+        res.status(200).json()
+    }catch(err)
+    {
+        res.status(400).json({error:err})
+    }
+}
 
 
 

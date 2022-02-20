@@ -1,7 +1,6 @@
 import express from 'express'
 const routesProductos = express.Router()
 import {isAuth, Admin} from './middelware/PassportLocal.js'
-import {mwdProductoValido} from './middelware/productos.js'
 import * as controller from  '../controller/productos.js'
 /* ------------------------------------------------------ */
 
@@ -12,7 +11,7 @@ routesProductos.get('/', controller.listar);
 routesProductos.get('/:productoId', controller.buscar);
 
 // b. POST: '/' - Para incorporar productos al listado (disponible para administradores)
-routesProductos.post('/', isAuth, Admin, mwdProductoValido, controller.crear);
+routesProductos.post('/', isAuth, Admin,  controller.crear);
 
 // c. PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
 routesProductos.put('/:productoId', isAuth, Admin, controller.actualizar);

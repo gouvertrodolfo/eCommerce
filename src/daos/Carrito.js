@@ -6,7 +6,7 @@ const file = process.env.CARRITO_TIPO_PERSISTENCIA;
 
 let contenedor;
 try {
-    contenedor = await import(`./contenedorescarritos/${file}.js`)
+    contenedor = await import(`./Carritos/${file}.js`)
         .then(module => module.getInstancia())
         .then();
 }

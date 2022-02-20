@@ -6,7 +6,7 @@ const file = process.env.USUARIO_TIPO_PERSISTENCIA;
 
 let contenedor;
 try {
-    contenedor = await import(`./contenedoresUsuarios/${file}.js`)
+    contenedor = await import(`./Usuarios/${file}.js`)
         .then(module => module.getInstancia())
         .then();
 }

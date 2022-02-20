@@ -1,6 +1,6 @@
-import Contenedor from '../contenedores/FireBase.js';
-// import admin from 'firebase-admin';
+import Contenedor from '../DaosBase/FireBase.js';
 import logger from '../../logger.js'
+
 class Firebase extends Contenedor {
 
     constructor() {
@@ -40,11 +40,9 @@ class Firebase extends Contenedor {
 
 }
 
-function getInstancia()
+export function getInstancia()
 {
     const instacia = new Firebase()
     logger.info('instancia contenedor de carritos Firebase')
     return instacia;
 }
-
-export  {getInstancia};

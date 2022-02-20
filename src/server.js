@@ -1,10 +1,10 @@
 import express, { json, urlencoded } from 'express'
 import session from 'express-session'
-import { passport } from './routers/middelware/PassportLocal.js'
-import routesCarritos from "./routers/carritos.js"
-import routesProductos from "./routers/productos.js"
-import { failRoute } from "./routers/default.js"
-import { routerLogin } from './routers/login.js'
+import { passport } from './routes/middelware/PassportLocal.js'
+import CarritoRoute from "./routes/carritos.js"
+import routesProductos from "./routes/productos.js"
+import { failRoute } from "./routes/default.js"
+import { routerLogin } from './routes/login.js'
 import logger from './logger.js'
 
 import dotenv from 'dotenv';
@@ -52,7 +52,7 @@ app.use(passport.session());
 app.use('/', routerLogin)
 
 app.use('/productos', routesProductos)
-app.use('/carrito', routesCarritos)
+app.use('/carrito', CarritoRoute)
 app.use('/*', failRoute)
 
 const PORT = process.env.PORT || 8080

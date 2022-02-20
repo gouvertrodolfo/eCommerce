@@ -6,7 +6,7 @@ const file = process.env.PRODUCTOS_TIPO_PERSISTENCIA;
 
 let contenedor;
 try {
-    contenedor = contenedor = await import(`./contenedoresproductos/${file}.js`)
+    contenedor = contenedor = await import(`./Productos/${file}.js`)
         .then(module => module.getInstancia())
         .then();
 }
