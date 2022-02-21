@@ -15,10 +15,10 @@ const schema = Joi.object(
             .positive()
             .required(),
         stock: Joi.number()
-        .integer()
-        .positive()
-        .required(),
-        thumbnail: Joi.string()      
+            .integer()
+            .positive()
+            .required(),
+        thumbnail: Joi.string()
     }
 )
 

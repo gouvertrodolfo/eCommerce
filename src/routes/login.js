@@ -3,14 +3,14 @@ import { passport } from './middelware/PassportLocal.js'
 
 import { postLoginController, postSignupController, getfailloginController, getfailsignupController, getlogoutController } from '../controller/usuarios.js'
 
-const routerLogin = new Router();
+const LoginRoutes = new Router();
 
-routerLogin.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin' }), postLoginController);
-routerLogin.post('/signup', passport.authenticate('signup', { failureRedirect: '/failsignup' }), postSignupController)
+LoginRoutes.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin' }), postLoginController);
+LoginRoutes.post('/signup', passport.authenticate('signup', { failureRedirect: '/failsignup' }), postSignupController)
 
-routerLogin.get('/faillogin', getfailloginController)
-routerLogin.get('/failsignup', getfailsignupController)
+LoginRoutes.get('/faillogin', getfailloginController)
+LoginRoutes.get('/failsignup', getfailsignupController)
 
-routerLogin.get('/logout', getlogoutController)
+LoginRoutes.get('/logout', getlogoutController)
 
-export { routerLogin }
+export { LoginRoutes as routerLogin }

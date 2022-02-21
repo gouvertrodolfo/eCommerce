@@ -1,17 +1,6 @@
+import { query } from 'express';
 import * as apiProducto from '../api/Producto.js';
 import schema from '../validations/productos.js';
-
-export async function mdwObtenerProducto(req, res, next) {
-    const { productoId } = req.params
-
-    if (producto == undefined) {
-        res.status(400).json({ error: 'producto no encontrado' })
-    }
-    req.producto = producto
-
-    next();
-};
-
 
 export async function listar(req, res) {
     const array = await apiProducto.listar()
@@ -30,17 +19,14 @@ export async function buscar(req, res) {
 
 export async function crear(req, res) {
 
-    try{
+    try {
         const data = await schema.validateAsync(req.body)
         const producto = await apiProducto.crear(data)
         res.status(200).json(producto)
-        }
-    catch (err)
-    {
-        res.status(400).json(err)
-
     }
-    
+    catch (err) {
+        res.status(400).json(err)
+    }
 }
 
 export async function actualizar(req, res) {
@@ -50,8 +36,8 @@ export async function actualizar(req, res) {
         const producto = await apiProducto.buscar(productoId)
         producto.modificar(data)
         res.status(200).json(producto)
-    
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(400).json(err)
     }
 }
@@ -63,7 +49,7 @@ export async function borrar(req, res) {
 
         producto.borrar();
         res.status(200).json('ok')
-    
+
     } catch (err) {
         res.status(400).json(err)
     }

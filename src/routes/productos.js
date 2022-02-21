@@ -1,22 +1,22 @@
 import express from 'express'
-const routesProductos = express.Router()
+const ProductosRoutes = express.Router()
 import {isAuth, Admin} from './middelware/PassportLocal.js'
 import * as controller from  '../controller/productos.js'
 /* ------------------------------------------------------ */
 
 // a. GET: '/:id?' - Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
-routesProductos.get('/', controller.listar);
+ProductosRoutes.get('/', controller.listar);
 
 // GET '/api/productos/:id' -> devuelve un producto según su id.
-routesProductos.get('/:productoId', controller.buscar);
+ProductosRoutes.get('/:productoId', controller.buscar);
 
 // b. POST: '/' - Para incorporar productos al listado (disponible para administradores)
-routesProductos.post('/', isAuth, Admin,  controller.crear);
+ProductosRoutes.post('/', isAuth, Admin,  controller.crear);
 
 // c. PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
-routesProductos.put('/:productoId', isAuth, Admin, controller.actualizar);
+ProductosRoutes.put('/:productoId', isAuth, Admin, controller.actualizar);
 
 // d. DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
-routesProductos.delete('/:productoId', isAuth, Admin, controller.borrar);
+ProductosRoutes.delete('/:productoId', isAuth, Admin, controller.borrar);
 
-export default routesProductos;
+export default ProductosRoutes;
