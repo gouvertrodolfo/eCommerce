@@ -1,8 +1,8 @@
+import { refreshToken } from 'firebase-admin/app';
 import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 
 export function SignUp(req, username, password, done) {
-
 
     if (UsuarioApi.existe(username)) {
         logger.warn('username already exists');
@@ -24,7 +24,6 @@ export function SignUp(req, username, password, done) {
     }
 
 }
-
 
 export async function login(username, password, done) {
 
@@ -62,5 +61,9 @@ export function getfailsignupController(req, res) {
 }
 
 export function getlogoutController(req, res) {
-    res.status(200).json({ 'status': 'ok' })
+    req.session.destroy(err => {
+        if (!err) res.status(200).json({ 'status': 'ok' })
+        else res.status(500).send({ status: 'Logout ERROR', body: err })
+    })  
+    
 }

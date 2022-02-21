@@ -5,19 +5,19 @@ import logger from '../logger.js'
 class Usuario {
 
     constructor(data) {
-        const { _id, username, password,  email, firstName, lastName, avatar, admin } = data;
+        const { _id, username, password, email, firstName, lastName, avatar, admin } = data;
 
-        if(_id== undefined){
-            this._id=undefined;
+        if (_id == undefined) {
+            this._id = undefined;
             this.admin = false;
             this.password = createHash(password)
         }
-        else{ 
-            this._id= _id;
+        else {
+            this._id = _id;
             this.admin = admin;
             this.password = password;
         }
-        
+
         this.username = username;
         this.email = email;
         this.firstName = firstName;
@@ -41,23 +41,24 @@ class Usuario {
     isValidPassword(password) {
         return bCrypt.compareSync(password, this.password);
     }
-    
-    
-    guardar(){
-        if(this._id == undefined){
+
+
+    guardar() {
+        if (this._id == undefined) {
             contenedor.create(this)
         }
-        else{ 
+        else {
             contenedor.actualizar(this)
         }
     }
+
+
 
 }
 
 function createHash(password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 }
-
 
 export async function existe(username) {
 
@@ -85,9 +86,7 @@ export async function buscar(username) {
     return usuario;
 }
 
-
 export async function registrar(data) {
-
     try {
         const usuario = new Usuario(data)
         usuario.guardar()
@@ -101,5 +100,8 @@ export async function registrar(data) {
     }
 }
 
+export async function chmod(username){
+
+}
 
 

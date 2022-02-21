@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { passport } from './middelware/PassportLocal.js'
+import { passport } from '../controller/PassportLocal.js'
 
 import { postLoginController, postSignupController, getfailloginController, getfailsignupController, getlogoutController } from '../controller/usuarios.js'
 

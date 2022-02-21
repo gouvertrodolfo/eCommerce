@@ -1,6 +1,6 @@
 import express from 'express'
 const ProductosRoutes = express.Router()
-import {isAuth, Admin} from './middelware/PassportLocal.js'
+import {isAuth, Admin} from '../controller/PassportLocal.js'
 import * as controller from  '../controller/productos.js'
 /* ------------------------------------------------------ */
 

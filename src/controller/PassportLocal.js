@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
-import { SignUp, login } from '../../controller/usuarios.js'
+import { SignUp, login } from './usuarios.js'
 
 passport.use('signup', new LocalStrategy({ passReqToCallback: true }, SignUp))
 

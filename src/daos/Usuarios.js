@@ -1,8 +1,6 @@
 import logger from '../logger.js';
-import dotenv from 'dotenv';
-dotenv.config()
-
-const file = process.env.USUARIO_TIPO_PERSISTENCIA;
+import config from '../../config/config.js';
+const file = config.TIPO_PERSISTENCIA;
 
 let contenedor;
 try {
