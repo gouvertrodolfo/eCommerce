@@ -1,6 +1,6 @@
 import express from 'express'
 const ProductosRoutes = express.Router()
-import {isAuth, Admin} from '../controller/PassportLocal.js'
+import {isAuth, isAdmin} from '../controller/PassportLocal.js'
 import * as controller from  '../controller/productos.js'
 /* ------------------------------------------------------ */
 
@@ -11,12 +11,12 @@ ProductosRoutes.get('/', controller.listar);
 ProductosRoutes.get('/:productoId', controller.buscar);
 
 // b. POST: '/' - Para incorporar productos al listado (disponible para administradores)
-ProductosRoutes.post('/', isAuth, Admin,  controller.crear);
+ProductosRoutes.post('/', isAuth, isAdmin,  controller.crear);
 
 // c. PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
-ProductosRoutes.put('/:productoId', isAuth, Admin, controller.actualizar);
+ProductosRoutes.put('/:productoId', isAuth, isAdmin, controller.actualizar);
 
 // d. DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
-ProductosRoutes.delete('/:productoId', isAuth, Admin, controller.borrar);
+ProductosRoutes.delete('/:productoId', isAuth, isAdmin, controller.borrar);
 
 export default ProductosRoutes;

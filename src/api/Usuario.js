@@ -35,6 +35,7 @@ class Usuario {
             avatar: this.avatar,
             admin: this.admin
         }
+        
         return user;
     }
 

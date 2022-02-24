@@ -1,4 +1,3 @@
-import { refreshToken } from 'firebase-admin/app';
 import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 
@@ -43,7 +42,6 @@ export async function login(username, password, done) {
 };
 
 export function postLoginController(req, res) {
-
     res.status(200).json(req.user)
 }
 

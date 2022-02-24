@@ -1,0 +1,592 @@
+
+> ecommerce@1.0.0 test
+> NODE_ENV=development mocha test/*.test.js
+
+process.env.NODE_ENV: development
+[32m[2022-02-24T09:51:31.979] [INFO] default - [39mContenedor Mongo Base conectada
+[32m[2022-02-24T09:51:31.984] [INFO] default - [39mMongo Base:eCommerce collection: usuarios instanciada
+[32m[2022-02-24T09:51:31.984] [INFO] default - [39minstancia contenedor de usuarios Mongo
+[32m[2022-02-24T09:51:31.985] [INFO] default - [39mMongo Base:eCommerce collection: carritos instanciada
+[32m[2022-02-24T09:51:31.986] [INFO] default - [39minstancia contenedor de carritos mongo
+[32m[2022-02-24T09:51:31.986] [INFO] default - [39mMongo Base:eCommerce collection: productos instanciada
+[32m[2022-02-24T09:51:31.987] [INFO] default - [39minstancia contenedor de productos mongo
+
+
+  Pruebas APIRestFull Productos
+
+********* inicio de Test Api Rest*********
+    Get Listado de productos
+
+********* Inicio test unitario*********
+      ✔ debería retornar un status 200 (223ms)
+
+********* fin test unitario*********
+    Post de productos sin persmiso
+
+********* Inicio test unitario*********
+
+******************************************************************************************************************
+      ✔ debería retornar un status 401 (44ms)
+
+********* fin test unitario*********
+
+********* Inicio test unitario*********
+serializeUser
+******************************************************************************************************************
+response
+<ref *2> Response {
+  _events: [Object: null prototype] {},
+  _eventsCount: 0,
+  _maxListeners: undefined,
+  res: <ref *1> IncomingMessage {
+    _readableState: ReadableState {
+      objectMode: false,
+      highWaterMark: 16384,
+      buffer: BufferList { head: null, tail: null, length: 0 },
+      length: 0,
+      pipes: [],
+      flowing: true,
+      ended: true,
+      endEmitted: true,
+      reading: false,
+      constructed: true,
+      sync: false,
+      needReadable: false,
+      emittedReadable: false,
+      readableListening: false,
+      resumeScheduled: false,
+      errorEmitted: false,
+      emitClose: true,
+      autoDestroy: true,
+      destroyed: true,
+      errored: null,
+      closed: true,
+      closeEmitted: true,
+      defaultEncoding: 'utf8',
+      awaitDrainWriters: null,
+      multiAwaitDrain: false,
+      readingMore: false,
+      dataEmitted: true,
+      decoder: [StringDecoder],
+      encoding: 'utf8',
+      [Symbol(kPaused)]: false
+    },
+    _events: [Object: null prototype] {
+      end: [Array],
+      data: [Array],
+      error: [Array],
+      close: [Function: bound emit]
+    },
+    _eventsCount: 4,
+    _maxListeners: undefined,
+    socket: Socket {
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'localhost',
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: null,
+      _server: null,
+      parser: null,
+      _httpMessage: [ClientRequest],
+      [Symbol(async_id_symbol)]: 378,
+      [Symbol(kHandle)]: [TCP],
+      [Symbol(kSetNoDelay)]: true,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    httpVersionMajor: 1,
+    httpVersionMinor: 1,
+    httpVersion: '1.1',
+    complete: true,
+    rawHeaders: [
+      'X-Powered-By',
+      'Express',
+      'Content-Type',
+      'application/json; charset=utf-8',
+      'Content-Length',
+      '154',
+      'ETag',
+      'W/"9a-sS4cROeNyo03Ak3Df18RwpsXbqk"',
+      'Set-Cookie',
+      'connect.sid=s%3A8b9mfE6hPxUFswnJVubc0UQ3-Y-KA6X7.Z8cfrr9mMTGZ0NaNGnSkkPOTCUDkLncZGaI1%2FVr2%2BHE; Path=/; Expires=Thu, 24 Feb 2022 13:01:32 GMT; HttpOnly',
+      'Date',
+      'Thu, 24 Feb 2022 12:51:32 GMT',
+      'Connection',
+      'close'
+    ],
+    rawTrailers: [],
+    aborted: false,
+    upgrade: false,
+    url: '',
+    method: null,
+    statusCode: 200,
+    statusMessage: 'OK',
+    client: Socket {
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'localhost',
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: null,
+      _server: null,
+      parser: null,
+      _httpMessage: [ClientRequest],
+      [Symbol(async_id_symbol)]: 378,
+      [Symbol(kHandle)]: [TCP],
+      [Symbol(kSetNoDelay)]: true,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _consuming: true,
+    _dumped: false,
+    req: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: true,
+      chunkedEncoding: false,
+      shouldKeepAlive: false,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      _contentLength: 35,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: false,
+      socket: [Socket],
+      _header: 'POST /login HTTP/1.1\r\n' +
+        'Host: localhost:46457\r\n' +
+        'Accept-Encoding: gzip, deflate\r\n' +
+        'Content-Type: application/json\r\n' +
+        'Content-Length: 35\r\n' +
+        'Connection: close\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      path: '/login',
+      _ended: true,
+      res: [Circular *1],
+      aborted: false,
+      timeoutCb: null,
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'localhost',
+      protocol: 'http:',
+      [Symbol(kCapture)]: false,
+      [Symbol(kNeedDrain)]: false,
+      [Symbol(corked)]: 0,
+      [Symbol(kOutHeaders)]: [Object: null prototype]
+    },
+    text: '{"username":"r02","email":"rgouvert@gmail.com","firstName":"Rodolfo","lastName":"Gouvert","avatar":"https://avatars.githubusercontent.com/u/91162843?v=4"}',
+    [Symbol(kCapture)]: false,
+    [Symbol(kHeaders)]: {
+      'x-powered-by': 'Express',
+      'content-type': 'application/json; charset=utf-8',
+      'content-length': '154',
+      etag: 'W/"9a-sS4cROeNyo03Ak3Df18RwpsXbqk"',
+      'set-cookie': [Array],
+      date: 'Thu, 24 Feb 2022 12:51:32 GMT',
+      connection: 'close'
+    },
+    [Symbol(kHeadersCount)]: 14,
+    [Symbol(kTrailers)]: null,
+    [Symbol(kTrailersCount)]: 0,
+    [Symbol(RequestTimeout)]: undefined
+  },
+  request: Test {
+    _events: [Object: null prototype] { abort: [Function (anonymous)] },
+    _eventsCount: 1,
+    _maxListeners: undefined,
+    _enableHttp2: false,
+    _agent: false,
+    _formData: null,
+    method: 'POST',
+    url: 'http://localhost:46457/login',
+    _header: { 'content-type': 'application/json' },
+    header: { 'Content-Type': 'application/json' },
+    writable: true,
+    _redirects: 0,
+    _maxRedirects: 0,
+    cookies: '',
+    qs: {},
+    _query: [],
+    qsRaw: [],
+    _redirectList: [],
+    _streamRequest: false,
+    _buffer: true,
+    app: 'http://localhost:46457',
+    _asserts: [],
+    _data: { username: 'r02', password: '123' },
+    req: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: true,
+      chunkedEncoding: false,
+      shouldKeepAlive: false,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      _contentLength: 35,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: false,
+      socket: [Socket],
+      _header: 'POST /login HTTP/1.1\r\n' +
+        'Host: localhost:46457\r\n' +
+        'Accept-Encoding: gzip, deflate\r\n' +
+        'Content-Type: application/json\r\n' +
+        'Content-Length: 35\r\n' +
+        'Connection: close\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      path: '/login',
+      _ended: true,
+      res: [IncomingMessage],
+      aborted: false,
+      timeoutCb: null,
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'localhost',
+      protocol: 'http:',
+      [Symbol(kCapture)]: false,
+      [Symbol(kNeedDrain)]: false,
+      [Symbol(corked)]: 0,
+      [Symbol(kOutHeaders)]: [Object: null prototype]
+    },
+    protocol: 'http:',
+    host: 'localhost:46457',
+    _endCalled: true,
+    _callback: [Function (anonymous)],
+    _fullfilledPromise: Promise { [Circular *2] },
+    res: <ref *1> IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 4,
+      _maxListeners: undefined,
+      socket: [Socket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [Socket],
+      _consuming: true,
+      _dumped: false,
+      req: [ClientRequest],
+      text: '{"username":"r02","email":"rgouvert@gmail.com","firstName":"Rodolfo","lastName":"Gouvert","avatar":"https://avatars.githubusercontent.com/u/91162843?v=4"}',
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 14,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _resBuffered: true,
+    response: [Circular *2],
+    called: true,
+    [Symbol(kCapture)]: false
+  },
+  req: <ref *3> ClientRequest {
+    _events: [Object: null prototype] {
+      drain: [Function],
+      error: [Function (anonymous)],
+      prefinish: [Function: requestOnPrefinish]
+    },
+    _eventsCount: 3,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: false,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: false,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: true,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    _contentLength: 35,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: false,
+    socket: Socket {
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'localhost',
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: null,
+      _server: null,
+      parser: null,
+      _httpMessage: [Circular *3],
+      [Symbol(async_id_symbol)]: 378,
+      [Symbol(kHandle)]: [TCP],
+      [Symbol(kSetNoDelay)]: true,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _header: 'POST /login HTTP/1.1\r\n' +
+      'Host: localhost:46457\r\n' +
+      'Accept-Encoding: gzip, deflate\r\n' +
+      'Content-Type: application/json\r\n' +
+      'Content-Length: 35\r\n' +
+      'Connection: close\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 80,
+      protocol: 'http:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype],
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: false,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'POST',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    path: '/login',
+    _ended: true,
+    res: <ref *1> IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 4,
+      _maxListeners: undefined,
+      socket: [Socket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [Socket],
+      _consuming: true,
+      _dumped: false,
+      req: [Circular *3],
+      text: '{"username":"r02","email":"rgouvert@gmail.com","firstName":"Rodolfo","lastName":"Gouvert","avatar":"https://avatars.githubusercontent.com/u/91162843?v=4"}',
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 14,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'localhost',
+    protocol: 'http:',
+    [Symbol(kCapture)]: false,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      host: [Array],
+      'accept-encoding': [Array],
+      'content-type': [Array],
+      'content-length': [Array]
+    }
+  },
+  text: '{"username":"r02","email":"rgouvert@gmail.com","firstName":"Rodolfo","lastName":"Gouvert","avatar":"https://avatars.githubusercontent.com/u/91162843?v=4"}',
+  files: undefined,
+  buffered: true,
+  headers: {
+    'x-powered-by': 'Express',
+    'content-type': 'application/json; charset=utf-8',
+    'content-length': '154',
+    etag: 'W/"9a-sS4cROeNyo03Ak3Df18RwpsXbqk"',
+    'set-cookie': [
+      'connect.sid=
+      
+      s%3A8b9mfE6hPxUFswnJVubc0UQ3-Y-KA6X7.Z8cfrr9mMTGZ0NaNGnSkkPOTCUDkLncZGaI1%2FVr2%2BHE
+      s%3AJWFWr00C3VzkwljgedI5kpnwXdTO79WI.ABUp2tHaL6UAIMtff3LEctamQMYWdJA6ZoKhQz638OA
+      ; Path=/; Expires=Thu, 24 Feb 2022 13:01:32 GMT; HttpOnly'
+    ],
+    date: 'Thu, 24 Feb 2022 12:51:32 GMT',
+    connection: 'close'
+  },
+  header: {
+    'x-powered-by': 'Express',
+    'content-type': 'application/json; charset=utf-8',
+    'content-length': '154',
+    etag: 'W/"9a-sS4cROeNyo03Ak3Df18RwpsXbqk"',
+    'set-cookie': [
+      'connect.sid=s%3A8b9mfE6hPxUFswnJVubc0UQ3-Y-KA6X7.Z8cfrr9mMTGZ0NaNGnSkkPOTCUDkLncZGaI1%2FVr2%2BHE; Path=/; Expires=Thu, 24 Feb 2022 13:01:32 GMT; HttpOnly'
+    ],
+    date: 'Thu, 24 Feb 2022 12:51:32 GMT',
+    connection: 'close'
+  },
+  statusCode: 200,
+  status: 200,
+  statusType: 2,
+  info: false,
+  ok: true,
+  redirect: false,
+  clientError: false,
+  serverError: false,
+  error: false,
+  created: false,
+  accepted: false,
+  noContent: false,
+  badRequest: false,
+  unauthorized: false,
+  notAcceptable: false,
+  forbidden: false,
+  notFound: false,
+  unprocessableEntity: false,
+  type: 'application/json',
+  charset: 'utf-8',
+  links: {},
+  setEncoding: [Function: bound ],
+  redirects: [],
+  _body: {
+    username: 'r02',
+    email: 'rgouvert@gmail.com',
+    firstName: 'Rodolfo',
+    lastName: 'Gouvert',
+    avatar: 'https://avatars.githubusercontent.com/u/91162843?v=4'
+  },
+  pipe: [Function (anonymous)],
+  [Symbol(kCapture)]: false
+}
+******************************************************************************************************************
+******************************************************************************************************************
+      1) debería retornar un status 403
+
+********* fin test unitario*********
+
+********* Fin de Test Api Rest*********
+
+
+  2 passing (2s)
+  1 failing
+
+  1) Pruebas APIRestFull Productos
+       Post de productos sin persmiso
+         debería retornar un status 403:
+
+      AssertionError: expected 401 to deeply equal 200
+      + expected - actual
+
+      -401
+      +200
+      
+      at Context.<anonymous> (file:///home/r02/Documentos/Node/Final/eCommerce/test/productos.test.js:75:40)
+      at processTicksAndRejections (node:internal/process/task_queues:96:5)
+
+
+
