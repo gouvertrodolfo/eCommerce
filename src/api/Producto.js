@@ -21,6 +21,7 @@ class Producto {
         this.precio = precio
         this.thumbnail = thumbnail
         this.stock = stock
+        this.caracteristicas = caracteristicas
 
     }
 

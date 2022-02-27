@@ -5,12 +5,16 @@ import { postLoginController, postSignupController, getfailloginController, getf
 
 const LoginRoutes = new Router();
 
-LoginRoutes.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin' }), postLoginController);
-LoginRoutes.post('/signup', passport.authenticate('signup', { failureRedirect: '/failsignup' }), postSignupController)
+
+LoginRoutes.post('/login', passport.authenticate('login', {session: false, failureRedirect: '/faillogin' }), postLoginController);
+LoginRoutes.post('/signup', passport.authenticate('signup', {session: false, failureRedirect: '/failsignup' }), postSignupController)
 
 LoginRoutes.get('/faillogin', getfailloginController)
 LoginRoutes.get('/failsignup', getfailsignupController)
 
 LoginRoutes.get('/logout', getlogoutController)
 
-export { LoginRoutes as routerLogin }
+export { LoginRoutes }
+
+
+
