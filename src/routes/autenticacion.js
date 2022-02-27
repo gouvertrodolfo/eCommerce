@@ -1,13 +1,13 @@
 import { Router } from 'express'
-import { passport } from '../controller/PassportLocal.js'
+import { passport } from '../controller/Passport.js'
 
-import { postLoginController, postSignupController, getfailloginController, getfailsignupController, getlogoutController } from '../controller/usuarios.js'
+import { responseToken, getfailloginController, getfailsignupController, getlogoutController } from '../controller/usuarios.js'
 
 const LoginRoutes = new Router();
 
 
-LoginRoutes.post('/login', passport.authenticate('login', {session: false, failureRedirect: '/faillogin' }), postLoginController);
-LoginRoutes.post('/signup', passport.authenticate('signup', {session: false, failureRedirect: '/failsignup' }), postSignupController)
+LoginRoutes.post('/login', passport.authenticate('login', {session: false, failureRedirect: '/faillogin' }), responseToken);
+LoginRoutes.post('/signup', passport.authenticate('signup', {session: false, failureRedirect: '/failsignup' }), responseToken)
 
 LoginRoutes.get('/faillogin', getfailloginController)
 LoginRoutes.get('/failsignup', getfailsignupController)

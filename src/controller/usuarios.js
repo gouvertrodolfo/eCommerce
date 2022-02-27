@@ -1,6 +1,7 @@
 import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 import jwt from 'jsonwebtoken'
+import {jwtOpts} from '../../config/config.js'
 
 export function SignUp(req, username, password, done) {
 
@@ -43,15 +44,27 @@ export async function login(username, password, done) {
 
 };
 
-export function postLoginController(req, res) {
+export function responseToken(req, res) {
     const user = req.user;
-    const body = { username: user.username, email: user.email, firstName : user.firstName, lastName:user.lastName, avatar:user.avatar, admin:user.admin };
-    const token = jwt.sign({ user: body }, 'TOP_SECRET');
-    res.status(200).json({token})
+    
+    const body = {
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        avatar: user.avatar,
+        admin: user.admin
+    };
+    const token = jwt.sign({ user: body }, jwtOpts.secretOrKey);
+    res.status(200).json({ token })
 }
 
-export function postSignupController(req, res) {
-    res.status(200).json(req.user)
+export function validateToken(token, cb){
+    try {
+        return cb(null, token.user);
+      } catch (error) {
+        cb(error);
+      }
 }
 
 export function getfailloginController(req, res) {
@@ -68,6 +81,6 @@ export function getlogoutController(req, res) {
     req.session.destroy(err => {
         if (!err) res.status(200).json({ 'status': 'ok' })
         else res.status(500).send({ status: 'Logout ERROR', body: err })
-    })  
-    
+    })
+
 }

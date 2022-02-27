@@ -1,12 +1,19 @@
 // config.js
 import dotenv from 'dotenv';
 import path from 'path';
+import { ExtractJwt as ExtractJWT } from 'passport-jwt';
+
 
 console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`)
 
 dotenv.config({
   path: path.resolve(process.cwd()+'/config', process.env.NODE_ENV +'.env')
 });
+
+export const jwtOpts ={
+  secretOrKey: process.env.SECRET ||'TOP_SECRET',
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+}
 
 export default {
   NODE_ENV: process.env.NODE_ENV || 'development',
