@@ -1,8 +1,10 @@
 import express from 'express'
-const ProductosRoutes = express.Router()
-import {passport,  isAdmin} from '../controller/Passport.js'
+import { passport } from '../controller/passport.js'
+import { isAdmin } from '../controller/usuarios.js'
 import * as controller from  '../controller/productos.js'
 /* ------------------------------------------------------ */
+
+const ProductosRoutes = express.Router()
 
 // a. GET: '/:id?' - Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
 ProductosRoutes.get('/', controller.listar);

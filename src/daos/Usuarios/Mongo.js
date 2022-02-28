@@ -18,6 +18,14 @@ class Mongo extends Contenedor {
         }
     }
 
+    async listar( condiciones){
+        try {
+            return await this.collection.find(condiciones).toArray()
+        }
+        catch (err) {
+            logger.error(err)
+        }
+    }
 
     update(usuario) {
         const { username, password, email, firstName, lastName, avatar } = usuario

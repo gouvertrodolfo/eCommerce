@@ -101,8 +101,14 @@ export async function registrar(data) {
     }
 }
 
-export async function chmod(username){
+
+export async function enviarMailRegistro(user)
+{
+
+    const lista = await contenedor.listar({admin:true});
+
+    lista.forEach(element => {
+        enviarCorreo(element.email, 'Nuevo usuario', `Estimado <b>${element.firstName}</b><br/>le informamos un nuevo registro usuario <b>${user.username}</b> nombre <b>${user.firstName}</b><br/><br/> Atte. Obrero del bits`)        
+    });
 
 }
-
-

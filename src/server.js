@@ -1,6 +1,6 @@
 import express, { json, urlencoded } from 'express'
 import session from 'express-session'
-import { passport } from './controller/Passport.js'
+import { passport } from './controller/passport.js'
 import CarritoRoute from "./routes/carritos.js"
 import routesProductos from "./routes/productos.js"
 import { failRoute } from "./routes/default.js"

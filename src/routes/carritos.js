@@ -1,8 +1,8 @@
 import express from 'express'
-const CarritoRoutes = express.Router()
-
 import * as ctrl from '../controller/carrito.js'
 
+
+const CarritoRoutes = express.Router()
 // a. POST: '/' - Crea un carrito y devuelve su id.
 CarritoRoutes.post('/', ctrl.crear);
 

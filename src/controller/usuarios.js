@@ -2,6 +2,7 @@ import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 import jwt from 'jsonwebtoken'
 import {jwtOpts} from '../../config/config.js'
+import { enviarCorreo } from './mensajeria.js';
 
 export function SignUp(req, username, password, done) {
 
@@ -21,7 +22,9 @@ export function SignUp(req, username, password, done) {
         };
         const user = UsuarioApi.registrar(data);
 
-        registrarUsuario(user.get(), done);
+        UsuarioApi.enviarMailRegistro(data)
+
+        done(user.get(), null);
     }
 
 }
@@ -34,8 +37,8 @@ export async function login(username, password, done) {
         if (!user.isValidPassword(password)) {
             return done(null, false, { message: 'Incorrect password.' });
         }
-
         return done(null, user.get());
+
     }
     catch (error) {
         logger.warn(error);
@@ -44,7 +47,7 @@ export async function login(username, password, done) {
 
 };
 
-export function responseToken(req, res) {
+export async function responseToken(req, res) {
     const user = req.user;
     
     const body = {
@@ -56,6 +59,7 @@ export function responseToken(req, res) {
         admin: user.admin
     };
     const token = jwt.sign({ user: body }, jwtOpts.secretOrKey);
+
     res.status(200).json({ token })
 }
 
@@ -68,9 +72,7 @@ export function validateToken(token, cb){
 }
 
 export function getfailloginController(req, res) {
-
-    res.status(400).json({ "descripcion": "username o contraseña incorrecta" })
-
+    res.status(401).json({ "descripcion": "username o contraseña incorrecta" })
 }
 
 export function getfailsignupController(req, res) {
@@ -84,3 +86,13 @@ export function getlogoutController(req, res) {
     })
 
 }
+
+export function isAdmin(req, res, next) {
+
+    if (!req.user.admin) {
+      res.status(403).json({ error: `${req.user.username} ruta no autorizada` })
+    }
+    else {
+      next()
+    }
+  }

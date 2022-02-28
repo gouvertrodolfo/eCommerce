@@ -15,6 +15,15 @@ export const jwtOpts ={
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
 }
 
+export const ServidorEnvioCorreo={
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+      user: 'madalyn.waelchi45@ethereal.email',
+      pass: 'BNYDRwcF3FzuzftTgD'
+  }
+}
+
 export default {
   NODE_ENV: process.env.NODE_ENV || 'development',
   HOST: process.env.HOST || 'localhost',
