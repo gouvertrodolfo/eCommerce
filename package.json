@@ -5,9 +5,15 @@
   "description": "Proyecto final Node.js eComerce",
   "main": "src/app.js",
   "scripts": {
+<<<<<<< HEAD
+    "start": "NODE_ENV=development nodemon .",
+    "test": "NODE_ENV=development mocha --timeout 10000 test/*.test.js",
+    "prod": "NODE_ENV=production nodemon ."
+=======
     "start": "NODE_ENV=production node .",
     "test": "NODE_ENV=development mocha --timeout 10000 test/*.test.js",
     "prod": "NODE_ENV=production node ."
+>>>>>>> f0d0bdacfcc1b74138c9b99e05d7c9e9040892ce
   },
   "repository": {
     "type": "git",
