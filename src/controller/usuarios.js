@@ -2,20 +2,19 @@ import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 import jwt from 'jsonwebtoken'
 import {jwtOpts} from '../../config/config.js'
-import { enviarCorreo } from './mensajeria.js';
 
-export function SignUp(req, username, password, done) {
+export function SignUp(req, email, password, done) {
 
     if (UsuarioApi.existe(username)) {
-        logger.warn('username already exists');
+        logger.warn('email already exists');
         req.error = { error: "username already exists" }
         return done(null, false)
     } else {
 
         const data = {
-            username: username,
+            email: email,
             password: password,
-            email: req.body.email,
+            username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             avatar: req.body.avatar
@@ -29,10 +28,10 @@ export function SignUp(req, username, password, done) {
 
 }
 
-export async function login(username, password, done) {
+export async function login(email, password, done) {
 
     try {
-        const user = await UsuarioApi.buscar(username)
+        const user = await UsuarioApi.buscar(email)
 
         if (!user.isValidPassword(password)) {
             return done(null, false, { message: 'Incorrect password.' });
@@ -51,14 +50,14 @@ export async function responseToken(req, res) {
     const user = req.user;
     
     const body = {
-        username: user.username,
         email: user.email,
+        username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
         avatar: user.avatar,
         admin: user.admin
     };
-    const token = jwt.sign({ user: body }, jwtOpts.secretOrKey);
+    const token = jwt.sign({ user: body }, jwtOpts.secretOrKey, {expiresIn: jwtOpts.expireIn});
 
     res.status(200).json({ token })
 }

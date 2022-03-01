@@ -1,5 +1,5 @@
 import { promises } from 'fs';
-import logger from './logger.js'
+import logger from '../../../logger.js'
 
  class Archivos{
 

@@ -1,5 +1,5 @@
 import NUID from 'nuid'
-import { contenedor } from "../daos/Productos.js";
+import { contenedor } from "../models/daos/Productos.js";
 
 class Producto {
 

@@ -1,5 +1,5 @@
-import logger from '../logger.js';
-import config from '../../config/config.js';
+import logger from '../../logger.js';
+import config from '../../../config/config.js';
 const file = config.TIPO_PERSISTENCIA;
 
 let contenedor;

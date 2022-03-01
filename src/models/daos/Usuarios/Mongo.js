@@ -1,5 +1,5 @@
 import Contenedor from '../DaosBase/Mongo.js';
-import logger from '../../logger.js'
+import logger from '../../../logger.js'
 
 class Mongo extends Contenedor {
 
@@ -18,6 +18,17 @@ class Mongo extends Contenedor {
         }
     }
 
+    async getByEmail(email) {
+
+        try {
+            const [object] = await this.collection.find({ email: email }).toArray()
+            return object
+        }
+        catch (err) {
+            logger.error(err)
+        }
+    }
+
     async listar( condiciones){
         try {
             return await this.collection.find(condiciones).toArray()
@@ -28,16 +39,16 @@ class Mongo extends Contenedor {
     }
 
     update(usuario) {
-        const { username, password, email, firstName, lastName, avatar } = usuario
+        const { email, username, password, firstName, lastName, avatar } = usuario
 
         this.collection.updateOne(
             {
-                username: username
+                email: email,
             },
             {
                 '$set':
                 {
-                    email: email,
+                    username: username,
                     password: password,
                     firstName: firstName,
                     lastName: lastName,

@@ -1,5 +1,5 @@
 import Contenedor from '../DaosBase/Mongo.js';
-import logger from '../../logger.js'
+import logger from '../../../logger.js'
 
 class Mongo extends Contenedor {
 

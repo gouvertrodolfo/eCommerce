@@ -1,4 +1,4 @@
-import { contenedor } from '../daos/Usuarios.js';
+import { contenedor } from '../models/daos/Usuarios.js';
 import bCrypt from 'bcrypt';
 import logger from '../logger.js'
 
@@ -18,8 +18,8 @@ class Usuario {
             this.password = password;
         }
 
-        this.username = username;
         this.email = email;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.avatar = avatar;
@@ -28,8 +28,8 @@ class Usuario {
 
     get() {
         const user = {
-            username: this.username,
             email: this.email,
+            username: this.username,
             firstName: this.firstName,
             lastName: this.lastName,
             avatar: this.avatar,
@@ -61,9 +61,9 @@ function createHash(password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 }
 
-export async function existe(username) {
+export async function existe(email) {
 
-    const data = await contenedor.getByUserName(username);
+    const data = await contenedor.getByEmail(email);
 
     if (data == undefined) {
         return false;
@@ -71,13 +71,14 @@ export async function existe(username) {
     return true;
 }
 
-export async function buscar(username) {
+export async function buscar(email) {
 
-    const data = await contenedor.getByUserName(username);
+    const data = await contenedor.getByEmail(email);
+
     if (data == undefined) {
         err = {
             codigo: 400,
-            descripcion: `${username} no es un usuario registrado`
+            descripcion: `${email} no es un usuario registrado`
         }
         throw err
     }
@@ -101,10 +102,8 @@ export async function registrar(data) {
     }
 }
 
-
 export async function enviarMailRegistro(user)
 {
-
     const lista = await contenedor.listar({admin:true});
 
     lista.forEach(element => {

@@ -1,4 +1,4 @@
-import { contenedor  } from "../daos/Carrito.js";
+import { contenedor  } from "../models/daos/Carrito.js";
 import Producto from './Producto.js';
 import NUID from 'nuid'
 

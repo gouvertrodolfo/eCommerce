@@ -12,7 +12,9 @@ dotenv.config({
 
 export const jwtOpts ={
   secretOrKey: process.env.SECRET ||'TOP_SECRET',
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  ignoreExpiration: process.env.JWT_IGNORE_EXPIRE || false,
+  expireIn: parseInt(process.env.JWT_TIME_EXPIRE) || 3600,
 }
 
 export const ServidorEnvioCorreo={

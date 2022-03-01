@@ -1,5 +1,5 @@
 import Contenedor from '../DaosBase/FireBase.js';
-import logger from '../../logger.js'
+import logger from '../../../logger.js'
 
 class Firebase extends Contenedor {
 

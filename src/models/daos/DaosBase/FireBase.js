@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 import fs from 'fs'
-import logger from '../../logger.js'
+import logger from '../../../logger.js'
 
 const serviceAccount = JSON.parse(await fs.promises.readFile(process.env.FIREBASE_FILE, 'utf-8'))
 
