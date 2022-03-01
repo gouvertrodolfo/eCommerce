@@ -1,13 +1,32 @@
-import Contenedor from '../contenedores/Mongo.js';
+import Contenedor from '../DaosBase/FireBase.js';
 import logger from '../../logger.js'
 
-class Mongo extends Contenedor {
+class Firebase extends Contenedor {
 
     constructor() {
-        super('eCommerce', 'productos');
+        super('productos');
     }
-    
+
+    async create(product) {
+   
+        const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = product
+
+        let doc = this.coleccion.doc(`${id}`)
+
+        await doc.create({
+            codigo: codigo,
+            timestamp: timestamp,
+            nombre: nombre,
+            descripcion: descripcion,
+            precio: precio,
+            thumbnail: thumbnail,
+            stock: stock
+        })
+
+    }
+
     update(product) {
+
         const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = product
 
         this.collection.updateOne(
@@ -32,11 +51,9 @@ class Mongo extends Contenedor {
 
 }
 
-function getInstancia()
-{
-    const instacia = new Mongo()
-    logger.info('instancia contenedor de productos mongo')
+export function getInstancia() {
+    const instacia = new Firebase()
+    logger.info('instancia contenedor de productos Firebase')
     return instacia;
 }
 
-export  {getInstancia};

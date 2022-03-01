@@ -1,4 +1,6 @@
 import log4js from 'log4js';
+import config from '../config/config.js';
+
 
 log4js.configure({
   appenders: {
@@ -35,8 +37,8 @@ log4js.configure({
 
 let logger = null
 
-if (process.env.NODE_ENV === 'PROD') {
-  logger = log4js.getLogger('prod')
+if (config.NODE_ENV === 'production') {
+  logger = log4js.getLogger('production')
 } else {
   logger = log4js.getLogger()
 }

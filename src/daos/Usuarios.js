@@ -4,12 +4,13 @@ const file = config.TIPO_PERSISTENCIA;
 
 let contenedor;
 try {
-    contenedor = await import(`./Carritos/${file}.js`)
+    contenedor = await import(`./Usuarios/${file}.js`)
         .then(module => module.getInstancia())
         .then();
 }
 catch {
-    logger.error(`Persistencia de carritos ${file} no implementada`)
+    logger.error(`Persistencia de usuario ${file} no implementada`)
 }
+
 
 export { contenedor };

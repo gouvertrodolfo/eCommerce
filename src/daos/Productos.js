@@ -1,23 +1,16 @@
-import logger from '../logger.js'
-import dotenv from 'dotenv';
-dotenv.config()
+import logger from '../logger.js';
+import config from '../../config/config.js';
+const file = config.TIPO_PERSISTENCIA;
 
-const file = process.env.PRODUCTOS_TIPO_PERSISTENCIA;
-
-class Productos {
-    constructor() {
-            this.contenedor = undefined;
-    }
-
+let contenedor;
+try {
+    contenedor = contenedor = await import(`./Productos/${file}.js`)
+        .then(module => module.getInstancia())
+        .then();
+}
+catch {
+    logger.error(`Persistencia de productos ${file} no implementado`)
 }
 
-Productos.contenedor = await import(`./contenedoresproductos/${file}.js`)
-.then(module => module.getInstancia())
-.then();
-
-export function getInstancia() {
-    return Productos.contenedor;
-}
-
-export default Productos;
+export { contenedor };
 
