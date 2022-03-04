@@ -40,10 +40,16 @@ app.use(passport.initialize());
 // app.use(passport.session());
 /**************************************************************************************** */
 
-app.use('/', LoginRoutes)
+// rutas apiRestFull
+app.use('/api/', LoginRoutes)
+app.use('/api/productos', routesProductos)
+app.use('/api/carrito', CarritoRoute)
 
-app.use('/productos', routesProductos)
-app.use('/carrito', CarritoRoute)
+// rutas plantillas
+app.use('/')
+app.use('/login')
+
+//rutas no encontrada
 app.use('/*', failRoute)
 
 export default app
