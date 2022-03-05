@@ -76,7 +76,7 @@ export async function buscar(email) {
     const data = await contenedor.getByEmail(email);
 
     if (data == undefined) {
-        err = {
+        const err = {
             codigo: 400,
             descripcion: `${email} no es un usuario registrado`
         }

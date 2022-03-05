@@ -1,20 +1,21 @@
 import { Router } from 'express'
-import { passport } from '../controller/passport.js'
+import passport from '../controller/passport.js'
 
 import { responseToken, getfailloginController, getfailsignupController, getlogoutController } from '../controller/usuarios.js'
 
-const LoginRoutes = new Router();
+const routesAutenticacion = new Router();
 
 
-LoginRoutes.post('/login', passport.authenticate('login', {session: false, failureRedirect: '/faillogin' }), responseToken);
-LoginRoutes.post('/signup', passport.authenticate('signup', {session: false, failureRedirect: '/failsignup' }), responseToken)
+routesAutenticacion.post('/login',  passport.authenticate('login', {session: false, failureRedirect: '/faillogin' }), responseToken);
 
-LoginRoutes.get('/faillogin', getfailloginController)
-LoginRoutes.get('/failsignup', getfailsignupController)
+routesAutenticacion.post('/signup', passport.authenticate('signup', {session: false, failureRedirect: '/failsignup' }), responseToken)
 
-LoginRoutes.get('/logout', getlogoutController)
+routesAutenticacion.get('/faillogin', getfailloginController)
+routesAutenticacion.get('/failsignup', getfailsignupController)
 
-export { LoginRoutes }
+routesAutenticacion.get('/logout', getlogoutController)
+
+export default routesAutenticacion 
 
 
 

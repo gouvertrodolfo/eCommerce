@@ -1,6 +1,6 @@
 import logger from '../logger.js'
 
-function failRoute(req, res) {
+export function failRoute(req, res) {
   const title = 'ROUTING ERROR';
   const { url, method } = req
 
@@ -9,4 +9,3 @@ function failRoute(req, res) {
   res.status(404).json({ titulo: title });
 }
 
-export { failRoute }

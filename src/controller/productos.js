@@ -18,7 +18,7 @@ export async function buscar(req, res) {
 };
 
 export async function crear(req, res) {
-
+console.log(req.headers)
     try {
         const data = await schema.validateAsync(req.body)
         const producto = await apiProducto.crear(data)

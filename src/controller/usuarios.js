@@ -1,12 +1,13 @@
 import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 import jwt from 'jsonwebtoken'
-import {jwtOpts} from '../../config/config.js'
+import { jwtOpts } from '../../config/config.js'
 
 export function SignUp(req, email, password, done) {
 
     if (UsuarioApi.existe(email)) {
         logger.warn('email already exists');
+        req.error = { error: "username already exists" }
         return done(null, false)
     } else {
 
@@ -29,12 +30,15 @@ export function SignUp(req, email, password, done) {
 
 export async function login(email, password, done) {
 
+    logger.info(`usuarios controller login email: ${email} `)
+
     try {
         const user = await UsuarioApi.buscar(email)
 
         if (!user.isValidPassword(password)) {
             return done(null, false, { message: 'Incorrect password.' });
         }
+
         return done(null, user.get());
 
     }
@@ -46,27 +50,20 @@ export async function login(email, password, done) {
 };
 
 export async function responseToken(req, res) {
+
     const user = req.user;
-    
-    const body = {
-        email: user.email,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        avatar: user.avatar,
-        admin: user.admin
-    };
-    const token = jwt.sign({ user: body }, jwtOpts.secretOrKey, {expiresIn: jwtOpts.expireIn});
+
+    const token = jwt.sign({ user: user }, jwtOpts.secretOrKey, { expiresIn: jwtOpts.expireIn });
 
     res.status(200).json({ token })
 }
 
-export function validateToken(token, cb){
+export function validateToken(token, cb) {
     try {
         return cb(null, token.user);
-      } catch (error) {
+    } catch (error) {
         cb(error);
-      }
+    }
 }
 
 export function getfailloginController(req, res) {
@@ -88,9 +85,9 @@ export function getlogoutController(req, res) {
 export function isAdmin(req, res, next) {
 
     if (!req.user.admin) {
-      res.status(403).json({ error: `${req.user.username} ruta no autorizada` })
+        res.status(403).json({ error: `${req.user.username} ruta no autorizada` })
     }
     else {
-      next()
+        next()
     }
-  }
+}
