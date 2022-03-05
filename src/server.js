@@ -41,13 +41,10 @@ app.use(passport.initialize());
 /**************************************************************************************** */
 
 // rutas apiRestFull
-app.use('/api/', LoginRoutes)
+app.use('/', LoginRoutes)
 app.use('/api/productos', routesProductos)
 app.use('/api/carrito', CarritoRoute)
 
-// rutas plantillas
-app.use('/')
-app.use('/login')
 
 //rutas no encontrada
 app.use('/*', failRoute)

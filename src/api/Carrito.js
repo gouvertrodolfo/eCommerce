@@ -1,26 +1,27 @@
 import { contenedor  } from "../models/daos/Carrito.js";
-import Producto from './Producto.js';
 import NUID from 'nuid'
 
 class Carrito {
 
     constructor(data) {
 
-        if (data == undefined) {
-            this.id= NUID.next();
+        const {email, _id, timestamp, listaProductos} = data
+
+        this.email = email
+
+        if (id == undefined) {
             this.timestamp = Date.now();
             this.listaProductos = [];
         }
         else{
-            const { id, timestamp, listaProductos } = data
-            this.id = id
+            this.id = _id; 
             this.timestamp = timestamp;
             this.listaProductos = listaProductos;
         }
         
     };
 
-    agregarProducto(producto) {
+    async agregarProducto(producto) {
         this.listaProductos.push(producto)
         contenedor.addProducto(producto)
         return this.listaProductos;
@@ -30,7 +31,6 @@ class Carrito {
         
         await contenedor.delProducto(this.id, id_prod)
         const {listaProductos} = await contenedor.getById(id)
-
         this.listaProductos = listaProductos
 
         return this.listaProductos;

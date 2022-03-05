@@ -5,9 +5,8 @@ import {jwtOpts} from '../../config/config.js'
 
 export function SignUp(req, email, password, done) {
 
-    if (UsuarioApi.existe(username)) {
+    if (UsuarioApi.existe(email)) {
         logger.warn('email already exists');
-        req.error = { error: "username already exists" }
         return done(null, false)
     } else {
 
