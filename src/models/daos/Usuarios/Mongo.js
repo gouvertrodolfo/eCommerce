@@ -4,7 +4,7 @@ import logger from '../../../logger.js'
 class Mongo extends Contenedor {
 
     constructor() {
-        super('eCommerce', 'usuarios');
+        super( 'usuarios');
     }
 
     async getByUserName(username) {
@@ -64,6 +64,5 @@ class Mongo extends Contenedor {
 export function getInstancia()
 {
     const instacia = new Mongo()
-    logger.info('instancia contenedor de usuarios Mongo')
     return instacia;
 }

@@ -4,8 +4,9 @@ import logger from "../logger.js";
 
 const transporter = createTransport(ServidorEnvioCorreo);
 
-
 export async function enviarCorreo(correoDestino, asunto, cuerpo) {
+
+    console.log(ServidorEnvioCorreo)
 
     const mailOptions = {
         from: 'Servidor Node.js',
@@ -14,12 +15,15 @@ export async function enviarCorreo(correoDestino, asunto, cuerpo) {
         html: cuerpo
     }
 
+    console.log(mailOptions)
+
     try{
-    const info = transporter.sendMail(mailOptions)
+        let info = await transporter.sendMail(mailOptions)
+            
         logger.info(info)
     }
     catch(err)
     {
-        logger.err(err)
+        logger.error(err)
     }
 }

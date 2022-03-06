@@ -1,4 +1,5 @@
 import app from '../src/server.js'
+import logger from '../src/logger.js'
 import supertest from 'supertest'
 import { expect } from 'chai'
 
@@ -102,7 +103,6 @@ describe('Pruebas APIRestFull Productos', () => {
             response =await request.get(`/productos/${producto.id}`).set("Cookie", [cookies])
             expect(response.status).to.eql(200)
             expect(response.body.stock).to.eql(150)
-            console.log(response.body)
         })
 
         it('eliminar el producto modificado debería retornar un status 200', async function() {
@@ -110,27 +110,7 @@ describe('Pruebas APIRestFull Productos', () => {
             expect(response.status).to.eql(200)
         })
 
-
     })
-
-
-
-
-
-
-
-    // describe('Get Listado de productos', () => {
-    //     it('debería retornar un status 200', async () => {
-    //         const response = await request.get('/productos/')
-    //         expect(response.status).to.eql(200)
-    //     })
-    // })
-
-
-
-
-
-
 
 })
 
@@ -143,7 +123,7 @@ async function startServer() {
             resolve(server)
         });
         server.on('error', error => {
-            console.log(`Error en Servidor: ${error}`)
+            logger.error(`Error en Servidor: ${error}`)
             reject(error)
         });
 

@@ -4,7 +4,7 @@ import logger from '../../../logger.js'
 class Mongo extends Contenedor {
 
     constructor() {
-        super('productos');
+        super('ordenes');
     }
     
     update(product) {

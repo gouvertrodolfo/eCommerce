@@ -18,8 +18,6 @@ class mySocket{
 
         this.io.on('connection', async socket => {
 
-            console.log('Nuevo cliente conectado!')
-
             let mensajes = await chat.getAll();
 
             /* Envio los mensajes al cliente que se conectó */

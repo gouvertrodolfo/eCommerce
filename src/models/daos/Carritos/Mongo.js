@@ -4,7 +4,7 @@ import logger from '../../../logger.js'
 class Mongo extends Contenedor {
 
     constructor() {
-        super('eCommerce', 'carritos');
+        super('carritos');
     }
 
     async addProducto(id, producto) {
@@ -42,6 +42,5 @@ class Mongo extends Contenedor {
 export function getInstancia()
 {
     const instacia = new Mongo()
-    logger.info('instancia contenedor de carritos mongo')
     return instacia;
 }

@@ -53,8 +53,6 @@
 
     async function  redirectIndex(data) {
       
-      console.log('      redirectIndex')
-console.log(data.token)
 
       localStorage.setItem('token', data.token)
       const fetchData = {
@@ -69,8 +67,6 @@ console.log(data.token)
     }
 
     async function gologin() {
-
-      console.log('gologin')
 
       const data = {
         email: document.getElementById('email').value,

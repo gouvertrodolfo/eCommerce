@@ -1,10 +1,6 @@
-// config.js
 import dotenv from 'dotenv';
 import path from 'path';
 import { ExtractJwt as ExtractJWT } from 'passport-jwt';
-
-
-console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`)
 
 dotenv.config({
   path: path.resolve(process.cwd()+'/config', process.env.NODE_ENV +'.env')
@@ -18,13 +14,15 @@ export const jwtOpts ={
 }
 
 export const ServidorEnvioCorreo={
-  host: 'smtp.ethereal.email',
-  port: 587,
+  host: process.env.MAIL_SMTP ,
+  port: parseInt(process.env.MAIL_PORT),
+  secure:false,
   auth: {
-      user: 'madalyn.waelchi45@ethereal.email',
-      pass: 'BNYDRwcF3FzuzftTgD'
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
   }
 }
+
 
 export default {
   NODE_ENV: process.env.NODE_ENV || 'development',

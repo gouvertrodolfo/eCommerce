@@ -3,29 +3,18 @@ import logger from '../logger.js'
 import jwt from 'jsonwebtoken'
 import { jwtOpts } from '../../config/config.js'
 
-export function SignUp(req, email, password, done) {
+export async function SignUp(req, email, password, done) {
+    const data = {
+        email: email,
+        password: password,
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        avatar: req.body.avatar
+    };
+    const user = await UsuarioApi.registrar(data);
 
-    if (UsuarioApi.existe(email)) {
-        logger.warn('email already exists');
-        req.error = { error: "username already exists" }
-        return done(null, false)
-    } else {
-
-        const data = {
-            email: email,
-            password: password,
-            username: req.body.username,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            avatar: req.body.avatar
-        };
-        const user = UsuarioApi.registrar(data);
-
-        UsuarioApi.enviarMailRegistro(data)
-
-        done(user.get(), null);
-    }
-
+    done(null, user.get());
 }
 
 export async function login(email, password, done) {
@@ -43,18 +32,15 @@ export async function login(email, password, done) {
 
     }
     catch (error) {
-        logger.warn(error);
+        logger.error(error);
         return done(null, false, { message: 'Incorrect username.' });
     }
 
 };
 
 export async function responseToken(req, res) {
-
     const user = req.user;
-
     const token = jwt.sign({ user: user }, jwtOpts.secretOrKey, { expiresIn: jwtOpts.expireIn });
-
     res.status(200).json({ token })
 }
 
@@ -71,7 +57,7 @@ export function getfailloginController(req, res) {
 }
 
 export function getfailsignupController(req, res) {
-    res.status(401).json(req.error)
+    res.status(401).json({ "descripcion": "error al intentar crear el usuario" })
 }
 
 export function getlogoutController(req, res) {
@@ -79,7 +65,6 @@ export function getlogoutController(req, res) {
         if (!err) res.status(200).json({ 'status': 'ok' })
         else res.status(500).send({ status: 'Logout ERROR', body: err })
     })
-
 }
 
 export function isAdmin(req, res, next) {
@@ -90,4 +75,19 @@ export function isAdmin(req, res, next) {
     else {
         next()
     }
+}
+
+export async function validaEmail(req, res, next) {
+    if (await UsuarioApi.existeEmail(req.body.email)) {
+        res.status(400).json({ descripcion: 'El email ya esta registrado' })
+    }
+    else
+        next();
+}
+
+export async function validarUsername(req, res, next) {
+    if (await UsuarioApi.existeUsername(req.body.username))
+        res.status(400).json({ descripcion: 'El username ya esta registrado' })
+    else
+        next();
 }
