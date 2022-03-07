@@ -75,7 +75,7 @@ async function buscar(id) {
     const dot = await contenedor.getById(id)
     if (dot == undefined) { 
 
-            throw ` Producto ${id} no existe`
+            throw `Producto ${id} no existe`
         
     }
     {

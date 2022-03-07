@@ -1,5 +1,5 @@
 import { contenedor  } from "../models/daos/Carrito.js";
-import NUID from 'nuid'
+import logger from "../logger.js";
 
 class Carrito {
 
@@ -9,16 +9,15 @@ class Carrito {
 
         this.email = email
 
-        if (id == undefined) {
+        if (_id == undefined) {
             this.timestamp = Date.now();
             this.listaProductos = [];
         }
         else{
-            this.id = _id; 
+            this._id = _id; 
             this.timestamp = timestamp;
             this.listaProductos = listaProductos;
         }
-        
     };
 
     async agregarProducto(producto) {
@@ -49,22 +48,28 @@ class Carrito {
     }
 }
 
-export async function crear() {
+export async function crear(email) {
 
-    let carrito = new Carrito();
-    await contenedor.create(carrito)
+    const data = {email:email};
+    const carrito = new Carrito(data);
+    try{
+        await contenedor.create(carrito);
+    }catch(err)
+    {
+        logger.error(`Error al registrar el carrito ${email} error:${err}`);
+    }
     return carrito;
-
 }
 
-export async function obtener(id){
-    const data = contenedor.getById(id)
+export async function obtener(email){
+    let data = await contenedor.getByEmail(email)
+    let carrito
     if(data!=undefined){
-        const carrito = new Carrito(data);
-        return carrito;
+        carrito = new Carrito(data);
     }
     else{
-        throw `carrito ${id} no existe`
+                carrito = await crear(email);
     }
+    return carrito;
 }
 

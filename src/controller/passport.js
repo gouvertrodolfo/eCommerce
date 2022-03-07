@@ -6,7 +6,7 @@ import { jwtOpts } from '../../config/config.js'
 
 passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, SignUp))
 
-passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, login));
+passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField: 'password'}, login));
 
 passport.use(new JWTstrategy(jwtOpts, validateToken));
 

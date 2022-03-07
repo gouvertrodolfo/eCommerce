@@ -1,69 +1,65 @@
 import * as apiCarrito from '../api/Carrito.js'
-import {buscar as obtenerProducto} from '../api/Producto.js'
-export async function crear(req, res) {
-    const { id } = await apiCarrito.crear()
-    res.json(id)
+import { buscar as obtenerProducto } from '../api/Producto.js'
+import logger from '../logger.js';
+
+export function mdwValidarEmail(req, res, next) {
+    const { email } = req.user;
+
+    if (email == undefined) {
+        logger.error('Error al obtener el identificador del carrito')
+        res.status(400).json({ descripcion: 'Error al obtener el identificador del carrito' })
+    }
+    else {
+        req.email = email;
+        next()
+    }
 }
 
-export async function agregarProducto(req, res) {
+export function mdwValidarProductoId(req, res, next) {
+    const { productoId } = req.params
+    if (productoId == undefined) {
+        logger.error('Error al obtener el identificador del producto');
+        res.status(400).json({ descripcion: 'Error al obtener el identificador del producto' })
+    }
+    else
+        req.productoId = productoId
+        next()
+}
 
-    const { id, productoId } = req.params
+
+export async function obtener(req, res) {
+     console.log(`controller carrito obtener email:${req.email}`)
     try {
-        const [ carrito, producto] = await Promises.all([ apiCarrito.obtener(id),  obtenerProducto(productoId)])
+        const carrito = await apiCarrito.obtener(req.email)
+        res.status(200).json(carrito)
+    } catch (err) {
+        res.status(400).json({ error: err })
+    }
+}
+
+export async function agregarProducto(email, productoId, res) {
+
+
+    try {
+        const [carrito, producto] = await Promises.all([apiCarrito.obtener(req.email), obtenerProducto(req.productoId)])
         carrito.agregarProducto(producto)
-        res.status(200).json(carrito.listaProductos())
-    }catch(err)
-    {
-        res.status(400).json({error:err})
-    }
-    const new_carrito = market.addProdutoAlCarrito(carrito, producto)
-    res.json(new_carrito)
+        res.status(201).json(carrito)
 
-}
-export async function quitarProducto(req, res) {
-    const { id, productoId } = req.params
-    try {
-        const carrito = await apiCarrito.obtener(id)
-        carrito.quitarProducto(productoId)
-        res.status(200).json(carrito.listaProductos())
-    }catch(err)
-    {
-        res.status(400).json({error:err})
+    } catch (err) {
+        res.status(400).json({ error: err })
     }
 
 }
-export async function listaProductos(req, res) {
-    const { id } = req.params
-    try {
-        const carrito = await apiCarrito.obtener(id)
-        res.status(200).json(carrito.listaProductos())
-    }catch(err)
-    {
-        res.status(400).json({error:err})
-    }
-}
-export async function borrar(req, res) {
-    const { id } = req.params
-    try {
-        const carrito = await apiCarrito.obtener(id)
-        carrito.eliminar()
-        res.status(200).json()
-    }catch(err)
-    {
-        res.status(400).json({error:err})
-    }
-}
+export async function quitarProducto(email, productoId, res) {
 
-export async function finalizar(req, res){
-    const { id } = req.params
     try {
-        const carrito = await apiCarrito.obtener(id)
-        carrito.Confirmar()
-        res.status(200).json()
-    }catch(err)
-    {
-        res.status(400).json({error:err})
+        const carrito = await apiCarrito.obtener(req.email)
+        carrito.quitarProducto(req.productoId)
+        res.status(204).json(carrito)
+    } catch (err) {
+        res.status(400).json({ error: err })
     }
+
 }
 
 

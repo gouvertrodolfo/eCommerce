@@ -11,7 +11,7 @@ app.use(express.static('public'))
 app.use(json())
 app.use(urlencoded({ extended: true }))
 //Configuracion del motor de vistas que se usara
-app.set('view engine', 'ejs')
+// app.set('view engine', 'ejs')
 
 
 /**************************************************************************************** */
@@ -20,8 +20,8 @@ app.use(passport.initialize());
 
 // rutas apiRestFull
 app.use('/', routesAutenticacion)
-app.use('/api/productos', routesProductos)
-app.use('/api/carrito', routesCarrito)
+app.use('/productos', routesProductos)
+app.use('/carrito', routesCarrito)
 
 
 //rutas no encontrada

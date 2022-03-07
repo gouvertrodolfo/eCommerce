@@ -16,7 +16,7 @@ export const jwtOpts ={
 export const ServidorEnvioCorreo={
   host: process.env.MAIL_SMTP ,
   port: parseInt(process.env.MAIL_PORT),
-  secure:false,
+  secure:false, 
   auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
@@ -28,5 +28,5 @@ export default {
   NODE_ENV: process.env.NODE_ENV || 'development',
   HOST: process.env.HOST || 'localhost',
   PORT: process.env.PORT || 8000,
-  TIPO_PERSISTENCIA: process.env.TIPO_PERSISTENCIA || 'File'
+  TIPO_PERSISTENCIA: process.env.TIPO_PERSISTENCIA || 'Mongo'
 }

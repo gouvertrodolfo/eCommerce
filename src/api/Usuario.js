@@ -123,8 +123,11 @@ async function enviarMailRegistro(user) {
     try {
         const lista = await contenedor.listar({ admin: true });
 
+        if(lista.count==0)
+            return;
 
         lista.forEach(element => {
+        
             if (mailto == undefined)
                 mailto = element.email
             else

@@ -7,6 +7,17 @@ class Mongo extends Contenedor {
         super('carritos');
     }
 
+    async getByEmail(email) {
+
+        try {
+            const [object] = await this.collection.find({ email: email }).toArray()
+            return object
+        }
+        catch (err) {
+            logger.error(err)
+        }
+    }
+
     async addProducto(id, producto) {
 
         await this.collection.updateOne(

@@ -25,15 +25,17 @@ export async function login(email, password, done) {
         const user = await UsuarioApi.buscar(email)
 
         if (!user.isValidPassword(password)) {
-            return done(null, false, { message: 'Incorrect password.' });
+            return done(null, false);
         }
+
+        console.log(user)
 
         return done(null, user.get());
 
     }
     catch (error) {
         logger.error(error);
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false);
     }
 
 };
