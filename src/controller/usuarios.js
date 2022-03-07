@@ -2,19 +2,21 @@ import * as UsuarioApi from '../api/Usuario.js'
 import logger from '../logger.js'
 import jwt from 'jsonwebtoken'
 import { jwtOpts } from '../../config/config.js'
+import schema from '../validations/usuarios.js'
 
 export async function SignUp(req, email, password, done) {
-    const data = {
-        email: email,
-        password: password,
-        username: req.body.username,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        avatar: req.body.avatar
-    };
-    const user = await UsuarioApi.registrar(data);
 
-    done(null, user.get());
+    try {
+        const data = await schema.validateAsync(req.body)
+
+        const user = await UsuarioApi.registrar(data);
+
+        done(null, user.get());
+    }
+    catch (err) {
+        logger.warn(err)
+        done(null, false)
+    }
 }
 
 export async function login(email, password, done) {
@@ -27,8 +29,6 @@ export async function login(email, password, done) {
         if (!user.isValidPassword(password)) {
             return done(null, false);
         }
-
-        console.log(user)
 
         return done(null, user.get());
 
@@ -43,15 +43,17 @@ export async function login(email, password, done) {
 export async function responseToken(req, res) {
     const user = req.user;
     const token = jwt.sign({ user: user }, jwtOpts.secretOrKey, { expiresIn: jwtOpts.expireIn });
+
     res.status(200).json({ token })
 }
 
 export function validateToken(token, cb) {
-    try {
-        return cb(null, token.user);
-    } catch (error) {
-        cb(error);
+
+    if (token.iat < Math.floor(Date.now() / 1000)) {
+        logger.warn('token caducado')
+        return cb(null, false)
     }
+    else return cb(null, token.user);
 }
 
 export function getfailloginController(req, res) {
@@ -59,7 +61,8 @@ export function getfailloginController(req, res) {
 }
 
 export function getfailsignupController(req, res) {
-    res.status(401).json({ "descripcion": "error al intentar crear el usuario" })
+
+    res.status(400).json({ descripcion: req.error })
 }
 
 export function getlogoutController(req, res) {
@@ -79,17 +82,30 @@ export function isAdmin(req, res, next) {
     }
 }
 
-export async function validaEmail(req, res, next) {
-    if (await UsuarioApi.existeEmail(req.body.email)) {
-        res.status(400).json({ descripcion: 'El email ya esta registrado' })
+export async function validaUser(req, res, next) {
+    let data
+    try {
+        data = await schema.validateAsync(req.body)
     }
-    else
-        next();
+    catch (err) { 
+        logger.warn(`Error al validaciones esquema de usuarios`)
+        return res.status(400).json({ descripcion: err.details }) 
+    }
+
+    try {
+        if (await UsuarioApi.existeEmail(data.email)) {
+            return res.status(400).json({ descripcion: 'El email ya esta registrado' })
+        }
+
+        if (await UsuarioApi.existeUsername(data.username))
+            return res.status(400).json({ descripcion: 'El username ya esta registrado' })
+    }
+    catch (err) {
+        logger.error(`Error al ejecutar validaciones de usuarios ${err}`)
+        return res.status(500).json({ descripcion: err })
+    }
+
+    next();
+
 }
 
-export async function validarUsername(req, res, next) {
-    if (await UsuarioApi.existeUsername(req.body.username))
-        res.status(400).json({ descripcion: 'El username ya esta registrado' })
-    else
-        next();
-}

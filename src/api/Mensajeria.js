@@ -15,7 +15,8 @@ transporter.verify(function (error, success) {
 export async function enviarCorreo(correoDestino, asunto, cuerpo) {
 
     const mailOptions = {
-        // from: 'Servidor Node.js',
+        // from: ServidorEnvioCorreo.auth.user,
+        from:'Ecomerce@noreply',
         to: correoDestino,
         subject: asunto,
         html: cuerpo
@@ -24,6 +25,7 @@ export async function enviarCorreo(correoDestino, asunto, cuerpo) {
     try{
         let info = await transporter.sendMail(mailOptions)
         logger.info(info)
+        return info.messageId;  
     }
     catch(err)
     {

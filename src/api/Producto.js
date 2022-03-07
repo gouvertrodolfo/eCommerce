@@ -4,7 +4,7 @@ import { contenedor } from "../models/daos/Productos.js";
 class Producto {
 
     constructor(data) {
-        const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = data
+        const { id, codigo, timestamp, nombre, descripcion, precio, stock } = data
 
         if (id == undefined) {
             this.id = NUID.next();
@@ -19,7 +19,7 @@ class Producto {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio
-        this.thumbnail = thumbnail
+        
         this.stock = stock
         this.caracteristicas = caracteristicas
 

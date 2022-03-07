@@ -8,8 +8,9 @@ try {
         .then(module => module.getInstancia())
         .then();
 }
-catch {
+catch(err) {
     logger.error(`Persistencia de usuario ${file} no implementada`)
+    logger.error(err)
 }
 
 

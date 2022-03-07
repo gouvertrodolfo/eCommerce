@@ -17,8 +17,8 @@ const schema = Joi.object(
         stock: Joi.number()
             .integer()
             .positive()
-            .required(),
-        thumbnail: Joi.string()
+            .required()
+
     }
 )
 

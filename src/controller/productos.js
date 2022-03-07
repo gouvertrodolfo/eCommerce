@@ -1,4 +1,4 @@
-import { query } from 'express';
+
 import * as apiProducto from '../api/Producto.js';
 import schema from '../validations/productos.js';
 
