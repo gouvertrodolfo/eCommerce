@@ -24,7 +24,6 @@ class Mongo {
     // getAll(): Object[] - Devuelve un array con los objetos presentes en el archivo.
     async getAll() {
         const array = await this.collection.find().toArray()
-
         return array
     }
 

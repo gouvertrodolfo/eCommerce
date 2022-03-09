@@ -1,17 +1,18 @@
-import * as UsuarioApi from '../api/Usuario.js'
+import UsuariosApi from '../api/UsuariosApi.js'
 import logger from '../logger.js'
 import jwt from 'jsonwebtoken'
 import { jwtOpts } from '../../config/config.js'
 import schema from '../validations/usuarios.js'
 
+const usuarios = new UsuariosApi();
+
 export async function SignUp(req, email, password, done) {
 
     try {
         const data = await schema.validateAsync(req.body)
+        const user = await usuarios.Agregar(data);
 
-        const user = await UsuarioApi.registrar(data);
-
-        done(null, user.get());
+        done(null, user.toJson());
     }
     catch (err) {
         logger.warn(err)
@@ -24,14 +25,8 @@ export async function login(email, password, done) {
     logger.info(`usuarios controller login email: ${email} `)
 
     try {
-        const user = await UsuarioApi.buscar(email)
-
-        if (!user.isValidPassword(password)) {
-            return done(null, false);
-        }
-
-        return done(null, user.get());
-
+        const user = await usuarios.login(email,password)
+        return done(null, user);
     }
     catch (error) {
         logger.error(error);
@@ -93,11 +88,11 @@ export async function validaUser(req, res, next) {
     }
 
     try {
-        if (await UsuarioApi.existeEmail(data.email)) {
+        if (await usuarios.existeEmail(data.email)) {
             return res.status(400).json({ descripcion: 'El email ya esta registrado' })
         }
 
-        if (await UsuarioApi.existeUsername(data.username))
+        if (await usuarios.existeUsername(data.username))
             return res.status(400).json({ descripcion: 'El username ya esta registrado' })
     }
     catch (err) {

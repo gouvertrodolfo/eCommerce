@@ -23,10 +23,8 @@ export const ServidorEnvioCorreo={
   }
 }
 
-
 export default {
   NODE_ENV: process.env.NODE_ENV || 'development',
   HOST: process.env.HOST || 'localhost',
-  PORT: process.env.PORT || 8000,
-  TIPO_PERSISTENCIA: process.env.TIPO_PERSISTENCIA || 'Mongo'
+  PORT: process.env.PORT || 8000
 }

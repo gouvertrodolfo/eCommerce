@@ -1,6 +1,12 @@
-import * as apiCarrito from '../api/Carrito.js'
-import { buscar as obtenerProducto } from '../api/Producto.js'
+import CarritosApi from '../api/CarritosApi.js'
+import ProductosApi from '../api/ProductosApi.js'
 import logger from '../logger.js';
+
+const carritos = new CarritosApi();
+const productos = new ProductosApi(); 
+
+
+
 
 export function mdwValidarEmail(req, res, next) {
     const { email } = req.user;
@@ -28,36 +34,35 @@ export function mdwValidarProductoId(req, res, next) {
 
 
 export async function obtener(req, res) {
-     console.log(`controller carrito obtener email:${req.email}`)
+
     try {
-        const carrito = await apiCarrito.obtener(req.email)
+        const carrito = await carritos.obtener(req.email)
         res.status(200).json(carrito)
     } catch (err) {
-        res.status(400).json({ error: err })
+        res.status(err.estado).json({ descripcion: err.descripcion, detalle: err.detalle })
     }
 }
 
-export async function agregarProducto(email, productoId, res) {
-
+export async function agregarProducto(req, res) {
 
     try {
-        const [carrito, producto] = await Promises.all([apiCarrito.obtener(req.email), obtenerProducto(req.productoId)])
-        carrito.agregarProducto(producto)
+        const producto = await  productos.buscar(req.productoId)
+        carritos.agregarProducto(req.email, producto)
         res.status(201).json(carrito)
 
     } catch (err) {
-        res.status(400).json({ error: err })
+        res.status(err.estado).json({ descripcion: err.descripcion, detalle: err.detalle })
     }
 
 }
-export async function quitarProducto(email, productoId, res) {
+export async function quitarProducto(req, res) {
 
     try {
-        const carrito = await apiCarrito.obtener(req.email)
-        carrito.quitarProducto(req.productoId)
+
+        carritos.quitarProducto(req.email, req.productoId)
         res.status(204).json(carrito)
     } catch (err) {
-        res.status(400).json({ error: err })
+        res.status(err.estado).json({ descripcion: err.descripcion, detalle: err.detalle })
     }
 
 }

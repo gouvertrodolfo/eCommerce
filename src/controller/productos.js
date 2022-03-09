@@ -1,16 +1,18 @@
 
-import * as apiProducto from '../api/Producto.js';
+import ProductosApi from '../api/ProductosApi.js';
 import schema from '../validations/productos.js';
 
+const productos = new ProductosApi(); 
+
 export async function listar(req, res) {
-    const array = await apiProducto.listar()
+    const array = await productos.listar()
     res.json(array);
 }
 
 export async function buscar(req, res) {
     const { productoId } = req.params
     try {
-        const producto = await apiProducto.buscar(productoId)
+        const producto = await productos.buscar(productoId)
         res.status(200).json(producto)
     } catch (err) {
         res.status(400).json(err)
@@ -20,8 +22,8 @@ export async function buscar(req, res) {
 export async function crear(req, res) {
     try {
         const data = await schema.validateAsync(req.body)
-        const producto = await apiProducto.crear(data)
-        res.status(200).json(producto)
+        const producto = await productos.agregar(data)
+        res.status(201).json(producto)
     }
     catch (err) {
         res.status(400).json(err)
@@ -30,10 +32,10 @@ export async function crear(req, res) {
 
 export async function actualizar(req, res) {
     const data = req.body
-    const { productoId } = req.params
+    // const { codigo } = req.params
     try {
-        const producto = await apiProducto.buscar(productoId)
-        producto.modificar(data)
+        // const producto = await apiProducto.buscarxCodigo(codigo)
+        productos.modificar(data)
         res.status(200).json(producto)
     } 
     catch (err) {
@@ -44,11 +46,8 @@ export async function actualizar(req, res) {
 export async function borrar(req, res) {
     const { productoId } = req.params
     try {
-        const producto = await apiProducto.buscar(productoId)
-
-        producto.borrar();
-        res.status(200).json('ok')
-
+        productos.borrar(productoId);
+        res.status(204).json('ok')
     } catch (err) {
         res.status(400).json(err)
     }

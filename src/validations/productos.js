@@ -4,7 +4,7 @@ const schema = Joi.object(
     {
         codigo: Joi.string()
             .min(5)
-            .max(10)
+            .max(20)
             .required(),
         nombre: Joi.string()
             .required(),

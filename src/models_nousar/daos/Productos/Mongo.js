@@ -7,6 +7,17 @@ class Mongo extends Contenedor {
         super('productos');
     }
     
+    async getByCodigo(codigo) {
+
+        try {
+            const [object] = await this.collection.find({ codigo: codigo }).toArray()
+            return object
+        }
+        catch (err) {
+            logger.error(err)
+        }
+    }
+
     update(product) {
         const { id, codigo, timestamp, nombre, descripcion, precio, thumbnail, stock } = product
 

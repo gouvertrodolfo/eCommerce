@@ -21,7 +21,7 @@ app.use(passport.initialize());
 // rutas apiRestFull
 app.use('/', routesAutenticacion)
 app.use('/productos', routesProductos)
-app.use('/carrito', routesCarrito)
+// app.use('/carrito', routesCarrito)
 
 
 //rutas no encontrada

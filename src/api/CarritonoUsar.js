@@ -15,7 +15,7 @@ class Carrito {
         }
         else{
             this._id = _id; 
-            this.timestamp = timestamp;
+            this.timestamp = timestamp; 
             this.listaProductos = listaProductos;
         }
     };
