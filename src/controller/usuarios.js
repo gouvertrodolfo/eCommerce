@@ -12,7 +12,7 @@ export async function SignUp(req, email, password, done) {
         const data = await schema.validateAsync(req.body)
         const user = await usuarios.Agregar(data);
 
-        done(null, user.toJson());
+        done(null, user);
     }
     catch (err) {
         logger.warn(err)

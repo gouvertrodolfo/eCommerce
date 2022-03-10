@@ -63,7 +63,7 @@ export default class UsuariosApi {
     
             await enviarMailRegistro(usuario)
     
-            return usuario;
+            return usuario.get();
         }
         catch (err) {
             logger.error(`Error in Saving user: ${err}`);
