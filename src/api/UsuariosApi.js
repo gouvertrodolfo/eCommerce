@@ -45,7 +45,7 @@ export default class UsuariosApi {
             if (!usuario.isValidPassword(password)) 
                 return false
             else
-                return usuario.toJson();
+                return usuario.get();
         }
         catch(err){
              logger.error(`fallo el login de mail error:${err}`)             
@@ -66,6 +66,19 @@ export default class UsuariosApi {
             return usuario;
         }
         catch (err) {
+            logger.error(`Error in Saving user: ${err}`);
+            throw (err);
+        }
+    }
+
+    async AgregarRole(email, role)
+    {
+        try{
+            const dto = await this.usuariosDao.addRole(email, role)
+            return new UsuarioDto(dto);
+        }
+        catch(err)
+        {
             logger.error(`Error in Saving user: ${err}`);
             throw (err);
         }

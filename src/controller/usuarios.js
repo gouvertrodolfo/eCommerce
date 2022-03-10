@@ -77,6 +77,11 @@ export function isAdmin(req, res, next) {
     }
 }
 
+export function AgregarRole(req, res){
+    const user = usuarios.AgregarRole(req.body.email, req.body.role);
+    res.status(201).json(user.get())
+}
+
 export async function validaUser(req, res, next) {
     let data
     try {

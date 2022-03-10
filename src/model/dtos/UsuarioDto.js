@@ -30,12 +30,7 @@ export default class UsuarioDto {
 
     }
 
-    static fromJson(json) {
-        const datos = JSON.parse(json)
-        return new UsuarioDto(datos)
-    }
-
-    toJson() {
+    get() {
         
         return {
             email:this.email,

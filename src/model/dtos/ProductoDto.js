@@ -4,20 +4,16 @@ export default class ProductoDto {
     precio;
     stock;
   
-    constructor({ id, nombre, precio, stock }) {
+    constructor({ id, nombre, caracteristicas, precio, stock }) {
       this.id = id
       this.nombre = nombre;
       this.precio = precio;
       this.stock = stock;
+      this.caracteristicas = caracteristicas
     }
-  
-    static fromJson(json) {
-      const datos = JSON.parse(json)
-      return new ProductoDto(datos)
-    }
-  
-    toJson() {
-      return JSON.stringify(this)
+ 
+    get() {
+      return this
     }
   }
   
