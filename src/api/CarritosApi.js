@@ -9,9 +9,10 @@ export default class CarritosApi {
         this.carritosDao = new CarritosDao();
     }
 
-    async agregar(carritoParaAgregar) {
-        const carritoAgregado = await this.productosDao.add(carritoParaAgregar);
-        return carritoAgregado;
+    async agregar(email) {
+        const carrito = new CarritoDto({ email })
+        carrito._id = await this.productosDao.add(carrito);
+        return carrito;
     }
 
     // async listar(){
@@ -20,15 +21,23 @@ export default class CarritosApi {
     // }
 
     async obtener(email) {
-        const dot = await this.carritosDao.getById({email: email})
-        return new CarritoDto(dot)
+        try {
+            const dot = await this.carritosDao.getById({ email: email })
+            return new CarritoDto(dot)
+
+        } catch (err) {
+            if (err.estado = 404) {
+                const carrito = await this.agregar(email)
+                return carrito
+            }
+            else
+                throw (err)
+        }
     }
 
     async agregarProducto(email, producto) {
-        const carrito = this.obtener(email);
-
-        // contenedor.addProducto(producto)
-        // return this.listaProductos;
+        const dot = this.carritosDao.agregarProducto(email,producto)
+        return new CarritoDto(dot)
     }
 
     async quitarProducto(email, producto) {
@@ -37,28 +46,27 @@ export default class CarritosApi {
 
     modificar(data) {
 
-    //     const { nombre, descripcion, precio, thumbnail, stock } = data
+        //     const { nombre, descripcion, precio, thumbnail, stock } = data
 
-    //     this.timestamp = Date.now()
+        //     this.timestamp = Date.now()
 
-    //     if (nombre != undefined) {
-    //         this.nombre = nombre;
-    //     }
-    //     if (descripcion != undefined) {
-    //         this.descripcion = descripcion;
-    //     }
-    //     if (precio != undefined) {
-    //         this.precio = precio
-    //     }
-    //     if (stock != undefined) {
-    //         this.stock = stock
-    //     }
+        //     if (nombre != undefined) {
+        //         this.nombre = nombre;
+        //     }
+        //     if (descripcion != undefined) {
+        //         this.descripcion = descripcion;
+        //     }
+        //     if (precio != undefined) {
+        //         this.precio = precio
+        //     }
+        //     if (stock != undefined) {
+        //         this.stock = stock
+        //     }
 
-    //     contenedor.update(this)
+        //     contenedor.update(this)
     }
 
-    async borrar(codigo)
-    {
+    async borrar(codigo) {
         await this.productosDao.deleteById(codigo)
     }
 

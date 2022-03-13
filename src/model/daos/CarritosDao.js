@@ -7,4 +7,14 @@ export default class CarritosDao extends ContenedorDao {
     super('carritos')
   }
 
+  async addProducto(email, producto) {
+
+    await this.collection.updateOne(
+      { email: email },
+      {'$push': { productos: producto } })
+
+    return await super.getById({email:email})
+  }
+
+
 }
