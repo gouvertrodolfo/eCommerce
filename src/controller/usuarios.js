@@ -25,7 +25,7 @@ export async function login(email, password, done) {
     logger.info(`usuarios controller login email: ${email} `)
 
     try {
-        const user = await usuarios.login(email,password)
+        const user = await usuarios.login(email, password)
         return done(null, user);
     }
     catch (error) {
@@ -44,7 +44,7 @@ export async function responseToken(req, res) {
 
 export function validateToken(token, cb) {
 
-    if (token.iat < Math.floor(Date.now() / 1000)) {
+    if (token.exp < Math.floor(Date.now() / 1000)) {
         logger.warn('token caducado')
         return cb(null, false)
     }
@@ -68,28 +68,39 @@ export function getlogoutController(req, res) {
 }
 
 export function isAdmin(req, res, next) {
+   
+    let isAdmin = false
+   
+    req.user.roles.forEach(element => {
+        if (element == 'Admin')
+            isAdmin = true
+    });
 
-    if (!req.user.admin) {
-        res.status(403).json({ error: `${req.user.username} ruta no autorizada` })
-    }
-    else {
+    if(isAdmin)
         next()
-    }
+    else
+        res.status(403).json({ error: `${req.user.username} ruta no autorizada` })
 }
 
-export function AgregarRole(req, res){
-    const user = usuarios.AgregarRole(req.body.email, req.body.role);
+export async function AgregarRole(req, res) {
+    const user = await usuarios.AgregarRole(req.body.email, req.body.role);
     res.status(201).json(user.get())
 }
+
+export async function EliminarRole(req, res) {
+    const user = await usuarios.EliminarRole(req.body.email, req.body.role);
+    res.status(204).json(user.get())
+}
+
 
 export async function validaUser(req, res, next) {
     let data
     try {
         data = await schema.validateAsync(req.body)
     }
-    catch (err) { 
+    catch (err) {
         logger.warn(`Error al validaciones esquema de usuarios`)
-        return res.status(400).json({ descripcion: err.details }) 
+        return res.status(400).json({ descripcion: err.details })
     }
 
     try {

@@ -12,7 +12,7 @@ export default class UsuariosApi {
 
     async existeEmail(email) {
         try {
-            await this.usuariosDao.getById({ email: email});
+            await this.usuariosDao.getByEmail(email);
             return true;
         }
         catch (err) {
@@ -23,7 +23,7 @@ export default class UsuariosApi {
     
     async existeUsername(username) {
         try {
-            await this.usuariosDao.getById({ username: username });
+            await this.usuariosDao.getByEmail(username);
             return true;
         }
         catch (err) {
@@ -32,15 +32,20 @@ export default class UsuariosApi {
         }
     }
 
-    async ObtenerXEmail(email) {
-        const data = await this.usuariosDao.getById({ email: email });
-        console.log(data)
+    async recuperar(email) {
+        const data = await this.usuariosDao.getByEmail(email);
         return new UsuarioDto(data);
+    }
+    
+
+    async ObtenerXEmail(email) {
+        const usuario = await this.recuperar(email)
+        return usuario.get();
     }
 
     async login(email, password){
         try{
-            const usuario = await this.ObtenerXEmail(email)
+            const usuario = await this.recuperar(email)
 
             if (!usuario.isValidPassword(password)) 
                 return false
@@ -55,13 +60,14 @@ export default class UsuariosApi {
 
     async Agregar(data){
         try {
+
             const usuario = new UsuarioDto(data)
 
-            usuario._id = await this.usuariosDao.add(data)
+            usuario._id = await this.usuariosDao.add(usuario)
 
             logger.info(`Registro Ok `);
     
-            await enviarMailRegistro(usuario)
+            await this.enviarMailNuevoRegistro(usuario)
     
             return usuario.get();
         }
@@ -83,30 +89,45 @@ export default class UsuariosApi {
             throw (err);
         }
     }
+    
+    async EliminarRole(email, role)
+    {
+        try{
+            const dto = await this.usuariosDao.delRole(email, role)
+            return new UsuarioDto(dto);
+        }
+        catch(err)
+        {
+            logger.error(`Error in Saving user: ${err}`);
+            throw (err);
+        }
+    }
+
+    async enviarMailNuevoRegistro(user) {
+
+        const asunto = 'Nuevo usuario'
+        let mailto
+    
+        try {
+            const lista = await this.usuariosDao.listar({ admin: true });
+    
+            if (lista.count == 0)
+                return;
+    
+            lista.forEach(element => {
+    
+                if (mailto == undefined)
+                    mailto = element.email
+                else
+                    mailto = mailto + ',' + element.email
+            });
+    
+            const cuerpo = `Estimados Admins <br/>le informamos un nuevo registro usuario <b>${user.username}</b> nombre <b>${user.firstName}</b><br/><br/> Atte. Obrero del bits`
+            await enviarCorreo(mailto, asunto, cuerpo)
+    
+        } catch (err) { logger.error(`fallo el envio de mail error:${err}`) }
+    }
+
 }
 
-async function enviarMailRegistro(user) {
 
-    const asunto = 'Nuevo usuario'
-    let mailto
-
-    try {
-        const lista = await this.usuariosDao.listar({ admin: true });
-
-        if (lista.count == 0)
-            return;
-
-        lista.forEach(element => {
-
-            if (mailto == undefined)
-                mailto = element.email
-            else
-                mailto = mailto + ',' + element.email
-        });
-
-        const cuerpo = `Estimados Admins <br/>le informamos un nuevo registro usuario <b>${user.username}</b> nombre <b>${user.firstName}</b><br/><br/> Atte. Obrero del bits`
-        await enviarCorreo(mailto, asunto, cuerpo)
-
-    } catch (err) { logger.error(`fallo el envio de mail error:${err}`) }
-
-}

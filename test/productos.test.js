@@ -9,20 +9,34 @@ let cookies
 let server
 
 const producto = {
-    codigo: 'testin',
-    nombre: 'producto de prueba',
-    descripcion: 'producto de prueba generado desde mocha',
-    precio: 14.224,
-    stock: 200
+    "codigo": "reg45",
+    "nombre": "regla",
+    "descripcion": "regla 45°",
+    "precio": 14.2,
+    "stock": 200,
+    "categoria": "utiles",
+    "caracteristicas": [
+        { "tipo": "color", "valor": "verde" },
+        { "tipo": "material", "valor": "plastico" }
+    ]
 };
 
 const user = {
-    username: 'r02',
-    password: '123'
+    "email": "ro1_test@mail.com",
+    "username": "ro1_test",
+    "password": "123456",
+    "firstname": "rod",
+    "lastname": "olfo",
+    "avatar": "https://avatars.githubusercontent.com/u/91162843?v=4"
 }
+
 const admin = {
-    username: 'admin',
-    password: '123'
+    "email": "admin_test@mail.com",
+    "username": "admin_test",
+    "password": "123456",
+    "firstname": "rod",
+    "lastname": "olfo",
+    "avatar": "https://avatars.githubusercontent.com/u/91162843?v=4"
 }
 
 describe('Pruebas APIRestFull Productos', () => {
@@ -32,12 +46,9 @@ describe('Pruebas APIRestFull Productos', () => {
         request = supertest(`http://localhost:${server.address().port}`)
     })
 
-    after(async function () {
-        await server.close()
 
-    })
 
-    describe('Pruebas sin estar logeado',  function(){
+    describe('Pruebas sin estar logeado', function () {
 
         it('debería retornar un status 200', async () => {
             const response = await request.get('/productos/')
@@ -51,66 +62,87 @@ describe('Pruebas APIRestFull Productos', () => {
 
     })
 
+    describe('creo un usuario sin perfil', function () {
 
-    describe('Pruebas con login usuario ', function() {
-
-        beforeEach( async function () {
-            response = await request.post('/login').send(user)
-            expect(response.status).to.eql(200)
-
-            // recupero las cookies del response del login 
-            cookies = response.headers["set-cookie"].pop().split(";")[0];
-
-        })
-    
-        afterEach(async function () {
-            response =await request.get('/logout').set("Cookie", [cookies])
+        it('debería retornar un status 200', async () => {
+            response = await request.post('/signup/').send(user)
             expect(response.status).to.eql(200)
         })
 
-        it('debería retornar un status 403', async function()  {
-            response =await request.post('/productos').set("Cookie", [cookies]).send(producto)
-            expect(response.status).to.eql(403)
-        })
+         console.log(response);
+        
+
+
+
+        // it('debería retornar un status 401', async () => {
+        //     const response = await request.post(`/productos/`).send(producto)
+        //     expect(response.status).to.eql(401)
+        // })
+
     })
 
-    describe('Pruebas con login Admin', function(){
-
-        beforeEach( async function () {
-            response = await request.post('/login').send(admin)
-            expect(response.status).to.eql(200)
-
-            // recupero las cookies del response del login 
-            cookies = response.headers["set-cookie"].pop().split(";")[0];
-        })
-    
-        afterEach(async function () {
-            response =await request.get('/logout').set("Cookie", [cookies])
-            expect(response.status).to.eql(200)
-        })
-
-        it('Crear un producto debería retornar un status 200', async function() {
-            response =await request.post('/productos').set("Cookie", [cookies]).send(producto)
-            producto.id = response.body.id
-            expect(response.status).to.eql(200)
-        })
-        it('Modificar un debería retornar un status 200', async function() {
-            producto.stock = 150
-            response =await request.put(`/productos/${producto.id}`).set("Cookie", [cookies]).send(producto)
-            expect(response.status).to.eql(200)
-        })
-        it('obtener el producto modificado debería retornar un status 200', async function() {
-            response =await request.get(`/productos/${producto.id}`).set("Cookie", [cookies])
-            expect(response.status).to.eql(200)
-            expect(response.body.stock).to.eql(150)
-        })
-
-        it('eliminar el producto modificado debería retornar un status 200', async function() {
-            response =await request.delete(`/productos/${producto.id}`).set("Cookie", [cookies])
-            expect(response.status).to.eql(200)
-        })
-
+    after(async function () {
+        await server.close()
     })
+    // describe('Pruebas con login usuario ', function () {
+
+    //     beforeEach(async function () {
+    //         response = await request.post('/login').send(user)
+    //         expect(response.status).to.eql(200)
+
+    //         // recupero las cookies del response del login 
+    //         cookies = response.headers["set-cookie"].pop().split(";")[0];
+
+    //     })
+
+    //     afterEach(async function () {
+    //         response = await request.get('/logout').set("Cookie", [cookies])
+    //         expect(response.status).to.eql(200)
+    //     })
+
+    //     it('debería retornar un status 403', async function () {
+    //         response = await request.post('/productos').set("Cookie", [cookies]).send(producto)
+    //         expect(response.status).to.eql(403)
+    //     })
+    // })
+
+    // describe('Pruebas con login Admin', function () {
+
+    //     beforeEach(async function () {
+    //         response = await request.post('/login').send(admin)
+    //         expect(response.status).to.eql(200)
+
+    //         // recupero las cookies del response del login 
+    //         cookies = response.headers["set-cookie"].pop().split(";")[0];
+    //     })
+
+    //     afterEach(async function () {
+    //         response = await request.get('/logout').set("Cookie", [cookies])
+    //         expect(response.status).to.eql(200)
+    //     })
+
+    //     it('Crear un producto debería retornar un status 200', async function () {
+    //         response = await request.post('/productos').set("Cookie", [cookies]).send(producto)
+    //         producto.id = response.body.id
+    //         expect(response.status).to.eql(200)
+    //     })
+    //     it('Modificar un debería retornar un status 200', async function () {
+    //         producto.stock = 150
+    //         response = await request.put(`/productos/${producto.id}`).set("Cookie", [cookies]).send(producto)
+    //         expect(response.status).to.eql(200)
+    //     })
+    //     it('obtener el producto modificado debería retornar un status 200', async function () {
+    //         response = await request.get(`/productos/${producto.id}`).set("Cookie", [cookies])
+    //         expect(response.status).to.eql(200)
+    //         expect(response.body.stock).to.eql(150)
+    //     })
+
+    //     it('eliminar el producto modificado debería retornar un status 200', async function () {
+    //         response = await request.delete(`/productos/${producto.id}`).set("Cookie", [cookies])
+    //         expect(response.status).to.eql(200)
+    //     })
+
+    // })
 
 })
 

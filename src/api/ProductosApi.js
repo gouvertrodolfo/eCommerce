@@ -8,8 +8,10 @@ export default class ProductosApi {
     }
 
     async agregar(prodParaAgregar) {
-        const prodAgregado = await this.productosDao.add(prodParaAgregar);
-        return prodAgregado;
+        
+        const producto = new ProductoDto(prodParaAgregar)
+        await this.productosDao.add(producto);
+        return producto;
     }
 
     async listar(){
@@ -17,38 +19,45 @@ export default class ProductosApi {
         return productos
     }
 
-    async Obtener(codigo) {
-
-        const dot = await this.productosDao.getById({codigo: codigo})
+    async Obtener(id) {
+        const dot = await this.productosDao.getById(id )
         return new ProductoDto(dot)
     }
 
 
-    modificar(data) {
+    async modificar(data) {
 
-    //     const { nombre, descripcion, precio, thumbnail, stock } = data
+        await this.productosDao.update(data)
 
-    //     this.timestamp = Date.now()
-
-    //     if (nombre != undefined) {
-    //         this.nombre = nombre;
-    //     }
-    //     if (descripcion != undefined) {
-    //         this.descripcion = descripcion;
-    //     }
-    //     if (precio != undefined) {
-    //         this.precio = precio
-    //     }
-    //     if (stock != undefined) {
-    //         this.stock = stock
-    //     }
-
-    //     contenedor.update(this)
+        const dot = await this.productosDao.getById( data.id )
+        return new ProductoDto(dot)
     }
 
-    async borrar(codigo)
+    async borrar(id)
     {
-        await this.productosDao.deleteById(codigo)
+        await this.productosDao.deleteById(id)
+    }
+
+
+    async existe(producto)
+    //TODO
+
+    {
+        try{
+            const arrayProductos = buscarXNombre(producto.nombre);
+            if(arrayProductos.lenght == 0)
+                return false
+            else
+            {
+                arrayProductos.forEach(element => {
+                    element.caracteristicas.forEach()
+                });
+            }
+        }catch(err)
+        {
+            throw new CustomError(500, `error al obtener todos los registros de la coleccion ${this.coleccionName}`, err)
+        }
+
     }
 
 }

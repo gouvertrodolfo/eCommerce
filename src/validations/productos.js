@@ -2,10 +2,6 @@ import Joi from 'joi'
 
 const schema = Joi.object(
     {
-        codigo: Joi.string()
-            .min(5)
-            .max(20)
-            .required(),
         nombre: Joi.string()
             .required(),
         descripcion: Joi.string()
@@ -17,8 +13,12 @@ const schema = Joi.object(
         stock: Joi.number()
             .integer()
             .positive()
-            .required()
-
+            .required(),
+        categoria: Joi.string(),
+        caracteristicas: Joi.array().items( Joi.object(
+            {tipo: Joi.string().required(), valor: Joi.string().required() }
+            )
+        )
     }
 )
 

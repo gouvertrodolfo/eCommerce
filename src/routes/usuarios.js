@@ -2,10 +2,9 @@ import { Router } from 'express'
 import passport from '../controller/passport.js'
 import {validaUser} from '../controller/usuarios.js'
 
-import { responseToken, getfailloginController, getfailsignupController, getlogoutController, AgregarRole } from '../controller/usuarios.js'
+import { responseToken, getfailloginController, getfailsignupController, getlogoutController, AgregarRole, EliminarRole } from '../controller/usuarios.js'
 
 const routesUsuarios = new Router();
-
 
 routesUsuarios.post('/login',  passport.authenticate('login', {session: false, failureRedirect: '/faillogin' }), responseToken);
 
@@ -16,8 +15,8 @@ routesUsuarios.get('/failsignup', getfailsignupController)
 
 routesUsuarios.get('/logout', getlogoutController)
 
-routesUsuarios.put('/usuarios/roles', AgregarRole)
-
+routesUsuarios.post('/usuarios/role', AgregarRole)
+routesUsuarios.delete('/usuarios/role', EliminarRole)
 
 export default routesUsuarios 
 

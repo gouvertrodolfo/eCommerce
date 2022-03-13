@@ -7,6 +7,16 @@ export default class UsuariosDao extends ContenedorDao {
     super('usuarios')
   }
 
+  async getByEmail(email)
+  {
+    return super.getById({email:email})
+  }
+
+  async getByUsername(username)
+  {
+    return super.getById({username:username})
+  }
+
   async addRole(email, role) {
 
     await this.collection.updateOne(
@@ -20,7 +30,7 @@ export default class UsuariosDao extends ContenedorDao {
 
     await this.collection.updateOne(
       { email: email },
-      { '$pull': { roles: { role: { $eq: role } } } })
+      { '$pull': { roles:  { $eq: role }  } })
 
     return await super.getById({email:email})
 

@@ -16,7 +16,7 @@ routesProductos.get('/:productoId', controller.buscar);
 routesProductos.post('/', passport.authenticate('jwt', { session: false }), isAdmin,  controller.crear);
 
 // c. PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
-routesProductos.put('/:productoId', passport.authenticate('jwt', { session: false }), isAdmin, controller.actualizar);
+routesProductos.put('/', passport.authenticate('jwt', { session: false }), isAdmin, controller.actualizar);
 
 // d. DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
 routesProductos.delete('/:productoId', passport.authenticate('jwt', { session: false }), isAdmin, controller.borrar);

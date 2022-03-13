@@ -31,31 +31,46 @@ export default class ContenedorDao {
         let buscado
         try {
             buscado = await this.collection.findOne(query);
-            
         }
         catch (err) {
             logger.error(err)
-            throw new CustomError(500, 'error al obtener un registro por codigo', err)
+            throw new CustomError(500, `error al obtener un Documento por codigo en la coleccion ${this.coleccionName}`, err)
         }
 
         if (!buscado) {
-           throw new CustomError(404, `registro no encontrado con ese ${JSON.stringify(query)}`)
+            throw new CustomError(404, `Documento no encontrado con ese ${JSON.stringify(query)}`)
         }
         return buscado
+    }
+
+    async listByQuery(query){
+        try {
+            const array = await this.collection.find(query).toArray()
+            return array
+        }
+        catch (err) {
+            throw new CustomError(500, `error al obtener todos los registros de la coleccion ${this.coleccionName}`, err)
+        }
 
     }
 
+
     async add(data) {
-        const { insertedId } = await this.collection.insertOne(data)
-        return insertedId;
+        try {
+            const { insertedId } = await this.collection.insertOne(data)
+            return insertedId;
+        }
+        catch (err) {
+            throw new CustomError(500, `error al Agregar un documento mongo en la coleccion ${this.coleccionName}`, err)
+        }
     }
 
     async deleteById(query) {
-        this.collection.deleteOne({ codigo: codigo }, function (err, obj) {
-          if (err)
-            throw new CustomError(500, 'error al obtener todos los productos', err)
-          logger.error("1 document deleted");
+        await this.collection.deleteOne(query, function (err, obj) {
+            if (err) {
+                throw new CustomError(500, `error al obtener todos los documento de la coleccion ${this.coleccionName}`, err)
+            }
         });
-      }
+    }
 
 }

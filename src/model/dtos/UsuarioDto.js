@@ -1,7 +1,7 @@
 import bCrypt from 'bcrypt';
 
 export default class UsuarioDto {
-    _id;
+
     roles;
     password;
     email;
@@ -31,7 +31,7 @@ export default class UsuarioDto {
     }
 
     get() {
-        
+       
         return {
             email:this.email,
             username:this.username,
@@ -42,6 +42,7 @@ export default class UsuarioDto {
         }
     }
 
+
     isValidPassword(password) {
         return bCrypt.compareSync(password, this.password);
     }
@@ -49,6 +50,7 @@ export default class UsuarioDto {
 }
 
 function createHash(password) {
+    console.log('createHash')
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 }
 
