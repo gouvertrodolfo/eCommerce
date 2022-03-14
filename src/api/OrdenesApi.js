@@ -1,17 +1,17 @@
-import CarritosDao from '../model/daos/CarritosDao.js';
-import CarritoDto from '../model/dtos/CarritoDto.js';
-import ProductosApi from './ProductosApi.js';
+import OrdenesDao from '../model/daos/OrdenesDao.js';
+import OrdenDto from '../model/dtos/OrdenDto.js';
 
+import carritosApi from './CarritosApi.js'
 
-export default class CarritosApi {
+export default class OrdenesApi {
 
     constructor() {
-        this.carritosDao = new CarritosDao();
+        this.ordenesDao = new OrdenesDao();
     }
 
     async agregar(email) {
 
-        const carrito = new CarritoDto({ email })
+        const carrito  =await carritosApi.obtener(email);
 
         carrito._id = await this.carritosDao.add(carrito);
 
@@ -58,25 +58,8 @@ export default class CarritosApi {
         await this.carritosDao.delete(email)
     }
 
-    async confirmar(email){
-        const carrito = await this.obtener(email);
-
-        if(carrito.productos.length === 0)
-            throw new CustomError(400, `No se puede confirmar un carrito sin productos`, err)
-
-        carrito.productos.forEach(async element => {
-            ProductosApi.descontarStock(element.id, element.cantidad)
-        })
-
-        await this.carritosDao.delete(email)
-
-        return carrito;
+    async borrar(codigo) {
+        await this.productosDao.deleteById(codigo)
     }
 
 }
-
-
-
-
-
-

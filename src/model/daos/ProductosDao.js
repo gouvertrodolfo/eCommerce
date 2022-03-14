@@ -40,6 +40,27 @@ export default class ProductosDao extends ContenedorDao {
     }
   }
 
+  async updateStock({ id, stock }) {
+
+    try {
+      await this.collection.updateOne(
+        {
+          id: id
+        },
+        {
+          '$set':
+          {
+            stock: stock
+          }
+        })
+
+    } catch (err) {
+      logger.error(err)
+      throw new CustomError(500, 'error al moduficar un producto por codigo', err)
+    }
+  }
+
+
   async getById(id) {
     return await super.getById({ id: id })
   }
@@ -49,7 +70,7 @@ export default class ProductosDao extends ContenedorDao {
     return await super.deleteById({ id: id })
   }
 
-  async buscarXNombre(nombre){
+  async buscarXNombre(nombre) {
     return await super.listByQuery({ nombre: nombre })
   }
 

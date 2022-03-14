@@ -1,28 +1,23 @@
 export default class CarritoDto {
   _id;
   email;
-  listaProductos;
+  productos;
   timestamp;
 
-  constructor({ email, _id, timestamp, listaProductos }) {
+  constructor({ email, _id, timestamp, productos }) {
     this.email = email
     if (_id == undefined) {
-        this.timestamp = Date.now();
-        this.listaProductos = [];
+      this.timestamp = Date.now();
+      this.productos = [];
     }
-    else{
-        this._id = _id; 
-        this.timestamp = timestamp;
-        this.listaProductos = listaProductos;
+    else {
+      this._id = _id;
+      this.timestamp = timestamp;
+      this.productos = productos;
     }
   }
 
-  static fromJson(json) {
-    const datos = JSON.parse(json)
-    return new ProductoDto(datos)
-  }
-
-  toJson() {
-    return JSON.stringify(this)
+  get() {
+    return this
   }
 }

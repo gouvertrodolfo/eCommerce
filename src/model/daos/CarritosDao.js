@@ -11,10 +11,24 @@ export default class CarritosDao extends ContenedorDao {
 
     await this.collection.updateOne(
       { email: email },
-      {'$push': { productos: producto } })
+      { '$push': { productos: producto } })
 
-    return await super.getById({email:email})
+    return await super.getById({ email: email })
   }
 
+
+  async delProducto(email, id) {
+
+    await this.collection.updateOne(
+      { email: email },
+      { '$pull': { productos: { id: { $eq: id } } } }
+    )
+
+    return await super.getById({ email: email })
+  }
+
+  async delete(email){
+    await super.deleteById({email : email})
+  }
 
 }

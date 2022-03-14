@@ -24,9 +24,7 @@ export default class ProductosApi {
         return new ProductoDto(dot)
     }
 
-
     async modificar(data) {
-
         await this.productosDao.update(data)
 
         const dot = await this.productosDao.getById( data.id )
@@ -38,26 +36,9 @@ export default class ProductosApi {
         await this.productosDao.deleteById(id)
     }
 
-
-    async existe(producto)
-    //TODO
-
-    {
-        try{
-            const arrayProductos = buscarXNombre(producto.nombre);
-            if(arrayProductos.lenght == 0)
-                return false
-            else
-            {
-                arrayProductos.forEach(element => {
-                    element.caracteristicas.forEach()
-                });
-            }
-        }catch(err)
-        {
-            throw new CustomError(500, `error al obtener todos los registros de la coleccion ${this.coleccionName}`, err)
-        }
-
+    async descontarStock(id, cantidad){
+        const producto = await this.Obtener(id)
+        await this.productosDao.updateStock(id,producto.stock - cantidad ) 
     }
 
 }
