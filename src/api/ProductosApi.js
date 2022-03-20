@@ -37,7 +37,9 @@ export default class ProductosApi {
     }
 
     async descontarStock(id, cantidad){
+        
         const producto = await this.Obtener(id)
+console.log(producto)        
         await this.productosDao.updateStock(id,producto.stock - cantidad ) 
     }
 

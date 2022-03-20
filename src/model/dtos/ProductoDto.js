@@ -40,6 +40,16 @@ export default class ProductoDto {
     return this
   }
 
+  getforCarrito(){
+    console.log('getforCarrito')
+    return {
+      id: this.id,
+      nombre: this.nombre,
+      precio: this.precio,
+      caracteristicas : this.caracteristicas,
+      cantidad: this.cantidad
+    }
+  }
 
 
 }

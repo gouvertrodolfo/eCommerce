@@ -40,7 +40,7 @@ export default class ProductosDao extends ContenedorDao {
     }
   }
 
-  async updateStock({ id, stock }) {
+  async updateStock( id, stock ) {
 
     try {
       await this.collection.updateOne(

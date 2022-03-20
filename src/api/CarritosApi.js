@@ -1,5 +1,6 @@
 import CarritosDao from '../model/daos/CarritosDao.js';
 import CarritoDto from '../model/dtos/CarritoDto.js';
+import ProductoDto from '../model/dtos/ProductoDto.js';
 import ProductosApi from './ProductosApi.js';
 
 const productosApi = new ProductosApi();
@@ -34,7 +35,10 @@ export default class CarritosApi {
         }
     }
 
-    async agregarProducto(email, producto, cantidad) {
+    async agregarProducto(email, dataProducto, cantidad) {
+        
+        const producto = new ProductoDto(dataProducto)
+
         producto.cantidad = cantidad
 
         const carrito = await this.obtener(email)
@@ -43,9 +47,7 @@ export default class CarritosApi {
                 await this.quitarProducto(email, producto.id)
         });
 
-
-
-        const dot = await this.carritosDao.addProducto(email, producto)
+        const dot = await this.carritosDao.addProducto(email, producto.getforCarrito())
         return new CarritoDto(dot)
     }
 
