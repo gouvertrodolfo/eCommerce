@@ -6,7 +6,7 @@ import schema from '../validations/usuarios.js'
 
 const usuarios = new UsuariosApi();
 
-export async function SignUp(req, email, password, done) {
+export async function mdwSignUp(req, email, password, done) {
 
     try {
         const data = await schema.validateAsync(req.body)
@@ -20,7 +20,7 @@ export async function SignUp(req, email, password, done) {
     }
 }
 
-export async function login(email, password, done) {
+export async function mdwlogin(email, password, done) {
 
     logger.info(`usuarios controller login email: ${email} `)
 
@@ -35,14 +35,14 @@ export async function login(email, password, done) {
 
 };
 
-export async function responseToken(req, res) {
+export async function postlogin(req, res) {
     const user = req.user;
     const token = jwt.sign({ user: user }, jwtOpts.secretOrKey, { expiresIn: jwtOpts.expireIn });
 
     res.status(200).json({ token })
 }
 
-export function validateToken(token, cb) {
+export function mdwValidateToken(token, cb) {
 
     if (token.exp < Math.floor(Date.now() / 1000)) {
         logger.warn('token caducado')
@@ -60,14 +60,8 @@ export function getfailsignupController(req, res) {
     res.status(400).json({ descripcion: req.error })
 }
 
-export function getlogoutController(req, res) {
-    req.session.destroy(err => {
-        if (!err) res.status(200).json({ 'status': 'ok' })
-        else res.status(500).send({ status: 'Logout ERROR', body: err })
-    })
-}
 
-export function isAdmin(req, res, next) {
+export function mdwIsAdmin(req, res, next) {
    
     let isAdmin = false
    
@@ -82,12 +76,12 @@ export function isAdmin(req, res, next) {
         res.status(403).json({ error: `${req.user.username} ruta no autorizada` })
 }
 
-export async function AgregarRole(req, res) {
+export async function postRole(req, res) {
     const user = await usuarios.AgregarRole(req.body.email, req.body.role);
     res.status(201).json(user.get())
 }
 
-export async function EliminarRole(req, res) {
+export async function deleteRole(req, res) {
     const user = await usuarios.EliminarRole(req.body.email, req.body.role);
     res.status(204).json(user.get())
 }

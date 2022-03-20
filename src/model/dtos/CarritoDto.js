@@ -13,8 +13,13 @@ export default class CarritoDto {
     else {
       this._id = _id;
       this.timestamp = timestamp;
-      this.productos = productos;
     }
+
+    if (productos == undefined)
+      this.productos = [];
+    else
+      this.productos = productos;
+
   }
 
   get() {

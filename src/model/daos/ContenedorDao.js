@@ -38,7 +38,7 @@ export default class ContenedorDao {
         }
 
         if (!buscado) {
-            throw new CustomError(404, `Documento no encontrado con ese ${JSON.stringify(query)}`)
+            throw new CustomError(404, `Documento no encontrado en ${this.coleccionName} con ese ${JSON.stringify(query)}`)
         }
         return buscado
     }

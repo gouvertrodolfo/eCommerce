@@ -5,7 +5,14 @@ import passport from '../controller/passport.js';
 
 const routesOrdenes = express.Router()
 
-routesOrdenes.get('/', passport.authenticate('jwt', { session: false }), ctrl.finalizar);   
-routesOrdenes.post('/', passport.authenticate('jwt', { session: false }), ctrl.finalizar);   
+/* GET lista de ordenes del usuario. */
+routesOrdenes.get('/',
+    passport.authenticate('jwt', { session: false }),
+    ctrl.obtener);
 
-export default  routesOrdenes;
+/* POST ordenes listing. */
+routesOrdenes.post('/',
+    passport.authenticate('jwt', { session: false }),
+    ctrl.agregar);
+
+export default routesOrdenes;

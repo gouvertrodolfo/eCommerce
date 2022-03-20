@@ -1,7 +1,9 @@
 import OrdenesDao from '../model/daos/OrdenesDao.js';
 import OrdenDto from '../model/dtos/OrdenDto.js';
 
-import carritosApi from './CarritosApi.js'
+import CarritosApi from './CarritosApi.js'
+
+const carritoApi = new CarritosApi();
 
 export default class OrdenesApi {
 
@@ -11,9 +13,9 @@ export default class OrdenesApi {
 
     async agregar(email) {
 
-        const carrito  =await carritosApi.obtener(email);
+        const carrito = await carritoApi.confirmar(email);
 
-        carrito._id = await this.carritosDao.add(carrito);
+        carrito._id = await this.ordenesDao.add(carrito);
 
         return carrito;
     }
@@ -33,13 +35,15 @@ export default class OrdenesApi {
         }
     }
 
+    /*
+
     async agregarProducto(email, producto, cantidad) {
         producto.cantidad = cantidad
 
         const carrito = await this.obtener(email)
 
         carrito.productos.forEach(async element => {
-            if( element.id === producto.id)
+            if (element.id === producto.id)
                 await this.quitarProducto(email, producto.id)
         });
 
@@ -54,12 +58,12 @@ export default class OrdenesApi {
 
     }
 
-    async eliminar(email){
+    async eliminar(email) {
         await this.carritosDao.delete(email)
     }
 
     async borrar(codigo) {
         await this.productosDao.deleteById(codigo)
     }
-
+*/
 }

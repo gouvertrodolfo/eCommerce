@@ -1,44 +1,22 @@
 import OrdenesApi from '../api/OrdenesApi.js'
-const ordenes = new OrdenesApi();
-
-
-export async function mdwValidarAddProducto(req, res, next) {
-    let data
-    try {
-        data = await schemaAddProducto.validateAsync(req.body)
-    } catch (err) {
-        res.status(400).json({ descripcion: err })
-    }
-
-    try {
-        const producto = await productos.Obtener(data.id)
-        req.producto = producto
-        req.cantidad = data.cantidad
-        next()
-    }
-    catch (err) { 
-        console.log(err)
-        res.status(err.estado).json(err) 
-    }
-}
-export async function mdwValidarDelProducto(req, res, next) {
-    let data
-    try {
-        data = await schemaDelProducto.validateAsync(req.body)
-    } catch (err) {
-        res.status(400).json({ descripcion: err })
-    }
-
-    req.producto_id = data.id
-    next()
-}
+const ordenesApi = new OrdenesApi();
 
 export async function obtener(req, res) {
     const { email } = req.user
 
     try {
-        const orden = await ordenes.obtener(email)
-        res.status(200).json(carrito)
+        const orden = await ordenesApi.obtener(email)
+        res.status(200).json(orden)
+    } catch (err) {
+        res.status(err.estado).json(err)
+    }
+}
+export async function agregar(req, res) {
+    const { email } = req.user
+
+    try {
+        const orden = await ordenesApi.agregar(email)
+        res.status(201).json(orden)
     } catch (err) {
         res.status(err.estado).json(err)
     }

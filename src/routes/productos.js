@@ -1,6 +1,6 @@
 import express from 'express'
 import passport from '../controller/passport.js'
-import { isAdmin } from '../controller/usuarios.js'
+import { mdwIsAdmin } from '../controller/usuarios.js'
 import * as controller from  '../controller/productos.js'
 /* ------------------------------------------------------ */
 
@@ -13,12 +13,12 @@ routesProductos.get('/', controller.listar);
 routesProductos.get('/:productoId', controller.buscar);
 
 // b. POST: '/' - Para incorporar productos al listado (disponible para administradores)
-routesProductos.post('/', passport.authenticate('jwt', { session: false }), isAdmin,  controller.crear);
+routesProductos.post('/', passport.authenticate('jwt', { session: false }), mdwIsAdmin,  controller.crear);
 
 // c. PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
-routesProductos.put('/', passport.authenticate('jwt', { session: false }), isAdmin, controller.actualizar);
+routesProductos.put('/', passport.authenticate('jwt', { session: false }), mdwIsAdmin, controller.actualizar);
 
 // d. DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
-routesProductos.delete('/:productoId', passport.authenticate('jwt', { session: false }), isAdmin, controller.borrar);
+routesProductos.delete('/:productoId', passport.authenticate('jwt', { session: false }), mdwIsAdmin, controller.borrar);
 
 export default routesProductos;
