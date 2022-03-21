@@ -43,6 +43,11 @@ export default class UsuariosApi {
         return usuario.get();
     }
 
+    async getAllAdmin(){
+        const array = await this.UsuariosDao.getAllAdmin()
+        return array;
+    }
+
     async login(email, password){
         try{
             const usuario = await this.recuperar(email)
