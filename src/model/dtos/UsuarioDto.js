@@ -50,7 +50,6 @@ export default class UsuarioDto {
 }
 
 function createHash(password) {
-    console.log('createHash')
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 }
 

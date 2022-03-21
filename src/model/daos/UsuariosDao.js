@@ -36,7 +36,7 @@ export default class UsuariosDao extends ContenedorDao {
 
   }
 
-  async getallAdmin()
+  async getAllAdmin()
   {
       return await super.listByQuery({ roles : {$elemMatch: {$eq:'Admin'}} })
   }

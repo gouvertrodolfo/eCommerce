@@ -3,9 +3,14 @@ import OrdenDto from '../model/dtos/OrdenDto.js';
 
 import CarritosApi from './CarritosApi.js'
 import UsuariosApi from './UsuariosApi.js'
+import logger from '../logger.js';
+import { enviarCorreo } from './Mensajeria.js'
+
 
 const carritoApi = new CarritosApi();
 const usuariosApi = new UsuariosApi();
+
+
 
 export default class OrdenesApi {
 
@@ -80,7 +85,7 @@ export default class OrdenesApi {
         let mailto
 
         try {
-            const lista = await this.usuariosApi.getallAdmin()
+            const lista = await usuariosApi.getAllAdmin()
 
             if (lista.count == 0)
                 return;

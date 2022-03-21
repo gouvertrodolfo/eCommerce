@@ -44,7 +44,7 @@ export default class UsuariosApi {
     }
 
     async getAllAdmin(){
-        const array = await this.UsuariosDao.getAllAdmin()
+        const array = await this.usuariosDao.getAllAdmin()
         return array;
     }
 
@@ -114,9 +114,9 @@ export default class UsuariosApi {
         let mailto
     
         try {
-            const lista = await this.usuariosDao.listar({ admin: true });
-    
-            if (lista.count == 0)
+            const lista = await this.getAllAdmin();
+
+            if (lista.length == 0)
                 return;
     
             lista.forEach(element => {

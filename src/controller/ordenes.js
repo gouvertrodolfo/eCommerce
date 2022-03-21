@@ -8,6 +8,7 @@ export async function obtener(req, res) {
         const orden = await ordenesApi.obtener(email)
         res.status(200).json(orden)
     } catch (err) {
+
         res.status(err.estado).json(err)
     }
 }
