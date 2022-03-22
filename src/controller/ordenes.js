@@ -19,6 +19,7 @@ export async function agregar(req, res) {
         const orden = await ordenesApi.agregar(email)
         res.status(201).json(orden)
     } catch (err) {
+        console.log(err)
         res.status(err.estado).json(err)
     }
 }

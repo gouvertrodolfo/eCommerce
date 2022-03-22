@@ -3,6 +3,7 @@ import CarritoDto from '../model/dtos/CarritoDto.js';
 import ProductoDto from '../model/dtos/ProductoDto.js';
 import ProductosApi from './ProductosApi.js';
 import CustomError from '../errores/CustomError.js';
+import logger from '../logger.js';
 
 const productosApi = new ProductosApi();
 
@@ -37,7 +38,7 @@ export default class CarritosApi {
     }
 
     async agregarProducto(email, dataProducto, cantidad) {
-        
+
         const producto = new ProductoDto(dataProducto)
 
         producto.cantidad = cantidad
@@ -69,9 +70,13 @@ export default class CarritosApi {
         if (carrito.productos.length == 0)
             throw new CustomError(400, `No se puede confirmar un carrito sin productos`)
 
-        carrito.productos.forEach(async element => {
-            productosApi.descontarStock(element.id, element.cantidad)
-        })
+        for (const producto of carrito.productos) {
+            await productosApi.validarStock(producto.id, producto.cantidad)
+        }
+
+        for (const producto of carrito.productos) {
+            await productosApi.descontarStock(producto.id, producto.cantidad)
+        }
 
         await this.carritosDao.delete(email)
 

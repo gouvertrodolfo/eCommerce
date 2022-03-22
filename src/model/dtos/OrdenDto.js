@@ -8,21 +8,23 @@ export default class CarritoDto {
   fechayhora;
   Estado;
 
-  constructor({ id, email, _id, fechayhora, items, productos }) {
+  constructor({ id, email, _id, fechayhora, items }) {
     this.email = email
+    this.items = items;
 
     if (_id == undefined) {
 
       this.id = NUID.next();
       this.fechayhora = Date.now();
-      this.items = productos;
     }
     else {
       this._id = _id;
       this.id = id;
       this.fechayhora = fechayhora;
-      this.items = items;
     }
+
+
+
   }
 
   get() {

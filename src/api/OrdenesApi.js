@@ -22,13 +22,12 @@ export default class OrdenesApi {
     async agregar(email) {
 
         const carrito = await carritoApi.confirmar(email);
-        const orden = new OrdenDto(carrito)
-
+        const orden = new OrdenDto( {email: carrito.email, items: carrito.productos})
         await this.ordenesDao.add(orden);
 
         this.enviarMailNuevaOrden(orden)        
 
-        return carrito;
+        return orden;
     }
 
     async obtener(email) {
