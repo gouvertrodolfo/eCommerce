@@ -51,11 +51,11 @@ export function mdwValidateToken(token, cb) {
     else return cb(null, token.user);
 }
 
-export function getfailloginController(req, res) {
+export function getfaillogin(req, res) {
     res.status(401).json({ "descripcion": "username o contraseña incorrecta" })
 }
 
-export function getfailsignupController(req, res) {
+export function getfailsignup(req, res) {
 
     res.status(400).json({ descripcion: req.error })
 }
