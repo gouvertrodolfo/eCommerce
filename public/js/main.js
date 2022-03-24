@@ -1,67 +1,34 @@
-crearCarrito()
-cargarProductos()
+const socket = io.connect();
 
-async function cargarProductos() {
-    const [ plantilla, listaProductos ] = await Promise.all([ buscarPlantilla('ListadoProductos'), buscarProductos() ])
+function addMessage(e) {
 
-    const html = armarHTML(plantilla, listaProductos)
-    document.getElementById('productos').innerHTML = html
+    const mensaje = {
+            author: {
+                correo: document.getElementById('correo').value,
+            },
+        text: document.getElementById('texto').value
+    };
+    document.getElementById('texto').value = ''
+    socket.emit('nuevoMensaje', mensaje);
+    return false;
 }
 
-async function crearCarrito() {
 
-    return fetch('/carritos/',{method: "POST"} )
-    .then(response => response.json())
-    .then(data => sessionStorage.setItem('IdCarrito', data))
-    
-}
+socket.on('mensajes', async msjs => {
+    /*********************************************************************************** */
 
-function buscarProductos() {
-    return fetch('/productos/' )
-        .then(response => response.json())
-}
+    const plantilla = await buscarPlantillaMensajes()
+    const html = armarHTML(plantilla, msjs)
+    document.getElementById('messages').innerHTML = html;
+});
 
-function buscarPlantilla(name) {
-    return fetch(`/plantillas/${name}.ejs`)
+function buscarPlantillaMensajes() {
+    return fetch('/plantillas/mensaje.ejs')
         .then(respuesta => respuesta.text())
 }
 
-function armarHTML(plantilla, listaProductos) {
+function armarHTML(plantilla, data) {
     const render = ejs.compile(plantilla);
-    const html = render({ listaProductos })
+    const html = render({ data })
     return html
 }
-
-async function AddCarrito(params){
-
-    let idProd = params
-
-    const [ plantilla, {listaProductos} ] = await Promise.all([ buscarPlantilla('carrito'), AddProduAlCarrito(idProd) ])
-
-    const html = armarHTML(plantilla, listaProductos)
-    document.getElementById('productos').innerHTML = html
-
-}
-
-async function verCarrito(){
-
-    const [ plantilla, listaProductos ] = await Promise.all([ buscarPlantilla('carrito'), GetProdCarrito() ])
-
-    const html = armarHTML(plantilla, listaProductos)
-    document.getElementById('productos').innerHTML = html
-}
-
-function AddProduAlCarrito(idProd) {
-   
-    let idCarrito = sessionStorage.getItem('IdCarrito');
-    return fetch('/Carritos/'+idCarrito+'/productos/'+idProd,{method: "POST"})
-         .then(response => response.json())
-}
-
-function GetProdCarrito(params) {
-    let idCarrito = sessionStorage.getItem('IdCarrito');
-
-    return fetch('/Carritos/'+idCarrito+'/productos',{method: "GET"})
-         .then(response => response.json())
-}
-

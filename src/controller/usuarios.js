@@ -87,7 +87,7 @@ export async function deleteRole(req, res) {
 }
 
 
-export async function validaUser(req, res, next) {
+export async function mdwValidaUser(req, res, next) {
     let data
     try {
         data = await schema.validateAsync(req.body)

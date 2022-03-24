@@ -1,23 +1,18 @@
 /**************************************************************************************** */
-const Chat = require('../api/Chat')
+import Chat from './api/Chat.js'
 const chat = new Chat();
 /**************************************************************************************** */
 
 class mySocket{
 
     constructor(io) {
-
         this.io = io
-
     };
 
     CrearInstancia() {
 
-        // Definimos un esquema de mensaje
-        const mensajes_schema = new schema.Array(mensaje_schema);
-
+        
         this.io.on('connection', async socket => {
-
             let mensajes = await chat.getAll();
 
             /* Envio los mensajes al cliente que se conectó */
@@ -31,8 +26,6 @@ class mySocket{
 
         })
     }
-
-
 
 }
 
@@ -50,4 +43,4 @@ function getInstancia(io) {
     }
 
 
-module.exports = { getInstancia }
+export { getInstancia }

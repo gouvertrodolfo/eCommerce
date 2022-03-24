@@ -1,18 +1,16 @@
 import { Router } from 'express'
 import passport from '../controller/passport.js'
-import { validaUser } from '../controller/usuarios.js'
 
-import { postlogin, getfailloginController, getfailsignupController, postRole, deleteRole } from '../controller/usuarios.js'
 import * as UserController from '../controller/usuarios.js'
 
 const routesUsuarios = new Router();
 
-routesUsuarios.post('/login',
+routesUsuarios.post('/login', 
     passport.authenticate('login', { session: false, failureRedirect: '/faillogin' }),
     UserController.postlogin);
 
 routesUsuarios.post('/signup',
-    UserController.validaUser, passport.authenticate('signup', { session: false, failureRedirect: '/failsignup' }),
+    UserController.mdwValidaUser, passport.authenticate('signup', { session: false, failureRedirect: '/failsignup' }),
     UserController.postlogin)
 
 routesUsuarios.get('/faillogin',

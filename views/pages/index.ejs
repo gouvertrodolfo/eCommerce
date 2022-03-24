@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include('../partials/head') %>
+</head>
+
+<body>
+
+    <div class="container p-3 my-3 bg-light text-black">
+        <% if(user!==undefined){ %>
+            <%- include('../partials/navbar_logout', {user:user}) %>
+                <% } else { %>
+                    <%- include('../partials/navbar_login') %>
+                        <% } %>
+    </div>
+
+
+    <% if(user!==undefined){ %>
+        <div class="container p-3 my-3 bg-light text-black">
+            <%- include('../partials/chat',{user:user}) %>
+        </div>
+        <% } %>
+
+
+</body>
+
+</html>
