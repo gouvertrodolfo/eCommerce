@@ -20,7 +20,6 @@ export async function mdwValidarAddProducto(req, res, next) {
         next()
     }
     catch (err) { 
-        console.log(err)
         res.status(err.estado).json(err) 
     }
 }

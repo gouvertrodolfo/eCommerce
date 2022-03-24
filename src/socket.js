@@ -19,8 +19,6 @@ export default class MySocket {
             /* Escucho los mensajes enviado por el cliente y se los propago a todos */
             socket.on('nuevoMensaje', async data => {
 
-                console.log('nuevoMensaje')
-                console.log(data)
                 mensajes = await chat.AddMensaje(data)
                 this.io.sockets.emit('mensajes', mensajes)
             })
