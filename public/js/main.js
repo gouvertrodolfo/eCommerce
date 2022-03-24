@@ -3,17 +3,15 @@ const socket = io.connect();
 function addMessage(e) {
 
     const mensaje = {
-       correo: document.getElementById('correo').value,
-        text: document.getElementById('texto').value
+       email: document.getElementById('correo').value,
+       text: document.getElementById('texto').value
     };
     document.getElementById('texto').value = ''
     socket.emit('nuevoMensaje', mensaje);
     return false;
 }
 
-
 socket.on('mensajes', async msjs => {
-    console.log(msjs)
     const plantilla = await buscarPlantillaMensajes()
     const html = armarHTML(plantilla, msjs)
     document.getElementById('messages').innerHTML = html;

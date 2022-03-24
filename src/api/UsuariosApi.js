@@ -58,7 +58,8 @@ export default class UsuariosApi {
                 return usuario.get();
         }
         catch(err){
-             logger.error(`fallo el login de mail error:${err}`)             
+            
+             logger.info(`fallo el login de mail error:${ JSON.stringify(err)   }`)             
         }
 
     }

@@ -2,7 +2,9 @@
 <html lang="es">
 
 <head>
-    <%- include('../partials/head') %>
+
+        <%- include('../partials/head') %>
+
 </head>
 
 <body>
@@ -15,12 +17,14 @@
                         <% } %>
     </div>
 
+    <div class="container p-3 my-3 bg-light text-black">
 
-    <% if(user!==undefined){ %>
-        <div class="container p-3 my-3 bg-light text-black">
+        <% if(user!==undefined){ %>
             <%- include('../partials/chat',{user:user}) %>
-        </div>
-        <% } %>
+                <% } else { %>
+                    <%- include('../partials/info',{info:info}) %>
+                        <% } %>
+    </div>
 
 
 </body>

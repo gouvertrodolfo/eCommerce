@@ -8,27 +8,26 @@ routesweb.get('/', webController.getInicio);
 
 routesweb.get('/login', webController.getlogin);
 
-routesweb.post('/login', 
+routesweb.post('/login',
     passport.authenticate('login', { session: false, failureRedirect: '/faillogin' }),
     webController.postlogin);
 
-
 routesweb.get('/faillogin',
-    webController.getfailloginController)
+    webController.getfaillogin)
 
-routesweb.post('/productos',
-         passport.authenticate('signup', { session: false, failureRedirect: '/failsignup' }),
-         webController.postlogin)
-    
+    routesweb.get('/failsignup',
+    webController.getfailSignup)
 
-//     routesweblogin.get('/failsignup',
-//     UserController.getfailsignupController)
+routesweb.get('/logout',
+    webController.getlogout)
 
-// routesweblogin.post('/usuarios/role',
-//     UserController.postRole)
+routesweb.get('/signup',
+    webController.getsignup)
 
-// routesweblogin.delete('/usuarios/role',
-//     UserController.deleteRole)
+routesweb.post('/signup',
+    webController.mdwValidaUser, 
+    passport.authenticate('signup', { session: false, failureRedirect: '/failsignup' }),
+    webController.postlogin);
 
 export default routesweb
 

@@ -3,14 +3,13 @@ import Chat from './api/Chat.js'
 const chat = new Chat();
 /**************************************************************************************** */
 
-export default class mySocket {
-
+export default class MySocket {
 
     constructor(io) {
         this.io = io;
     };
 
-    run() {
+    on() {
         this.io.on('connection', async socket => {
             let mensajes = await chat.getAll();
 
