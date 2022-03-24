@@ -31,12 +31,12 @@ app.use(morgan())
 /**************************************************************************************** */
 
 
-import HttpServer from 'http'
-import {IOServer} from 'socket.io'
+import { createServer } from "http";
+import {Server} from 'socket.io'
 /**************************************************************************************** */
 
-const httpServer = new HttpServer(app)
-const io = new IOServer(httpServer)
+const httpServer  = createServer(app);
+const io = new Server(httpServer)
 
 import {getInstancia}  from './socket.js'
 getInstancia(io)
