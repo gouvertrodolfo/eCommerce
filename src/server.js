@@ -11,7 +11,6 @@ import routesUsuarios from './routes/usuarios.js'
 import routesOrdenes from './routes/ordenes.js'
 import routesweb from './routes/weblogin.js'
 
-import morgan from 'morgan';
 
 /**************************************************************************************** */
 
@@ -24,20 +23,8 @@ app.use(urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 
 /**************************************************************************************** */
-
 app.use(passport.initialize());
-
-// app.use(morgan())
 /**************************************************************************************** */
-
-
-/**************************************************************************************** */
-
-
-
-
-
-
 
 // rutas apiRestFull
 app.use('/', routesweb)
