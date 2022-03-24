@@ -16,33 +16,23 @@ export default class OrdenesApi {
 
     constructor() {
         this.ordenesDao = new OrdenesDao();
-        
+
     }
 
     async agregar(email) {
 
         const carrito = await carritoApi.confirmar(email);
-        const orden = new OrdenDto( {email: carrito.email, items: carrito.productos})
+        const orden = new OrdenDto({ email: carrito.email, items: carrito.productos })
         await this.ordenesDao.add(orden);
 
-        this.enviarMailNuevaOrden(orden)        
+        this.enviarMailNuevaOrden(orden)
 
         return orden;
     }
 
     async obtener(email) {
-        try {
-            const dto = await this.carritosDao.getById({ email: email })
-            return new CarritoDto(dto)
+        return await this.ordenesDao.listByQuery({ email: email })
 
-        } catch (err) {
-            if (err.estado == 404) {
-                const carrito = await this.agregar(email)
-                return carrito
-            }
-            else
-                throw (err)
-        }
     }
 
     /*
@@ -97,7 +87,7 @@ export default class OrdenesApi {
                     mailto = mailto + ',' + element.email
             });
 
-            const cuerpo = orden.tohtml();   
+            const cuerpo = orden.tohtml();
             await enviarCorreo(mailto, asunto, cuerpo)
 
         } catch (err) { logger.error(`fallo el envio de mail error:${err}`) }

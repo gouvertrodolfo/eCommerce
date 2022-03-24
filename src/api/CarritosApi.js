@@ -41,13 +41,22 @@ export default class CarritosApi {
 
         const producto = new ProductoDto(dataProducto)
 
-        producto.cantidad = cantidad
-
         const carrito = await this.obtener(email)
-        carrito.productos.forEach(async element => {
-            if (element.id === producto.id)
-                await this.quitarProducto(email, producto.id)
+
+        const found = carrito.productos.find(function (element) {
+            return element.id == producto.id;
         });
+
+        if (!found) {
+            producto.cantidad = cantidad
+            if( producto.stock < producto.cantidad ) throw new CustomError(400, 'No existe stock suficiente')
+        }
+        else
+        {
+            producto.cantidad = cantidad + found.cantidad
+            if( producto.stock < producto.cantidad ) throw new CustomError(400, 'No existe stock suficiente')
+            await this.quitarProducto(email, producto.id)
+        }
 
         const dot = await this.carritosDao.addProducto(email, producto.getforCarrito())
         return new CarritoDto(dot)

@@ -4,7 +4,6 @@ export default class CarritoDto {
   _id;
   id;
   email;
-  productos;
   fechayhora;
   Estado;
 
@@ -16,6 +15,7 @@ export default class CarritoDto {
 
       this.id = NUID.next();
       this.fechayhora = Date.now();
+      this.Estado = 'Generada'
     }
     else {
       this._id = _id;

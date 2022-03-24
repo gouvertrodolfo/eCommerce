@@ -48,7 +48,7 @@ export default class ProductosApi {
         const producto = await this.Obtener(id)
         const nuevoStock = producto.stock - cantidad
 
-        if (nuevoStock << 0) {
+        if (nuevoStock < 0) {
             throw new CustomError(400, 'No existe stock suficiente para satifacer la demanda', `Stock disponible: ${producto.stock} solicitado ${cantidad}`)
         }
 
