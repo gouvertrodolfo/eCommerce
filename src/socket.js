@@ -3,15 +3,14 @@ import Chat from './api/Chat.js'
 const chat = new Chat();
 /**************************************************************************************** */
 
-class mySocket{
+export default class mySocket {
+
 
     constructor(io) {
-        this.io = io
+        this.io = io;
     };
 
-    CrearInstancia() {
-
-        
+    run() {
         this.io.on('connection', async socket => {
             let mensajes = await chat.getAll();
 
@@ -20,6 +19,9 @@ class mySocket{
 
             /* Escucho los mensajes enviado por el cliente y se los propago a todos */
             socket.on('nuevoMensaje', async data => {
+
+                console.log('nuevoMensaje')
+                console.log(data)
                 mensajes = await chat.AddMensaje(data)
                 this.io.sockets.emit('mensajes', mensajes)
             })
@@ -29,18 +31,3 @@ class mySocket{
 
 }
 
-function getInstancia(io) {
-   
-        if (!this.instance) {
-            this.instance = new mySocket(io)
-            this.instance.CrearInstancia();
-            return this.instance;
-        }
-        else {
-            return this.instance;
-        }
-
-    }
-
-
-export { getInstancia }

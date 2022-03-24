@@ -20,12 +20,8 @@ export async function postlogin(req, res) {
 
     const user = req.user;
 
-    console.log(user)
-
     const title = 'eCommerce'
     const token = jwt.sign({ user: user }, jwtOpts.secretOrKey, { expiresIn: jwtOpts.expireIn });
-    
-    
 
     res.render('pages/index',{ titulo: title, user })
 }

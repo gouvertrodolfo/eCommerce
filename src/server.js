@@ -27,19 +27,15 @@ app.set('view engine', 'ejs')
 
 app.use(passport.initialize());
 
-app.use(morgan())
+// app.use(morgan())
 /**************************************************************************************** */
 
 
-import { createServer } from "http";
-import {Server} from 'socket.io'
 /**************************************************************************************** */
 
-const httpServer  = createServer(app);
-const io = new Server(httpServer)
 
-import {getInstancia}  from './socket.js'
-getInstancia(io)
+
+
 
 
 

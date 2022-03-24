@@ -3,7 +3,7 @@ import logger from '../logger.js'
 export function failRoute(req, res) {
   const title = 'ROUTING ERROR';
   const { url, method } = req
-console.log(req.body)
+
   logger.warn(`Ruta ${method} ${url} inexistente`)
 
   res.status(404).json({ titulo: title });
