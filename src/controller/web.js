@@ -45,15 +45,14 @@ export async function getsignup(req, res) {
 
 export async function getfaillogin(req, res) {
   const title = 'Error usuario y/o contraseña no validos'
-  res.render('pages/error', { titulo: title })
+
+  res.render('pages/error', { titulo: title, detalle: undefined })
 }
 
 export async function getfailSignup(req, res) {
   const title = 'Error en el registro de usuario'
-  res.render('pages/error', { titulo: title })
+  res.render('pages/error', { titulo: title, detalle: undefined })
 }
-
-
 
 export async function mdwValidaUser(req, res, next) {
   let data
