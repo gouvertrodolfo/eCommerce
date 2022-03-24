@@ -2,7 +2,7 @@
 import moment from 'moment'
 import MensajeDao from '../model/daos/MensajesDao.js';
 
-class Chat {
+class ChatApi {
     
     constructor() {
         this.contenedor = new MensajeDao();
@@ -21,4 +21,4 @@ class Chat {
     
 }
 
-export default Chat
+export default ChatApi

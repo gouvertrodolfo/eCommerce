@@ -10,9 +10,9 @@ export async function listar(req, res) {
 }
 
 export async function buscar(req, res) {
-    const { productoId } = req.params
+    const { id } = req.params
     try {
-        const producto = await productos.Obtener(productoId)
+        const producto = await productos.Obtener(id)
         res.status(200).json(producto)
     } catch (err) {
         res.status(err.estado).json(err.descripcion)
@@ -48,9 +48,9 @@ export async function actualizar(req, res) {
 }
 
 export async function borrar(req, res) {
-    const { productoId } = req.params
+    const { id } = req.params
     try {
-        productos.borrar(productoId);
+        productos.borrar(id);
         res.status(204).json()
     } catch (err) {
         res.status(err.estado).json(err.descripcion)

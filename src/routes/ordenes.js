@@ -5,12 +5,12 @@ import passport from '../controller/passport.js';
 
 const routesOrdenes = express.Router()
 
-/* GET lista de ordenes del usuario. */
+//GET '/' - > lista de ordenes del usuario logeado.
 routesOrdenes.get('/',
     passport.authenticate('jwt', { session: false }),
     ctrl.obtener);
 
-/* POST ordenes listing. */
+//POST '/' Crea una nueva orden en base a lo que el usuario logeado tiene en el carrito.
 routesOrdenes.post('/',
     passport.authenticate('jwt', { session: false }),
     ctrl.agregar);

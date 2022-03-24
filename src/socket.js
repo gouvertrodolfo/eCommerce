@@ -1,6 +1,6 @@
 /**************************************************************************************** */
-import Chat from './api/Chat.js'
-const chat = new Chat();
+import ChatApi from './api/ChatApi.js'
+const chat = new ChatApi();
 /**************************************************************************************** */
 
 export default class MySocket {

@@ -23,18 +23,6 @@ export const ServidorEnvioCorreo = {
   }
 }
 
-export const SwaggerOptions = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Express API with Swagger",
-      description: "A simple CRUD API application made with Express and documented with Swagger",
-    },
-  },
-  apis: ['./docs/**/*.yaml'],
-};
-
-
 export default {
   NODE_ENV: process.env.NODE_ENV || 'development',
   HOST: process.env.HOST || 'localhost',

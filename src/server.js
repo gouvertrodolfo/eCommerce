@@ -1,10 +1,7 @@
 import express, { json, urlencoded } from 'express'
 import passport from './controller/passport.js'
-import swaggerUi from 'swagger-ui-express'
-import swaggerJsdoc from 'swagger-jsdoc'
-import {SwaggerOptions} from './../config/config.js'
-import { failRoute } from "./routes/default.js"
 
+import { failRoute } from "./routes/default.js"
 import routesCarrito from "./routes/carritos.js"
 import routesProductos from "./routes/productos.js"
 import routesUsuarios from './routes/usuarios.js'
@@ -35,14 +32,9 @@ app.use('/api/carrito', routesCarrito)
 app.use('/api/ordenes', routesOrdenes)
 
 /**************************************************************************************** */
-const swaggerSpecs = swaggerJsdoc(SwaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
-
-/**************************************************************************************** */
 
 //rutas no encontrada
 app.use('/*', failRoute)
-
 
 export default app
 

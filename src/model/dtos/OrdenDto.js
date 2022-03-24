@@ -23,8 +23,6 @@ export default class CarritoDto {
       this.fechayhora = fechayhora;
     }
 
-
-
   }
 
   get() {
